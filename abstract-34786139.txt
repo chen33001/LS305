@@ -1,0 +1,49 @@
+1. Am J Transl Res. 2021 Oct 15;13(10):12034-12042. eCollection 2021.
+
+Application of traditional Chinese medicine syndrome differentiation in 
+identification of body constitution of hypertensive and diabetic patients.
+
+Fang Y(1), Luo L(2), Li R(1).
+
+Author information:
+(1)Basic Medical College, Zhejiang Chinese Medical University Hangzhou City, 
+Zhejiang Province, China.
+(2)Beijing University of Chinese Medicine Beijing, China.
+
+OBJECTIVE: To investigate the application of traditional Chinese medicine (TCM) 
+syndrome differentiation in identification of body constitution of hypertensive 
+and diabetic patients.
+METHODS: A total of 110 hypertensive patients with diabetes treated in our 
+hospital were enrolled in this study, and were divided into a study group (SG, 
+n=60) and a control group (CG, n=50) according to different intervention 
+methods. Patients in the CG received conventional western medical intervention 
+for hypertension and diabetes, while patients in the SG received body 
+constitution-identified TCM syndrome differentiation intervention additionally. 
+The changes of blood pressure and plasma glucose during the intervention were 
+compared between the two groups, the clinical effect and quality of life of the 
+two groups were evaluated, and multivariate stepwise Logistic regression 
+analysis on influencing factor of TCM body constitution was conducted.
+RESULTS: Compared with that before intervention, the proportion of gentleness 
+constitution in the SG showed a significant increase (P<0.05) after 
+intervention. Dynamic analysis during the intervention showed that patients in 
+the SG had lower systolic blood pressure (SBP), diastolic blood pressure (DBP), 
+lower level of fasting plasma glucose (GLU) and 2-h postprandial plasma glucose 
+(2hPG) than the CG from 1 to 12 months after intervention (P<0.05). Patients in 
+the SG scored higher than the CG on all SF-36 dimensions after intervention 
+(P<0.05). Multivariate stepwise Logistic regression analysis showed that 
+dampness-heat constitution, blood-stasis constitution, Yin-deficiency 
+constitution and phlegm-dampness constitution were the main risk factors for 
+hypertension with diabetes (P<0.05).
+CONCLUSION: Body constitution-identified TCM syndrome differentiation treatment 
+for hypertensive patients with diabetes is effective, which can significantly 
+improve the plasma glucose and blood pressure indices of patients. Dampness-heat 
+constitution, blood-stasis constitution, Yin-deficiency constitution and 
+phlegm-dampness constitution are the risk factors for hypertension with 
+diabetes.
+
+AJTR Copyright © 2021.
+
+PMCID: PMC8581866
+PMID: 34786139
+
+Conflict of interest statement: None.
