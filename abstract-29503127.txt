@@ -1,0 +1,55 @@
+1. J Chin Med Assoc. 2018 Apr;81(4):358-365. doi: 10.1016/j.jcma.2018.01.005. Epub 
+2018 Mar 2.
+
+Constitution of traditional chinese medicine and related factors in women of 
+childbearing age.
+
+Jiang QY(1), Li J(2), Zheng L(3), Wang GH(4), Wang J(5).
+
+Author information:
+(1)Department of Prevention, Tongji University School of Medicine, Shanghai, 
+China; Department of Health Care Management, Public Health School of Fujian 
+Medical University, Fuzhou, Fujian, China.
+(2)Department of Health Care Management, Public Health School of Fujian Medical 
+University, Fuzhou, Fujian, China; Key Laboratory of Arrhythmias Ministry of 
+Education, Tongji University School of Medicine, Shanghai, China.
+(3)Shanghai East Hospital, Tongji University, Shanghai, China.
+(4)Shanghai First Maternity and Infant Hospital, Tongji University School of 
+Medicine, Shanghai, China.
+(5)Tongji Hospital affiliated to Tongji University, Shanghai, China. Electronic 
+address: 18918513937@163.com.
+
+BACKGROUND: This study investigates the constitution of traditional Chinese 
+medicine (TCM) among women who want to be pregnant in one year and explores 
+factors related to TCM constitution.
+METHODS: This study was conducted on women who participated in free 
+preconception check-ups provided by the Zhabei District Maternity and Child Care 
+Center in Shanghai, China. The information regarding the female demographic 
+characteristics, physical condition, history of pregnancy and childbearing, diet 
+and behavior, and social psychological factors was collected, and TCM 
+constitution assessment was performed. The Chi-square test, t-test, logistic 
+regression analysis, and multinomial logistic regression analysis were used to 
+explore the related factors of TCM constitution.
+RESULTS: The participants in this study were aged 28.3 ± 3.0 years. 
+Approximately fifty-five women in this study had Unbalanced Constitution. 
+Logistic regression analysis showed that Shanghai residence, dysmenorrhea, gum 
+bleeding, aversion to vegetables, preference for raw meat, job stress, and 
+economic stress were significantly and negatively associated with Balanced 
+Constitution. Multinomial logistic analysis showed that Shanghai residence was 
+significantly associated with Yang-deficiency, Yin-deficiency, and Stagnant Qi 
+Constitutions; gum bleeding was significantly associated with Yin-deficiency, 
+Stagnant Blood, Stagnant Qi, and Inherited Special Constitutions; aversion to 
+vegetables was significantly associated with Damp-heat Constitution; job stress 
+was significantly associated with Yang-deficiency, Phlegm-dampness, Damp-heat, 
+Stagnant Blood, and Stagnant Qi Constitutions; and economic stress was 
+significantly associated with Yang-deficiency, and Stagnant Qi Constitutions.
+CONCLUSION: The application of TCM constitution to preconception care would be 
+beneficial for early identification of potential TCM constitution risks and be 
+beneficial for early intervention (e.g., health education, and dietary 
+education), especially during the women who do not have a medical condition and 
+those who have related factors found in this study.
+
+Copyright © 2018. Published by Elsevier Taiwan LLC.
+
+DOI: 10.1016/j.jcma.2018.01.005
+PMID: 29503127 [Indexed for MEDLINE]
