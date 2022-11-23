@@ -1,0 +1,55 @@
+1. J Tradit Chin Med. 2020 Aug;40(4):690-702. doi: 
+10.19852/j.cnki.jtcm.2020.04.019.
+
+Clinical research linking Traditional Chinese Medicine constitution types with 
+diseases: a literature review of 1639 observational studies.
+
+Liang X(1), Wang Q(1), Jiang Z(1), Li Z(1), Zhang M(1), Yang P(1), Wang X(1), 
+Wang Y(1), Qin Y(1), Li T(1), Zhang T(1), Wang Y(1), Sun J(1), Li Y(1), Luo 
+H(2), Li L(1).
+
+Author information:
+(1)Center for Studies in Constitution Research and Reproductive Sciences of 
+Traditional Chinese Medicine, Beijing University of Chinese Medicine, Beijing 
+100029, China.
+(2)Institute for Tibetan Medicine, China Tibetology Research Center, Beijing 
+100101, China.
+
+OBJECTIVE: To analyze clinical studies on correlations between Traditional 
+Chinese Medicine (TCM) body constitution types and diseases published in the 
+past 10 years, and to provide an evidence base to support the use of such 
+correlations for health maintenance and disease prevention.
+METHODS: We searched five databases for the period April 2009 to December 2019: 
+China National Knowledge Infrastructure Database, Wanfang Database, China 
+Science and Technology Journal Database, PubMed and Embase. Three types of 
+observational studies on correlation between constitution types and diseases 
+were included: cross-sectional, case-control and cohort studies. Descriptive 
+statistical methods were employed for data analysis.
+RESULTS: A total of 1639 clinical studies were identified: 1452 (88.59%) 
+cross-sectional studies, 115 (7.02%) case-control studies and 72 (4.39%) cohort 
+studies covering 30 regions of China and five other countries (Malaysia, South 
+Korea, Singapore, Thailand and France). The collection of studies comprised 19 
+disease categories and 333 different diseases. The 10 most commonly studied 
+diseases were hypertension, diabetes, stroke, coronary atherosclerotic heart 
+disease (CAHD), sleep disorders, neoplasm of the breast, dysmenorrhea, fatty 
+liver disease, chronic viral hepatitis B and dyslipidemia. We found high 
+distributions for each biased constitution type in different patient populations 
+as follows: Qi-deficiency constitution in stroke, diabetes, chronic obstructive 
+pulmonary disease, acquired immunodeficiency syndrome and hypertension; 
+Yang-deficiency constitution in female infertility, osteoporosis, irritable 
+bowel syndrome, gonarthrosis and dysmenorrhea; Yin-deficiency constitution in 
+hypertension, diabetes, constipation, female climacteric states and 
+osteoporosis; phlegm- dampness constitution in hypertension, stroke, fatty liver 
+disease, diabetes and metabolic syndrome; damp-heat constitution in acne, 
+chronic gastritis, chronic viral hepatitis B, human papillomavirus infection and 
+hyperuricemia; blood-stasis constitution in CAHD, endometriosis and stroke; 
+Qi-stagnation constitution in hyperplasia and neoplasms of the breast, insomnia, 
+depression and thyroid nodules; and inherited-special constitution in asthma and 
+allergic rhinitis.
+CONCLUSION: Eight biased TCM constitutions were closely related to specific 
+diseases, and could be used to guide individualized prevention and treatment. 
+More rigorously designed studies are recommended to further verify the 
+constitution-disease relationship.
+
+DOI: 10.19852/j.cnki.jtcm.2020.04.019
+PMID: 32744037 [Indexed for MEDLINE]
