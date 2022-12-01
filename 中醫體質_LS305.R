@@ -1,82 +1,82 @@
 library(openxlsx)
 library(tidyverse)
 
-#ç”ŸèŒè·¯å¾‘:"C:\\R\\TCM_list20220924.csv"å¨ç”«è·¯å¾‘:"C:\\R\\LS305ä¸­é†«\\TCM_list20220924.csv"
-data <- read.csv("C:\\R\\LS305ä¸­é†«\\TCM_list20220924.csv",fileEncoding = "Big5")
+
+data <- read.csv("C:\\R\\LS305¤¤Âå\\TCM_list20220924.csv",fileEncoding = "Big5")
 head(data)
 
-#åˆ†é›¢è³‡æ–™
+#¤ÀÂ÷¸ê®Æ
 age<-c(data$age_gruop)
 sex<-c(data$SEX)
-yin<-c(data$é™°è™›é«”è³ª)
-yang<-c(data$é™½è™›é«”è³ª)
-TCM<-c(data$ç—°ç˜€é«”è³ª)
-peace<-c(data$å¹³å’Œé«”è³ª)
-con<-c(data$é«”è³ª)
-#ç”·å¥³é«”è³ª
+yin<-c(data$³±µêÅé½è)
+yang<-c(data$¶§µêÅé½è)
+TCM<-c(data$·ğ·ïÅé½è)
+peace<-c(data$¥­©MÅé½è)
+con<-c(data$Åé½è)
+#¨k¤kÅé½è
 newdata1<-data[,c(2,48)]
-newdata1$é«”è³ª<-factor(newdata1$é«”è³ª)
+newdata1$Åé½è<-factor(newdata1$Åé½è)
 
 library(ggplot2)
-#ç¹ªåœ–
+#Ã¸¹Ï
 par(mfrow = c(1,1),xpd=NA,oma= c(0,0,0,8))
-barplot(table(con,sex),main='ç”·å¥³é«”è³ªäººæ•¸',beside=T,col=rainbow(nlevels(newdata1$é«”è³ª)))
-legend(par("usr")[2],par("usr")[4],legend = as.character(levels(newdata1$é«”è³ª)),fill=rainbow(nlevels(newdata1$é«”è³ª)))
+barplot(table(con,sex),main='¨k¤kÅé½è¤H¼Æ',beside=T,col=rainbow(nlevels(newdata1$Åé½è)))
+legend(par("usr")[2],par("usr")[4],legend = as.character(levels(newdata1$Åé½è)),fill=rainbow(nlevels(newdata1$Åé½è)))
 
 table(con,sex)
 
-#å¹´é½¡é«”è³ª
+#¦~ÄÖÅé½è
 newdata2<-data[,c(49,48)]
-newdata2$é«”è³ª<-factor(newdata2$é«”è³ª)
+newdata2$Åé½è<-factor(newdata2$Åé½è)
 
 par(mfrow = c(1,1),xpd=NA,oma= c(0,0,0,8))
-barplot(table(con,age),main='å„å¹´é½¡é«”è³ªäººæ•¸',beside=T,col=rainbow(nlevels(newdata2$é«”è³ª)))
-legend(par("usr")[2],par("usr")[4],legend = as.character(levels(newdata2$é«”è³ª)),fill=rainbow(nlevels(newdata2$é«”è³ª)))
+barplot(table(con,age),main='¦U¦~ÄÖÅé½è¤H¼Æ',beside=T,col=rainbow(nlevels(newdata2$Åé½è)))
+legend(par("usr")[2],par("usr")[4],legend = as.character(levels(newdata2$Åé½è)),fill=rainbow(nlevels(newdata2$Åé½è)))
 table(con,age)
 
-data2<- read.csv(ç”·å¥³é«”è³ªäººæ•¸,fiieEncoding = "Big5")
-sex2<- c(data2$å¥³æ€§)
-sex3<- c(data2$ç”·æ€§)
+data2<- read.csv(¨k¤kÅé½è¤H¼Æ,fiieEncoding = "Big5")
+sex2<- c(data2$¤k©Ê)
+sex3<- c(data2$¨k©Ê)
 t.test(sex2,sex3, var.equal=true)
 
-#å¹´é½¡åˆ†å¸ƒ
+#¦~ÄÖ¤À¥¬
 newdata3<-data[,c(2,49)]
-newdata3$å¹´é½¡å€é–“<-factor(newdata3$age_gruop)
+newdata3$¦~ÄÖ°Ï¶¡<-factor(newdata3$age_gruop)
 
 par(mfrow = c(1,1),xpd=NA,oma= c(0,0,0,8))
-barplot(table(age,sex),main='ç”·å¥³å¹´é½¡åˆ†å¸ƒ',beside=T,col=rainbow(nlevels(newdata3$å¹´é½¡å€é–“)))
-legend(par("usr")[2],par("usr")[4],legend = as.character(levels(newdata3$å¹´é½¡å€é–“)),fill=rainbow(nlevels(newdata3$å¹´é½¡å€é–“)))
+barplot(table(age,sex),main='¨k¤k¦~ÄÖ¤À¥¬',beside=T,col=rainbow(nlevels(newdata3$¦~ÄÖ°Ï¶¡)))
+legend(par("usr")[2],par("usr")[4],legend = as.character(levels(newdata3$¦~ÄÖ°Ï¶¡)),fill=rainbow(nlevels(newdata3$¦~ÄÖ°Ï¶¡)))
 table(age,sex)
 
-#?ï—„?ïŠ¾éˆï‹ª??
+#?Œ¯?‡ºè³‡æ??
 aaa <- table(con,sex)
 bbb <- table(age,sex)
-write.csv(aaa, file = "C:\\R\\LS305éŠå‰ïˆ’\\å„é«”è³ªç”·å¥³äººæ•¸.csv",fileEncoding = "Big5")
-write.csv(bbb, file = "C:\\R\\LS305éŠå‰ïˆ’\\å„å¹´é½¡é«”è³ªäºº.csv",fileEncoding = "Big5")
+write.csv(aaa, file = "C:\\R\\LS305ä¸­é†«\\¦UÅé½è¨k¤k¤H¼Æ.csv",fileEncoding = "Big5")
+write.csv(bbb, file = "C:\\R\\LS305ä¸­é†«\\¦U¦~ÄÖÅé½è¤H.csv",fileEncoding = "Big5")
 
 #anova
-data2 <- read.csv("C:\\R\\å„é«”è³ªç”·å¥³äººæ•¸.csv",fileEncoding = "Big5")
-sex2 <- c(data2$å¥³æ€§)
-sex3 <- c(data2$ç”·æ€§)
+data2 <- read.csv("C:\\R\\¦UÅé½è¨k¤k¤H¼Æ.csv",fileEncoding = "Big5")
+sex2 <- c(data2$¤k©Ê)
+sex3 <- c(data2$¨k©Ê)
 t.test(sex2,sex3, var.equal=TRUE)
 
-data3 <- read.csv("C:\\R\\å„å¹´é½¡é«”è³ªäººæ•¸.csv",fileEncoding = "Big5")
-sex2 <- c(data3$å¥³æ€§)
-sex3 <- c(data3$ç”·æ€§)
+data3 <- read.csv("C:\\R\\¦U¦~ÄÖÅé½è¤H¼Æ.csv",fileEncoding = "Big5")
+sex2 <- c(data3$¤k©Ê)
+sex3 <- c(data3$¨k©Ê)
 t.test(sex2,sex3, var.equal=TRUE)
 
 
 
-#å¡æ–¹
- #å¹´é½¡é«”è³ªåˆ†å¸ƒ
+#¥d¤è
+ #¦~ÄÖÅé½è¤À¥¬
 chisq.test(data4[,2:8])
- #é«”è³ªã€ç”·å¥³
+ #Åé½è¡B¨k¤k
 chisq.test(data2[,2:3])
 
 #release_list_measure
-measure <- read.csv("C:\\R\\LS305ä¸­é†«\\release_list_measure.csv",sep=",", header=TRUE,na = "NA")
+measure <- read.csv("C:\\R\\LS305¤¤Âå\\release_list_measure.csv",sep=",", header=TRUE,na = "NA")
 
-#å–é«”æª¢å–ç‰¹å®šæ¬„ä½
+#¨úÅéÀË¨ú¯S©wÄæ¦ì
 measure_extract<-subset(measure,
                         select = c("Release_No","FOLLOW",
                                    "BODY_HEIGHT","BODY_WEIGHT","BMI","BODY_FAT_RATE","BODY_WAISTLINE","BODY_BUTTOCKS","WHR",
@@ -95,20 +95,20 @@ measure_extract<-subset(measure,
                                    "BUN","CREATININE","URIC_ACID","MICROALB","CREATININE_URINE")
                         )
 
-#å¾measure_extractå–å‡ºä¸­é†«é«”è³ªæª”æ¡ˆæœ‰çš„Release_No
- #TCM_list20220924è¦å…ˆå¦å­˜æˆcsv
-TCMlist<- read.csv("C:\\R\\LS305ä¸­é†«\\TCM_list20220924.csv",fileEncoding = "Big5")
-TCMlist<-subset(TCMlist,select=c("Release_No","é«”è³ª","SEX","AGE","age_gruop"))
+#±qmeasure_extract¨ú¥X¤¤ÂåÅé½èÀÉ®×¦³ªºRelease_No
+ #TCM_list20220924­n¥ı¥t¦s¦¨csv
+TCMlist<- read.csv("C:\\R\\LS305¤¤Âå\\TCM_list20220924.csv",fileEncoding = "Big5")
+TCMlist<-subset(TCMlist,select=c("Release_No","Åé½è","SEX","AGE","age_gruop"))
 
 TCMmerge<-merge(TCMlist,measure_extract, by = "Release_No", all.TCMlist = T)
 
-#TCMmergeåˆä½µTWB1,2åºè™Ÿ
-TWB12 <- read.csv("c:\\R\\LS305ä¸­é†«\\lab_info.csv",fileEncoding = "Big5")
+#TCMmerge¦X¨ÖTWB1,2§Ç¸¹
+TWB12 <- read.csv("c:\\R\\LS305¤¤Âå\\lab_info.csv",fileEncoding = "Big5")
 names(TWB12)[1] <- "Release_No"
 TWB12 <- subset(TWB12,select=c("Release_No","TWB1_ID","TWB2_ID"))
 TCMmerge2<-merge(TWB12,TCMmerge, by = "Release_No", all.TCMmerge = T)
 
-#ç”¨å¤šé‡è®Šé …å»é™¤é‡è¤‡åˆ—
+#¥Î¦h­«ÅÜ¶µ¥h°£­«½Æ¦C
 library(dplyr)
 
 TCMmerge3 <- distinct(TCMmerge2, BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,
@@ -116,51 +116,51 @@ TCMmerge3 <- distinct(TCMmerge2, BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,
                       SIT_2_SYSTOLIC_PRESSURE,VC,TV,ERV,
                       .keep_all = TRUE )
 
-#è¼¸å‡ºtwbåºè™Ÿ+é«”è³ªçš„è¡¨æ ¼
-write.csv(TCMmerge3,file='C:\\R\\LS305ä¸­é†«\\TCMmerge3.csv',fileEncoding = "Big5",append = FALSE)
+#¿é¥Xtwb§Ç¸¹+Åé½èªºªí®æ
+write.csv(TCMmerge3,file='C:\\R\\LS305¤¤Âå\\TCMmerge3.csv',fileEncoding = "Big5",append = FALSE)
 
 
-#è¨ˆç®—twb12çš„é«”è³ªæ•¸é‡---------------------
-TCMcal <- read.csv("C:\\R\\LS305ä¸­é†«\\TCMmerge3.csv",fileEncoding = "Big5")
+#­pºâtwb12ªºÅé½è¼Æ¶q---------------------
+TCMcal <- read.csv("C:\\R\\LS305¤¤Âå\\TCMmerge3.csv",fileEncoding = "Big5")
 
  #TWB1
- #åªåˆ†å‡ºbaseline(ä¸­é†«é«”è³ªçš„å€‹æ•¸)
+ #¥u¤À¥Xbaseline(¤¤ÂåÅé½èªº­Ó¼Æ)
   TCMcal1 <- subset(TCMcal,
-                   select=c("Release_No","TWB1_ID","é«”è³ª"),
+                   select=c("Release_No","TWB1_ID","Åé½è"),
                    FOLLOW=="Baseline")
-  #TWB1ç©ºé«”è³ªæ•¸é‡
-  TWBcal1 <- print(table(TCMcal1$TWB1_ID,TCMcal1$é«”è³ª)
+  #TWB1ªÅÅé½è¼Æ¶q
+  TWBcal1 <- print(table(TCMcal1$TWB1_ID,TCMcal1$Åé½è)
                    )
   
 
 
  #TWB2
- #åªåˆ†å‡ºbaseline(ä¸­é†«é«”è³ªçš„å€‹æ•¸)
+ #¥u¤À¥Xbaseline(¤¤ÂåÅé½èªº­Ó¼Æ)
   TCMcal2 <- subset(TCMcal,
-                    select=c("Release_No","TWB2_ID","é«”è³ª"),
+                    select=c("Release_No","TWB2_ID","Åé½è"),
                     FOLLOW=="Baseline")
- #TWB2ç©ºé«”è³ªæ•¸é‡
-  TWBcal2 <- print(table(TCMcal$TWB1_ID,TCMcal$é«”è³ª))
+ #TWB2ªÅÅé½è¼Æ¶q
+  TWBcal2 <- print(table(TCMcal$TWB1_ID,TCMcal$Åé½è))
 
  
-#é«”è³ªè·Ÿæª¢æ¸¬çµæœå¡æ–¹--------------------
-  TCMcal <- read.csv("C:\\R\\LS305ä¸­é†«\\TCMmerge3.csv",fileEncoding = "Big5")
- #åªå–baseline
+#Åé½è¸òÀË´úµ²ªG¥d¤è--------------------
+  TCMcal <- read.csv("C:\\R\\LS305¤¤Âå\\TCMmerge3.csv",fileEncoding = "Big5")
+ #¥u¨úbaseline
   chiqTCM <- subset(TCMcal,
                     FOLLOW=="Baseline")
-  #æ›¿æ›æ–‡å­—æˆæ•¸å­—
-  #ä¸­é†«é«”è³ª
-  chiqTCM$é«”è³ª <- as.character(chiqTCM$é«”è³ª)
+  #´À´«¤å¦r¦¨¼Æ¦r
+  #¤¤ÂåÅé½è
+  chiqTCM$Åé½è <- as.character(chiqTCM$Åé½è)
   
-  chiqTCM$é«”è³ª[which(chiqTCM$é«”è³ª=="å¹³å’Œ")] <- "1"
-  chiqTCM$é«”è³ª[which(chiqTCM$é«”è³ª=="é™°è™›")] <- "2"
-  chiqTCM$é«”è³ª[which(chiqTCM$é«”è³ª=="é™°è™›+é™½è™›")] <- "3"
-  chiqTCM$é«”è³ª[which(chiqTCM$é«”è³ª=="é™°è™›+é™½è™›+ç—°ç˜€")] <- "4"
-  chiqTCM$é«”è³ª[which(chiqTCM$é«”è³ª=="é™°è™›+ç—°ç˜€")] <- "5"
-  chiqTCM$é«”è³ª[which(chiqTCM$é«”è³ª=="é™½è™›")] <- "6"
-  chiqTCM$é«”è³ª[which(chiqTCM$é«”è³ª=="ç—°ç˜€")] <- "7"
-  chiqTCM$é«”è³ª[which(chiqTCM$é«”è³ª=="ç—°ç˜€+é™½è™›")] <- "8"
-  chiqTCM$é«”è³ª <- as.numeric(chiqTCM$é«”è³ª)
+  chiqTCM$Åé½è[which(chiqTCM$Åé½è=="¥­©M")] <- "1"
+  chiqTCM$Åé½è[which(chiqTCM$Åé½è=="³±µê")] <- "2"
+  chiqTCM$Åé½è[which(chiqTCM$Åé½è=="³±µê+¶§µê")] <- "3"
+  chiqTCM$Åé½è[which(chiqTCM$Åé½è=="³±µê+¶§µê+·ğ·ï")] <- "4"
+  chiqTCM$Åé½è[which(chiqTCM$Åé½è=="³±µê+·ğ·ï")] <- "5"
+  chiqTCM$Åé½è[which(chiqTCM$Åé½è=="¶§µê")] <- "6"
+  chiqTCM$Åé½è[which(chiqTCM$Åé½è=="·ğ·ï")] <- "7"
+  chiqTCM$Åé½è[which(chiqTCM$Åé½è=="·ğ·ï+¶§µê")] <- "8"
+  chiqTCM$Åé½è <- as.numeric(chiqTCM$Åé½è)
   
   #ANTI_HCV_AB_1
   chiqTCM$ANTI_HCV_AB_1 <- as.character(chiqTCM$ANTI_HCV_AB_1)
@@ -192,87 +192,87 @@ TCMcal <- read.csv("C:\\R\\LS305ä¸­é†«\\TCMmerge3.csv",fileEncoding = "Big5")
   chiqTCM$ANTI_HDV_AB_1[which(chiqTCM$ANTI_HDV_AB_1=="Positive")] <- "1"
   chiqTCM$ANTI_HDV_AB_1[which(chiqTCM$ANTI_HDV_AB_1=="Negative")] <- "2"
   
-  write.csv(chiqTCM,file='C:\\R\\LS305ä¸­é†«\\chiqTCM.csv',fileEncoding = "Big5")
+  write.csv(chiqTCM,file='C:\\R\\LS305¤¤Âå\\chiqTCM.csv',fileEncoding = "Big5")
   
-  #å¡æ–¹(æ¯æ®µ10å€‹)
+  #¥d¤è(¨C¬q10­Ó)
 
 
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$BODY_HEIGHT)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$BODY_WEIGHT)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$BMI)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$BODY_FAT_RATE)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$BODY_WAISTLINE)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$BODY_BUTTOCKS)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$WHR)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$SIT_1_SYSTOLIC_PRESSURE)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$SIT_1_DIASTOLIC_PRESSURE)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$SIT_2_SYSTOLIC_PRESSURE)
+chisq.test(chiqTCM$Åé½è,chiqTCM$BODY_HEIGHT)
+chisq.test(chiqTCM$Åé½è,chiqTCM$BODY_WEIGHT)
+chisq.test(chiqTCM$Åé½è,chiqTCM$BMI)
+chisq.test(chiqTCM$Åé½è,chiqTCM$BODY_FAT_RATE)
+chisq.test(chiqTCM$Åé½è,chiqTCM$BODY_WAISTLINE)
+chisq.test(chiqTCM$Åé½è,chiqTCM$BODY_BUTTOCKS)
+chisq.test(chiqTCM$Åé½è,chiqTCM$WHR)
+chisq.test(chiqTCM$Åé½è,chiqTCM$SIT_1_SYSTOLIC_PRESSURE)
+chisq.test(chiqTCM$Åé½è,chiqTCM$SIT_1_DIASTOLIC_PRESSURE)
+chisq.test(chiqTCM$Åé½è,chiqTCM$SIT_2_SYSTOLIC_PRESSURE)
 
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$SIT_2_DIASTOLIC_PRESSURE)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$SIT_3_SYSTOLIC_PRESSURE)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$SIT_3_DIASTOLIC_PRESSURE)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$SIT_1_HEARTBEAT_SPEED)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$SIT_2_HEARTBEAT_SPEED)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$SIT_3_HEARTBEAT_SPEED)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$BONE_EXAM_RESULT)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$T_SCORE)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$Z_SCORE)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$VC)
+chisq.test(chiqTCM$Åé½è,chiqTCM$SIT_2_DIASTOLIC_PRESSURE)
+chisq.test(chiqTCM$Åé½è,chiqTCM$SIT_3_SYSTOLIC_PRESSURE)
+chisq.test(chiqTCM$Åé½è,chiqTCM$SIT_3_DIASTOLIC_PRESSURE)
+chisq.test(chiqTCM$Åé½è,chiqTCM$SIT_1_HEARTBEAT_SPEED)
+chisq.test(chiqTCM$Åé½è,chiqTCM$SIT_2_HEARTBEAT_SPEED)
+chisq.test(chiqTCM$Åé½è,chiqTCM$SIT_3_HEARTBEAT_SPEED)
+chisq.test(chiqTCM$Åé½è,chiqTCM$BONE_EXAM_RESULT)
+chisq.test(chiqTCM$Åé½è,chiqTCM$T_SCORE)
+chisq.test(chiqTCM$Åé½è,chiqTCM$Z_SCORE)
+chisq.test(chiqTCM$Åé½è,chiqTCM$VC)
 
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$TV)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$ERV)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$IRV)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$IC)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$VC_HT)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$FVC)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$FVC_PRED)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$FEV10)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$FEV10_PRED)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$FEV10_FVC)
+chisq.test(chiqTCM$Åé½è,chiqTCM$TV)
+chisq.test(chiqTCM$Åé½è,chiqTCM$ERV)
+chisq.test(chiqTCM$Åé½è,chiqTCM$IRV)
+chisq.test(chiqTCM$Åé½è,chiqTCM$IC)
+chisq.test(chiqTCM$Åé½è,chiqTCM$VC_HT)
+chisq.test(chiqTCM$Åé½è,chiqTCM$FVC)
+chisq.test(chiqTCM$Åé½è,chiqTCM$FVC_PRED)
+chisq.test(chiqTCM$Åé½è,chiqTCM$FEV10)
+chisq.test(chiqTCM$Åé½è,chiqTCM$FEV10_PRED)
+chisq.test(chiqTCM$Åé½è,chiqTCM$FEV10_FVC)
 
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$FEV10_FVC_PRED)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$FEV10_SVC)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$RBC)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$WBC)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$PLATELET)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$HB)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$HCT)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$HBA1C)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$ANTI_HCV_AB_1)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$ANTI_HCV_AB_2)
+chisq.test(chiqTCM$Åé½è,chiqTCM$FEV10_FVC_PRED)
+chisq.test(chiqTCM$Åé½è,chiqTCM$FEV10_SVC)
+chisq.test(chiqTCM$Åé½è,chiqTCM$RBC)
+chisq.test(chiqTCM$Åé½è,chiqTCM$WBC)
+chisq.test(chiqTCM$Åé½è,chiqTCM$PLATELET)
+chisq.test(chiqTCM$Åé½è,chiqTCM$HB)
+chisq.test(chiqTCM$Åé½è,chiqTCM$HCT)
+chisq.test(chiqTCM$Åé½è,chiqTCM$HBA1C)
+chisq.test(chiqTCM$Åé½è,chiqTCM$ANTI_HCV_AB_1)
+chisq.test(chiqTCM$Åé½è,chiqTCM$ANTI_HCV_AB_2)
 
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$HBSAG_1)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$HBSAG_2)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$HBEAG_1)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$HBEAG_2)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$ANTI_HBS_AB_1)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$ANTI_HBS_AB_2)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$ANTI_HBC_AB_1)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$ANTI_HBC_AB_2)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$ANTI_HDV_AB_1)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$ANTI_HDV_AB_2)
+chisq.test(chiqTCM$Åé½è,chiqTCM$HBSAG_1)
+chisq.test(chiqTCM$Åé½è,chiqTCM$HBSAG_2)
+chisq.test(chiqTCM$Åé½è,chiqTCM$HBEAG_1)
+chisq.test(chiqTCM$Åé½è,chiqTCM$HBEAG_2)
+chisq.test(chiqTCM$Åé½è,chiqTCM$ANTI_HBS_AB_1)
+chisq.test(chiqTCM$Åé½è,chiqTCM$ANTI_HBS_AB_2)
+chisq.test(chiqTCM$Åé½è,chiqTCM$ANTI_HBC_AB_1)
+chisq.test(chiqTCM$Åé½è,chiqTCM$ANTI_HBC_AB_2)
+chisq.test(chiqTCM$Åé½è,chiqTCM$ANTI_HDV_AB_1)
+chisq.test(chiqTCM$Åé½è,chiqTCM$ANTI_HDV_AB_2)
 
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$FASTING_GLUCOSE)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$T_CHO)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$TG)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$HDL_C)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$LDL_C)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$T_BILIRUBIN)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$ALBUMIN)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$SGOT)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$SGPT)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$GAMMA_GT)
+chisq.test(chiqTCM$Åé½è,chiqTCM$FASTING_GLUCOSE)
+chisq.test(chiqTCM$Åé½è,chiqTCM$T_CHO)
+chisq.test(chiqTCM$Åé½è,chiqTCM$TG)
+chisq.test(chiqTCM$Åé½è,chiqTCM$HDL_C)
+chisq.test(chiqTCM$Åé½è,chiqTCM$LDL_C)
+chisq.test(chiqTCM$Åé½è,chiqTCM$T_BILIRUBIN)
+chisq.test(chiqTCM$Åé½è,chiqTCM$ALBUMIN)
+chisq.test(chiqTCM$Åé½è,chiqTCM$SGOT)
+chisq.test(chiqTCM$Åé½è,chiqTCM$SGPT)
+chisq.test(chiqTCM$Åé½è,chiqTCM$GAMMA_GT)
 
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$AFP)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$BUN)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$CREATININE)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$URIC_ACID)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$MICROALB)
-chisq.test(chiqTCM$é«”è³ª,chiqTCM$CREATININE_URINE)
+chisq.test(chiqTCM$Åé½è,chiqTCM$AFP)
+chisq.test(chiqTCM$Åé½è,chiqTCM$BUN)
+chisq.test(chiqTCM$Åé½è,chiqTCM$CREATININE)
+chisq.test(chiqTCM$Åé½è,chiqTCM$URIC_ACID)
+chisq.test(chiqTCM$Åé½è,chiqTCM$MICROALB)
+chisq.test(chiqTCM$Åé½è,chiqTCM$CREATININE_URINE)
 
 
-zzz1 <- chiqTCM[,c("é«”è³ª")]
-zzz2 <- chiqTCM$é«”è³ª
+zzz1 <- chiqTCM[,c("Åé½è")]
+zzz2 <- chiqTCM$Åé½è
 table(zzz1 == zzz2)
 
 dput(names(chiqTCM))
@@ -281,7 +281,7 @@ names(chiqTCM)[1:3]
 
 use_vb <- c("BODY_HEIGHT","BODY_WEIGHT","BMI")
 
-c("X", "Release_No", "TWB1_ID", "TWB2_ID", "é«”è³ª", "SEX", "AGE", 
+c("X", "Release_No", "TWB1_ID", "TWB2_ID", "Åé½è", "SEX", "AGE", 
   "age_gruop", "FOLLOW", "BODY_HEIGHT", "BODY_WEIGHT", "BMI", "BODY_FAT_RATE", 
   "BODY_WAISTLINE", "BODY_BUTTOCKS", "WHR", "SIT_1_SYSTOLIC_PRESSURE", 
   "SIT_1_DIASTOLIC_PRESSURE", "SIT_2_SYSTOLIC_PRESSURE", "SIT_2_DIASTOLIC_PRESSURE", 
@@ -297,7 +297,7 @@ c("X", "Release_No", "TWB1_ID", "TWB2_ID", "é«”è³ª", "SEX", "AGE",
   "SGPT", "GAMMA_GT", "AFP", "BUN", "CREATININE", "URIC_ACID", 
   "MICROALB", "CREATININE_URINE")
 
-# zzz3 <- chisq.test(chiqTCM[,c("é«”è³ª")],chiqTCM[,c("BODY_WEIGHT")])
+# zzz3 <- chisq.test(chiqTCM[,c("Åé½è")],chiqTCM[,c("BODY_WEIGHT")])
 # zzz3$p.value
 
 
@@ -306,7 +306,7 @@ xxx1 <- chiqTCM
 result_set <- data.frame(vb1 = NA, vb2 = NA, p_value = NA)
 
 for (i in 1:length(use_vb)) {
-  result_set[i,1] <- "é«”è³ª"
+  result_set[i,1] <- "Åé½è"
   result_set[i,2] <- use_vb[i]
-  result_set[i,3] <- chisq.test(xxx1[,c("é«”è³ª")],xxx1[,use_vb[i]])$p.value
+  result_set[i,3] <- chisq.test(xxx1[,c("Åé½è")],xxx1[,use_vb[i]])$p.value
 }
