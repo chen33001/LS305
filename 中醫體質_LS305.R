@@ -197,79 +197,6 @@ TCMcal <- read.csv("C:\\R\\LS305中醫\\TCMmerge3.csv",fileEncoding = "Big5")
   #卡方(每段10個)
 
 
-chisq.test(chiqTCM$體質,chiqTCM$BODY_HEIGHT)
-chisq.test(chiqTCM$體質,chiqTCM$BODY_WEIGHT)
-chisq.test(chiqTCM$體質,chiqTCM$BMI)
-chisq.test(chiqTCM$體質,chiqTCM$BODY_FAT_RATE)
-chisq.test(chiqTCM$體質,chiqTCM$BODY_WAISTLINE)
-chisq.test(chiqTCM$體質,chiqTCM$BODY_BUTTOCKS)
-chisq.test(chiqTCM$體質,chiqTCM$WHR)
-chisq.test(chiqTCM$體質,chiqTCM$SIT_1_SYSTOLIC_PRESSURE)
-chisq.test(chiqTCM$體質,chiqTCM$SIT_1_DIASTOLIC_PRESSURE)
-chisq.test(chiqTCM$體質,chiqTCM$SIT_2_SYSTOLIC_PRESSURE)
-
-chisq.test(chiqTCM$體質,chiqTCM$SIT_2_DIASTOLIC_PRESSURE)
-chisq.test(chiqTCM$體質,chiqTCM$SIT_3_SYSTOLIC_PRESSURE)
-chisq.test(chiqTCM$體質,chiqTCM$SIT_3_DIASTOLIC_PRESSURE)
-chisq.test(chiqTCM$體質,chiqTCM$SIT_1_HEARTBEAT_SPEED)
-chisq.test(chiqTCM$體質,chiqTCM$SIT_2_HEARTBEAT_SPEED)
-chisq.test(chiqTCM$體質,chiqTCM$SIT_3_HEARTBEAT_SPEED)
-chisq.test(chiqTCM$體質,chiqTCM$BONE_EXAM_RESULT)
-chisq.test(chiqTCM$體質,chiqTCM$T_SCORE)
-chisq.test(chiqTCM$體質,chiqTCM$Z_SCORE)
-chisq.test(chiqTCM$體質,chiqTCM$VC)
-
-chisq.test(chiqTCM$體質,chiqTCM$TV)
-chisq.test(chiqTCM$體質,chiqTCM$ERV)
-chisq.test(chiqTCM$體質,chiqTCM$IRV)
-chisq.test(chiqTCM$體質,chiqTCM$IC)
-chisq.test(chiqTCM$體質,chiqTCM$VC_HT)
-chisq.test(chiqTCM$體質,chiqTCM$FVC)
-chisq.test(chiqTCM$體質,chiqTCM$FVC_PRED)
-chisq.test(chiqTCM$體質,chiqTCM$FEV10)
-chisq.test(chiqTCM$體質,chiqTCM$FEV10_PRED)
-chisq.test(chiqTCM$體質,chiqTCM$FEV10_FVC)
-
-chisq.test(chiqTCM$體質,chiqTCM$FEV10_FVC_PRED)
-chisq.test(chiqTCM$體質,chiqTCM$FEV10_SVC)
-chisq.test(chiqTCM$體質,chiqTCM$RBC)
-chisq.test(chiqTCM$體質,chiqTCM$WBC)
-chisq.test(chiqTCM$體質,chiqTCM$PLATELET)
-chisq.test(chiqTCM$體質,chiqTCM$HB)
-chisq.test(chiqTCM$體質,chiqTCM$HCT)
-chisq.test(chiqTCM$體質,chiqTCM$HBA1C)
-chisq.test(chiqTCM$體質,chiqTCM$ANTI_HCV_AB_1)
-chisq.test(chiqTCM$體質,chiqTCM$ANTI_HCV_AB_2)
-
-chisq.test(chiqTCM$體質,chiqTCM$HBSAG_1)
-chisq.test(chiqTCM$體質,chiqTCM$HBSAG_2)
-chisq.test(chiqTCM$體質,chiqTCM$HBEAG_1)
-chisq.test(chiqTCM$體質,chiqTCM$HBEAG_2)
-chisq.test(chiqTCM$體質,chiqTCM$ANTI_HBS_AB_1)
-chisq.test(chiqTCM$體質,chiqTCM$ANTI_HBS_AB_2)
-chisq.test(chiqTCM$體質,chiqTCM$ANTI_HBC_AB_1)
-chisq.test(chiqTCM$體質,chiqTCM$ANTI_HBC_AB_2)
-chisq.test(chiqTCM$體質,chiqTCM$ANTI_HDV_AB_1)
-chisq.test(chiqTCM$體質,chiqTCM$ANTI_HDV_AB_2)
-
-chisq.test(chiqTCM$體質,chiqTCM$FASTING_GLUCOSE)
-chisq.test(chiqTCM$體質,chiqTCM$T_CHO)
-chisq.test(chiqTCM$體質,chiqTCM$TG)
-chisq.test(chiqTCM$體質,chiqTCM$HDL_C)
-chisq.test(chiqTCM$體質,chiqTCM$LDL_C)
-chisq.test(chiqTCM$體質,chiqTCM$T_BILIRUBIN)
-chisq.test(chiqTCM$體質,chiqTCM$ALBUMIN)
-chisq.test(chiqTCM$體質,chiqTCM$SGOT)
-chisq.test(chiqTCM$體質,chiqTCM$SGPT)
-chisq.test(chiqTCM$體質,chiqTCM$GAMMA_GT)
-
-chisq.test(chiqTCM$體質,chiqTCM$AFP)
-chisq.test(chiqTCM$體質,chiqTCM$BUN)
-chisq.test(chiqTCM$體質,chiqTCM$CREATININE)
-chisq.test(chiqTCM$體質,chiqTCM$URIC_ACID)
-chisq.test(chiqTCM$體質,chiqTCM$MICROALB)
-chisq.test(chiqTCM$體質,chiqTCM$CREATININE_URINE)
-
 
 zzz1 <- chiqTCM[,c("體質")]
 zzz2 <- chiqTCM$體質
@@ -279,7 +206,20 @@ dput(names(chiqTCM))
 
 names(chiqTCM)[1:3]
 
-use_vb <- c("BODY_HEIGHT","BODY_WEIGHT","BMI")
+use_vb <- c("BODY_HEIGHT","BODY_WEIGHT","BMI", "BODY_FAT_RATE", 
+            "BODY_WAISTLINE", "BODY_BUTTOCKS", "WHR", "SIT_1_SYSTOLIC_PRESSURE", 
+            "SIT_1_DIASTOLIC_PRESSURE", "SIT_2_SYSTOLIC_PRESSURE", "SIT_2_DIASTOLIC_PRESSURE", 
+            "SIT_3_SYSTOLIC_PRESSURE", "SIT_3_DIASTOLIC_PRESSURE", "SIT_1_HEARTBEAT_SPEED", 
+            "SIT_2_HEARTBEAT_SPEED", "SIT_3_HEARTBEAT_SPEED", "BONE_EXAM_RESULT", 
+            "T_SCORE", "Z_SCORE", "VC", "TV", "ERV", "IRV", "IC", "VC_HT", 
+            "FVC", "FVC_PRED", "FEV10", "FEV10_PRED", "FEV10_FVC", "FEV10_FVC_PRED", 
+            "FEV10_SVC", "RBC", "WBC", "PLATELET", "HB", "HCT", "HBA1C", 
+            "ANTI_HCV_AB_1", "ANTI_HCV_AB_2", "HBSAG_1", "HBSAG_2", "HBEAG_1", 
+            "HBEAG_2", "ANTI_HBS_AB_1", "ANTI_HBS_AB_2", "ANTI_HBC_AB_1", 
+            "ANTI_HBC_AB_2", "ANTI_HDV_AB_1", "ANTI_HDV_AB_2", "FASTING_GLUCOSE", 
+            "T_CHO", "TG", "HDL_C", "LDL_C", "T_BILIRUBIN", "ALBUMIN", "SGOT", 
+            "SGPT", "GAMMA_GT", "AFP", "BUN", "CREATININE", "URIC_ACID", 
+            "MICROALB", "CREATININE_URINE")
 
 c("X", "Release_No", "TWB1_ID", "TWB2_ID", "體質", "SEX", "AGE", 
   "age_gruop", "FOLLOW", "BODY_HEIGHT", "BODY_WEIGHT", "BMI", "BODY_FAT_RATE", 
