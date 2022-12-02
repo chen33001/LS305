@@ -1,9 +1,9 @@
 library(tidyverse)
-0231
+
 #抽取資料---------------------------------------------------------------------------------------------------------------------------------
-#生菌讀取路徑:C:\\R\\      威甫讀取路徑:C:\\R\\LS305中醫
+#生菌讀取路徑:C:\\R\\      威甫讀取路徑:C:\\R\\LS305中醫\\
 #各項體檢資料
-measure <- read.csv("C:\\R\\LS305中醫\\release_list_measure.csv",sep=",", header=TRUE,na = "NA")
+measure <- read.csv("C:\\R\\LS305中醫\\release_list_measure.csv",sep='\t', header=TRUE,na = "NA",fileEncoding = "Big5")
 #各種體質資料
 TCMlist<- read.csv("C:\\R\\LS305中醫\\TCM_list20220924.csv",fileEncoding = "Big5")
 ##體質跟各項體檢資料
@@ -59,9 +59,12 @@ measure_extract<-subset(measure,
                                    "SIT_2_SYSTOLIC_PRESSURE","SIT_2_DIASTOLIC_PRESSURE",
                                    "SIT_3_SYSTOLIC_PRESSURE","SIT_3_DIASTOLIC_PRESSURE",
                                    "SIT_1_HEARTBEAT_SPEED","SIT_2_HEARTBEAT_SPEED","SIT_3_HEARTBEAT_SPEED",
-                                   "BONE_EXAM_RESULT","T_SCORE","Z_SCORE",
-                                   "VC","TV","ERV","IRV","IC","VC_HT","FVC","FVC_PRED",
+                                   "BONE_EXAM_RESULT","T_SCORE","Z_SCORE","SOS","BUA",
+                                   "VC","VC_PRED","TV","ERV","IRV","IC","VC_HT","FVC","FVC_PRED",
                                    "FEV10","FEV10_PRED","FEV10_FVC","FEV10_FVC_PRED","FEV10_SVC",
+                                   "FEV10_SVC_PRED","FEV10_SVC_P_PRED","FEV10_VCPR","MMF","MMF_PRED",
+                                   "PEF","PEF_PRED","FEF25","FEF25_PRED","FEF50","FEF50_PRED","FEF75","FEF75_PRED","FEF75_HT","FEF75_HT_PRED",
+                                   "EXTRAPV_P","FIV10_FVC","MVV",
                                    "RBC","WBC","PLATELET","HB","HCT","HBA1C",
                                    "ANTI_HCV_AB_1","ANTI_HCV_AB_2","HBSAG_1","HBSAG_2","HBEAG_1","HBEAG_2",
                                    "ANTI_HBS_AB_1","ANTI_HBS_AB_2","ANTI_HBC_AB_1","ANTI_HBC_AB_2","ANTI_HDV_AB_1","ANTI_HDV_AB_2",
@@ -70,6 +73,7 @@ measure_extract<-subset(measure,
                                    "BUN","CREATININE","URIC_ACID","MICROALB","CREATININE_URINE")
                         )
 
+
 #抽取中醫體質的"Release_No","體質","SEX","AGE","age_gruop"和release_list_measure.csv依照 "Release_No"合併------------------------------------------------
 TCMlist<-subset(TCMlist,select=c("Release_No","體質","SEX","AGE","age_gruop"))
 TCMmerge<-merge(TCMlist,measure_extract, by = "Release_No", all.TCMlist = T)
@@ -77,7 +81,7 @@ TCMmerge<-merge(TCMlist,measure_extract, by = "Release_No", all.TCMlist = T)
 
 
 #TCMmerge合併TWB1,2序號
-TWB12 <- read.csv("c:\\R\\LS305中醫\\lab_info.csv",fileEncoding = "Big5")
+TWB12 <- read.csv("C:\\R\\LS305中醫\\lab_info.csv",fileEncoding = "Big5")
 names(TWB12)[1] <- "Release_No"
 TWB12 <- subset(TWB12,select=c("Release_No","TWB1_ID","TWB2_ID"))
 TCMmerge2<-merge(TWB12,TCMmerge, by = "Release_No", all.TCMmerge = T)
@@ -88,7 +92,7 @@ TCMmerge3 <- distinct(TCMmerge2, BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,
                       SIT_2_SYSTOLIC_PRESSURE,VC,TV,ERV,
                       .keep_all = TRUE )
 
-
+write.csv(TCMmerge3,file='C:\\R\\LS305中醫\\TCMmerge3.csv',fileEncoding = "Big5",append = FALSE)
 
 #只取baseline
 chiqTCM <- subset(TCMcal,
@@ -142,20 +146,23 @@ write.csv(chiqTCM,file='C:\\R\\LS305中醫\\chiqTCM.csv',fileEncoding = "Big5")
 #做卡方檢定---------------------------------------------------------------------------------------------------------------------------
 
 use_vb <- c("SEX", "AGE", 
-            "age_gruop", "BODY_HEIGHT", "BODY_WEIGHT", "BMI", "BODY_FAT_RATE", 
-            "BODY_WAISTLINE", "BODY_BUTTOCKS", "WHR", "SIT_1_SYSTOLIC_PRESSURE", 
-            "SIT_1_DIASTOLIC_PRESSURE", "SIT_2_SYSTOLIC_PRESSURE", "SIT_2_DIASTOLIC_PRESSURE", 
-            "SIT_3_SYSTOLIC_PRESSURE", "SIT_3_DIASTOLIC_PRESSURE", "SIT_1_HEARTBEAT_SPEED", 
-            "SIT_2_HEARTBEAT_SPEED", "SIT_3_HEARTBEAT_SPEED", "BONE_EXAM_RESULT", 
-            "T_SCORE", "Z_SCORE", "VC", "TV", "ERV", "IRV", "IC", "VC_HT", 
-            "FVC", "FVC_PRED", "FEV10", "FEV10_PRED", "FEV10_FVC", "FEV10_FVC_PRED", 
-            "FEV10_SVC", "RBC", "WBC", "PLATELET", "HB", "HCT", "HBA1C", 
-            "ANTI_HCV_AB_1", "ANTI_HCV_AB_2", "HBSAG_1", "HBSAG_2", "HBEAG_1", 
-            "HBEAG_2", "ANTI_HBS_AB_1", "ANTI_HBS_AB_2", "ANTI_HBC_AB_1", 
-            "ANTI_HBC_AB_2", "ANTI_HDV_AB_1", "ANTI_HDV_AB_2", "FASTING_GLUCOSE", 
-            "T_CHO", "TG", "HDL_C", "LDL_C", "T_BILIRUBIN", "ALBUMIN", "SGOT", 
-            "SGPT", "GAMMA_GT", "AFP", "BUN", "CREATININE", "URIC_ACID", 
-            "MICROALB", "CREATININE_URINE")
+            "age_gruop","BODY_HEIGHT","BODY_WEIGHT","BMI","BODY_FAT_RATE","BODY_WAISTLINE","BODY_BUTTOCKS","WHR",
+            "SIT_1_SYSTOLIC_PRESSURE","SIT_1_DIASTOLIC_PRESSURE",
+            "SIT_2_SYSTOLIC_PRESSURE","SIT_2_DIASTOLIC_PRESSURE",
+            "SIT_3_SYSTOLIC_PRESSURE","SIT_3_DIASTOLIC_PRESSURE",
+            "SIT_1_HEARTBEAT_SPEED","SIT_2_HEARTBEAT_SPEED","SIT_3_HEARTBEAT_SPEED",
+            "BONE_EXAM_RESULT","T_SCORE","Z_SCORE","SOS","BUA",
+            "VC","VC_PRED","TV","ERV","IRV","IC","VC_HT","FVC","FVC_PRED",
+            "FEV10","FEV10_PRED","FEV10_FVC","FEV10_FVC_PRED","FEV10_SVC",
+            "FEV10_SVC_PRED","FEV10_SVC_P_PRED","FEV10_VCPR","MMF","MMF_PRED",
+            "PEF","PEF_PRED","FEF25","FEF25_PRED","FEF50","FEF50_PRED","FEF75","FEF75_PRED","FEF75_HT","FEF75_HT_PRED",
+            "EXTRAPV_P","FIV10_FVC",
+            "RBC","WBC","PLATELET","HB","HCT","HBA1C",
+            "ANTI_HCV_AB_1","ANTI_HCV_AB_2","HBSAG_1","HBSAG_2","HBEAG_1","HBEAG_2",
+            "ANTI_HBS_AB_1","ANTI_HBS_AB_2","ANTI_HBC_AB_1","ANTI_HBC_AB_2","ANTI_HDV_AB_1","ANTI_HDV_AB_2",
+            "FASTING_GLUCOSE","T_CHO","TG","HDL_C","LDL_C",
+            "T_BILIRUBIN","ALBUMIN","SGOT","SGPT","GAMMA_GT","AFP",
+            "BUN","CREATININE","URIC_ACID","MICROALB","CREATININE_URINE")
 
 result_set <- data.frame(vb1 = NA, vb2 = NA, p_value = NA)
 xxx1 <- chiqTCM
