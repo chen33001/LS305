@@ -97,14 +97,14 @@ chiqTCM <- subset(TCMcal,
 #中醫體質
 chiqTCM$體質 <- as.character(chiqTCM$體質)
   
-chiqTCM$體質[which(chiqTCM$體質=="平和")] <- "1"
-chiqTCM$體質[which(chiqTCM$體質=="陰虛")] <- "2"
-chiqTCM$體質[which(chiqTCM$體質=="陰虛+陽虛")] <- "3"
-chiqTCM$體質[which(chiqTCM$體質=="陰虛+陽虛+痰瘀")] <- "4"
-chiqTCM$體質[which(chiqTCM$體質=="陰虛+痰瘀")] <- "5"
-chiqTCM$體質[which(chiqTCM$體質=="陽虛")] <- "6"
-chiqTCM$體質[which(chiqTCM$體質=="痰瘀")] <- "7"
-chiqTCM$體質[which(chiqTCM$體質=="痰瘀+陽虛")] <- "8"
+chiqTCM$體質[which(chiqTCM$體質=="平和")] <- 1
+chiqTCM$體質[which(chiqTCM$體質=="陰虛")] <- 2
+chiqTCM$體質[which(chiqTCM$體質=="陰虛+陽虛")] <- 3
+chiqTCM$體質[which(chiqTCM$體質=="陰虛+陽虛+痰瘀")] <- 4
+chiqTCM$體質[which(chiqTCM$體質=="陰虛+痰瘀")] <- 5
+chiqTCM$體質[which(chiqTCM$體質=="陽虛")] <- 6
+chiqTCM$體質[which(chiqTCM$體質=="痰瘀")] <- 7
+chiqTCM$體質[which(chiqTCM$體質=="痰瘀+陽虛")] <- 8
 chiqTCM$體質 <- as.numeric(chiqTCM$體質)
   
 #ANTI_HCV_AB_1
@@ -138,7 +138,22 @@ chiqTCM$ANTI_HDV_AB_1[which(chiqTCM$ANTI_HDV_AB_1=="Positive")] <- "1"
 chiqTCM$ANTI_HDV_AB_1[which(chiqTCM$ANTI_HDV_AB_1=="Negative")] <- "2"
   
 write.csv(chiqTCM,file='C:\\R\\LS305中醫\\chiqTCM.csv',fileEncoding = "Big5")
+
+#資料清洗-----------------------------------------------------------------
+chiqTCM[is.na(chiqTCM)] <- 0
+chiqTCM$HBA1C <- as.numeric(chiqTCM$HBA1C)
+chiqTCM$ANTI_HBS_AB_2 <- as.numeric(chiqTCM$ANTI_HBS_AB_2)
+chiqTCM$SGPT <- as.numeric(chiqTCM$SGPT)
+chiqTCM$GAMMA_GT <- as.numeric(chiqTCM$GAMMA_GT)
+chiqTCM$AFP <- as.numeric(chiqTCM$AFP)
+chiqTCM$MICROALB <- as.numeric(chiqTCM$MICROALB)
+chiqTCM$體質 <- as.numeric(chiqTCM$體質)
+for (i in length(use_T_test)){
+  chiqTCM$use_T_test[i] <- as.numeric(chiqTCM$use_T_test[i])
   
+}
+
+
 #做卡方檢定---------------------------------------------------------------------------------------------------------------------------
 
 use_vb <- c("SEX", 
@@ -152,7 +167,7 @@ use_T_test <- c("AGE","BODY_HEIGHT","BODY_WEIGHT","BMI","BODY_FAT_RATE","BODY_WA
                 "SIT_3_SYSTOLIC_PRESSURE", "SIT_3_DIASTOLIC_PRESSURE", "SIT_1_HEARTBEAT_SPEED", 
                 "SIT_2_HEARTBEAT_SPEED", "SIT_3_HEARTBEAT_SPEED", "BONE_EXAM_RESULT", 
                 "T_SCORE", "Z_SCORE","VC", "TV", "ERV", "IRV", "IC", "VC_HT", 
-                "FVC", "FVC_PRED", "FEV10", "FEV10_PRED", "FEV10_FVC", "FEV10_FVC_PRED","FEV10_SVC", "RBC", "WBC", "PLATELET", "HB", "HCT", "HBA1C",
+                "FVC", "FEV10", "FEV10_FVC","FEV10_SVC", "RBC", "WBC", "PLATELET", "HB", "HCT", "HBA1C",
                  "ANTI_HCV_AB_2", "HBSAG_2","HBEAG_2", "ANTI_HBS_AB_2","ANTI_HBC_AB_2", "ANTI_HDV_AB_2", "FASTING_GLUCOSE", 
                 "T_CHO", "TG", "HDL_C", "LDL_C", "T_BILIRUBIN", "ALBUMIN", "SGOT", 
                 "SGPT", "GAMMA_GT", "AFP", "BUN", "CREATININE", "URIC_ACID", 
@@ -173,12 +188,14 @@ result_set_T_test <- data.frame(vb1 = NA, vb2 = NA, p_value = NA)
 for (i in 1:length(use_T_test)) {
   result_set_T_test[i,1] <- "體質"
   result_set_T_test[i,2] <- use_T_test[i]
-  result_set_T_test[i,3] <- t.test(xxx2[,c("體質")],xxx2[,use_T_test[i]])$p.value
+  result_set_T_test[i,3] <- t.test(xxx2[,5],xxx2[,use_T_test[i]])$p.value
 }
-#--------------
-
+#--------------作質方圖
+for (i in 1:length(use_T_test)){
+  hist(x=xxx2[,use_T_test[i]], main=use_T_test[i],xlab=use_T_test[i], ylab="數值")
+}
 #匯出檔案---------------------------------------------------------------------------------------------------------------------------------
 write.csv(result_set,file='C:\\R\\LS305中醫\\卡方結果.csv',fileEncoding = "Big5")
 write.csv(result_set_T_test, file='C:\\R\\LS305中醫\\T-test.csv',fileEncoding = "Big5")
-
+write.csv(chiqTCM, file='C:\\R\\LS305中醫\\中醫體質清理完成之資料.csv',fileEncoding = "Big5")
 
