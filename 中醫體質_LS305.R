@@ -210,7 +210,7 @@ for (i in 1:length(use_T_test)) {
 }
 #--------------作質方圖
 for (i in 1:length(use_T_test)){
-  hist(x=xxx2[,use_T_test[i]], main=use_T_test[i],xlab=use_T_test[i], ylab="數值")
+  hist(x=xxx2[,use_T_test[i]], main=use_T_test[i],xlab=use_T_test[i], ylab="數量")
 }
 #匯出檔案---------------------------------------------------------------------------------------------------------------------------------
 #(昇峻)卡方結果<<<<<<< HEAD
