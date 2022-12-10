@@ -1,13 +1,13 @@
 library(tidyverse)
-#kfnkefjkefjekjfkejfklfke
+
 #抽取資料---------------------------------------------------------------------------------------------------------------------------------
 #生菌讀取路徑:C:\\R\\      威甫讀取路徑:C:\\R\\LS305中醫
 #各項體檢資料
-measure <- read.csv("C:\\R\\release_list_measure.csv",sep=",", header=TRUE,na = "NA")
+measure <- read.csv("C:\\R\\LS305中醫release_list_measure.csv",sep=",", header=TRUE,na = "NA")
 #各種體質資料
-TCMlist<- read.csv("C:\\R\\TCM_list20220924.csv",fileEncoding = "Big5")
+TCMlist<- read.csv("C:\\R\\LS305中醫TCM_list20220924.csv",fileEncoding = "Big5")
 ##體質跟各項體檢資料
-TCMcal <- read.csv("C:\\R\\TCMmerge3.csv",fileEncoding = "Big5")
+TCMcal <- read.csv("C:\\R\\LS305中醫TCMmerge3.csv",fileEncoding = "Big5")
 
 
 #分離資料---------------------------------------------------------------------------------------------------------------------------------
@@ -47,8 +47,8 @@ table(age,sex)
 #匯出各體質男女人數&各年齡體質人數 csv檔
 aaa <- table(con,sex)
 bbb <- table(age,sex)
-write.csv(aaa, file = "C:\\R\\各體質男女人數.csv",fileEncoding = "Big5")
-write.csv(bbb, file = "C:\\R\\各年齡體質人數.csv",fileEncoding = "Big5")
+write.csv(aaa, file = "C:\\R\\LS305中醫各體質男女人數.csv",fileEncoding = "Big5")
+write.csv(bbb, file = "C:\\R\\LS305中醫各年齡體質人數.csv",fileEncoding = "Big5")
 
 #取體檢取特定欄位---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -77,7 +77,7 @@ TCMmerge<-merge(TCMlist,measure_extract, by = "Release_No", all.TCMlist = T)
 
 
 #TCMmerge合併TWB1,2序號
-TWB12 <- read.csv("C:\\R\\lab_info.csv",fileEncoding = "Big5")
+TWB12 <- read.csv("C:\\R\\LS305中醫lab_info.csv",fileEncoding = "Big5")
 names(TWB12)[1] <- "Release_No"
 TWB12 <- subset(TWB12,select=c("Release_No","TWB1_ID","TWB2_ID"))
 TCMmerge2<-merge(TWB12,TCMmerge, by = "Release_No", all.TCMmerge = T)
@@ -138,9 +138,9 @@ chiqTCM$ANTI_HDV_AB_1[which(chiqTCM$ANTI_HDV_AB_1=="Positive")] <- "1"
 chiqTCM$ANTI_HDV_AB_1[which(chiqTCM$ANTI_HDV_AB_1=="Negative")] <- "2"
 
 #(昇峻)輸出更改文字的檔案
-write.csv(chiqTCM,file='C:\\R\\chiqTCM.csv',fileEncoding = "Big5")
+write.csv(chiqTCM,file='C:\\R\\LS305中醫chiqTCM.csv',fileEncoding = "Big5")
 #(威甫)輸出更改文字的檔案
-write.csv(chiqTCM,file='C:\\R\\LS305中醫\\chiqTCM.csv',fileEncoding = "Big5")
+write.csv(chiqTCM,file='C:\\R\\LS305中醫LS305中醫\\chiqTCM.csv',fileEncoding = "Big5")
 
 #資料清洗-----------------------------------------------------------------
 chiqTCM[is.na(chiqTCM)] <- 0
