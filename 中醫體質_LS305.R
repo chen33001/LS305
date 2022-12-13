@@ -138,9 +138,9 @@ chiqTCM$ANTI_HDV_AB_1[which(chiqTCM$ANTI_HDV_AB_1=="Positive")] <- "1"
 chiqTCM$ANTI_HDV_AB_1[which(chiqTCM$ANTI_HDV_AB_1=="Negative")] <- "2"
 
 #(昇峻)輸出更改文字的檔案
-write.csv(chiqTCM,file='C:\\R\\LS305中醫chiqTCM.csv',fileEncoding = "Big5")
+write.csv(chiqTCM,file='C:\\R\\chiqTCM.csv',fileEncoding = "Big5")
 #(威甫)輸出更改文字的檔案
-write.csv(chiqTCM,file='C:\\R\\LS305中醫LS305中醫\\chiqTCM.csv',fileEncoding = "Big5")
+write.csv(chiqTCM,file='C:\\R\\LS305中醫\\chiqTCM.csv',fileEncoding = "Big5")
 
 #資料清洗-----------------------------------------------------------------
 chiqTCM[is.na(chiqTCM)] <- 0
@@ -153,7 +153,7 @@ chiqTCM$MICROALB <- as.numeric(chiqTCM$MICROALB)
 chiqTCM$體質 <- as.numeric(chiqTCM$體質)
 for (i in length(use_T_test)){
   chiqTCM$use_T_test[i] <- as.numeric(chiqTCM$use_T_test[i])
-  >>>>>>> main
+  
   
 }
 
@@ -192,25 +192,23 @@ use_T_test_meaning <- c("年齡","身高","體重","身體質量指數","體脂肪率","腰圍", "
                         "尿中微蛋白", "尿中肌酸酐")
 
 result_set <- data.frame(vb1 = NA, vb2 = NA, vb2_釋義 = NA, p_value = NA)
-xxx1 <- chiqTCM
 for (i in 1:length(use_vb)) {
   result_set[i,1] <- "體質"
   result_set[i,2] <- use_vb[i]
   result_set[i,3] <- use_meaning[i]
-  result_set[i,4] <- chisq.test(xxx1[,c("體質")],xxx1[,use_vb[i]])$p.value
+  result_set[i,4] <- chisq.test(chiqTCM[,c("體質")],chiqTCM[,use_vb[i]])$p.value
 }
 
-xxx2 <- chiqTCM
-result_set_T_test <- data.frame(vb1 = NA, vb2 = NA, p_value = NA)
+result_set_T_test <- data.frame(vb1 = NA, vb2 = NA, vb2_釋義 = NA, p_value = NA)
 for (i in 1:length(use_T_test)) {
   result_set_T_test[i,1] <- "體質"
   result_set_T_test[i,2] <- use_T_test[i]
   result_set_T_test[i,3] <- use_T_test_meaning[i]
-  result_set_T_test[i,4] <- t.test(xxx2[,5],xxx2[,use_T_test[i]])$p.value
+  result_set_T_test[i,4] <- t.test(chiqTCM[,5],chiqTCM[,use_T_test[i]])$p.value
 }
 #--------------作質方圖
 for (i in 1:length(use_T_test)){
-  hist(x=xxx2[,use_T_test[i]], main=use_T_test[i],xlab=use_T_test[i], ylab="數量")
+  hist(x=chiqTCM[,use_T_test[i]], main=use_T_test[i],xlab=use_T_test[i], ylab="數量")
 }
 #匯出檔案---------------------------------------------------------------------------------------------------------------------------------
 #(昇峻)卡方結果<<<<<<< HEAD
@@ -218,7 +216,7 @@ write.csv(result_set,file='C:\\R\\卡方結果.csv',fileEncoding = "Big5")
 #(威甫)卡方結果
 write.csv(result_set,file='C:\\R\\LS305中醫\\卡方結果.csv',fileEncoding = "Big5")
 #(威甫)T-test結果
-write.csv(result_set_T_test, file='C:\\R\\LS305中醫\\T-test.csv',fileEncoding = "Big5")
+write.csv(result_set_T_test, file='C:\\R\\T-test.csv',fileEncoding = "Big5")
 #輸出清洗完成的資料
 write.csv(chiqTCM, file='C:\\R\\LS305中醫\\中醫體質清理完成之資料.csv',fileEncoding = "Big5")
 
