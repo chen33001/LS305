@@ -3,11 +3,11 @@ library(tidyverse)
 #抽取資料---------------------------------------------------------------------------------------------------------------------------------
 #生菌讀取路徑:C:\\R\\      威甫讀取路徑:C:\\R\\LS305中醫
 #各項體檢資料
-measure <- read.csv("C:\\R\\LS305中醫release_list_measure.csv",sep=",", header=TRUE,na = "NA")
+measure <- read.csv("C:\\R\\LS305中醫\\release_list_measure.csv",sep=",", header=TRUE,na = "NA")
 #各種體質資料
-TCMlist<- read.csv("C:\\R\\LS305中醫TCM_list20220924.csv",fileEncoding = "Big5")
+TCMlist<- read.csv("C:\\R\\LS305中醫\\TCM_list20220924.csv",fileEncoding = "Big5")
 ##體質跟各項體檢資料
-TCMcal <- read.csv("C:\\R\\LS305中醫TCMmerge3.csv",fileEncoding = "Big5")
+TCMcal <- read.csv("C:\\R\\LS305中醫\\TCMmerge3.csv",fileEncoding = "Big5")
 
 
 #分離資料---------------------------------------------------------------------------------------------------------------------------------
