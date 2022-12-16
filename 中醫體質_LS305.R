@@ -157,21 +157,23 @@ for (i in length(use_T_test)){
   
 }
 #Anova 資料清洗---------------------------------------------------------------------------------------------
-TCM_group1 <- TCM_group[,c(1:7)]
-TCM_Anova <- merge(TCM_group, chiqTCM, by = "Release_No",all.x = TRUE  )
+TCM_group <- TCM_group[,-grep("AGE|age_gruop",colnames(TCM_group))] #去除sex AGE age_group
+TCM_Anova_mergerdata<- merge(TCM_group, chiqTCM, by = "Release_No",all.x = TRUE  )
+TCM_Anova <- TCM_Anova_mergerdata[,-grep("X|TWB1_ID|TWB2_ID|SEX.y|體質",colnames(TCM_Anova_mergerdata))]
+TCM_Anova <- TCM_Anova[-6244,]
 
 #做Anova ------------------------------------------------
-model1 <- summary(aov(TCM_Anova$Yin_def*TCM_Anova$Yang_def*TCM_Anova$Phlegm_stasis ~ TCM_Anova$SEX.y + TCM_Anova$AGE.y))
-model1
-  
+for (i in c(1:64)){
+  model1 <- summary(aov(TCM_Anova[,i+8] ~ TCM_Anova$Yin_def*TCM_Anova$Yang_def*TCM_Anova$Phlegm_stasis ))
+  DisplayAnovaSummary(model_summary_object = model1, title = names(TCM_Anova[i+6]), title_font_size = 16,footnote = "")
+}
 
 
-#Anova製圖----------------------------------------------------
+
+
+#Anova製圖 *(Anova_table_export.R取自Github上別人提供的程式碼)----------------------------------------------------
 source("Anova_table_export.R")
-DisplayAnovaSummary(model_summary_object = model1, title = "TITLE", title_font_size = 16,footnote = "footnote")
-
-
-
+DisplayAnovaSummary(model_summary_object = model1, title = "SEX", title_font_size = 16,footnote = "")
 
 
 
@@ -234,4 +236,4 @@ for (i in 1:length(use_T_test)){
 write.csv(result_set,file='C:\\R\\LS305中醫\\卡方結果.csv',fileEncoding = "Big5")
 write.csv(result_set_T_test, file='C:\\R\\LS305中醫\\T-test.csv',fileEncoding = "Big5")
 write.csv(chiqTCM, file='C:\\R\\LS305中醫\\中醫體質清理完成之資料.csv',fileEncoding = "Big5")
-write.csv(output_anova, file = 'C:\\R\\LS305中醫\\output_anova.csv',fileEncoding = "Big5")
+write.csv(TCM_Anova, file = 'C:\\R\\LS305中醫\\TCM_Anova.csv',fileEncoding = "Big5")
