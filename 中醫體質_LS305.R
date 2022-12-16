@@ -220,5 +220,4 @@ write.csv(result_set_T_test, file='C:\\R\\T-test.csv',fileEncoding = "Big5")
 #輸出清洗完成的資料
 write.csv(chiqTCM, file='C:\\R\\LS305中醫\\中醫體質清理完成之資料.csv',fileEncoding = "Big5")
 
-#??????(>>>>>>> main)
 
