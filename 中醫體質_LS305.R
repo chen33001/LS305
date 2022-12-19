@@ -3,7 +3,7 @@ library(Hmisc) # install.packages("Hmisc") straight from CRAN. version 4.0-3
 library(grid) # version 3.3.3
 library(gtable) # version 0.2.0
 library(gridExtra)
-#抽取資料---------------------------------------------------------------------------------------------------------------------------------
+#抽取資料----------------------------------------------------------------------------------------------------------------------------------
 #生菌讀取路徑:C:\\R\\      威甫讀取路徑:C:\\R\\LS305中醫
 #各項體檢資料
 measure <- read.csv("C:\\R\\LS305中醫\\release_list_measure.csv",sep=",", header=TRUE,na = "NA")
