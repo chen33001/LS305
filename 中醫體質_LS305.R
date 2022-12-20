@@ -10,9 +10,9 @@ measure <- read.csv("C:\\R\\LS305中醫\\release_list_measure.csv",sep=",", header
 #各種體質資料
 TCMlist<- read.csv("C:\\R\\LS305中醫\\TCM_list20220924.csv",fileEncoding = "Big5")
 #體質跟各項體檢資料
-TCMcal <- read.csv("C:\\R\\LS305中醫\\TCMmerge3.csv",fileEncoding = "Big5")
+TCMcal <- read.csv("C:\\R\\TCMmerge3.csv",fileEncoding = "Big5")
 #做anova所需之資料
-TCM_group <- read.csv("C:\\R\\LS305中醫\\TCM_group.csv",fileEncoding = "Big5")
+TCM_group <- read.csv("C:\\R\\TCM_group.csv",fileEncoding = "Big5")
 
 
 #分離資料---------------------------------------------------------------------------------------------------------------------------------
@@ -156,19 +156,22 @@ for (i in length(use_T_test)){
   chiqTCM$use_T_test[i] <- as.numeric(chiqTCM$use_T_test[i])
   
 }
+
 #Anova 資料清洗---------------------------------------------------------------------------------------------
 TCM_group <- TCM_group[,-grep("AGE|age_gruop",colnames(TCM_group))] #去除sex AGE age_group
 TCM_Anova_mergerdata<- merge(TCM_group, chiqTCM, by = "Release_No",all.x = TRUE  )
 TCM_Anova <- TCM_Anova_mergerdata[,-grep("X|TWB1_ID|TWB2_ID|SEX.y|體質",colnames(TCM_Anova_mergerdata))]
 TCM_Anova <- TCM_Anova[-6244,]
 
+str(TCM_Anova)
 #做Anova ------------------------------------------------
 for (i in c(1:64)){
+  #TCM_Anova[,i+8] <- as.numeric(as.character(TCM_Anova[,i+8]))
+  #TCM_Anova[,i+8][is.na(TCM_Anova[,i+8]) | TCM_Anova[,i+8]=="Inf"] = NA
   model1 <- summary(aov(TCM_Anova[,i+8] ~ TCM_Anova$Yin_def*TCM_Anova$Yang_def*TCM_Anova$Phlegm_stasis ))
   DisplayAnovaSummary(model_summary_object = model1, title = names(TCM_Anova[i+6]), title_font_size = 16,footnote = "")
+  
 }
-
-
 
 
 #Anova製圖 *(Anova_table_export.R取自Github上別人提供的程式碼)----------------------------------------------------
