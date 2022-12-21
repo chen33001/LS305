@@ -164,21 +164,60 @@ TCM_Anova <- TCM_Anova_mergerdata[,-grep("X|TWB1_ID|TWB2_ID|SEX.y|體質",colnames
 TCM_Anova <- TCM_Anova[-6244,]
 
 str(TCM_Anova)
+
+print(TCM_Anova$FEV10_PRED)
+#TCM_Anova[,i+8][is.na(TCM_Anova[,i+8]) | TCM_Anova[,i+8]=="Inf"] = NA
+#TCM_Anova[,i+8] <- as.numeric(as.character(TCM_Anova[,i+8]))
 #做Anova ------------------------------------------------
-for (i in c(1:64)){
-  #TCM_Anova[,i+8] <- as.numeric(as.character(TCM_Anova[,i+8]))
-  #TCM_Anova[,i+8][is.na(TCM_Anova[,i+8]) | TCM_Anova[,i+8]=="Inf"] = NA
+
+ #(除68外已解決)ERROR:Error in lm.fit(x, y, offset = offset, singular.ok = singular.ok, ...) : 
+ #NA/NaN/Inf 出現於 'y'
+ #TCM_ANOVA:c30=VC_PRED(i=22),c37=FVC_PRED(i=29),C=39(31),47(39),49(41),
+                #(43),(45),(47),(68)
+ 
+ #Error in if ((model_summary$Pr..F.)[x] < 0.001) { : 
+ #missing value where TRUE/FALSE needed   
+                 # (51),(),
+                 
+ # Error in lm.fit(x, y, offset = offset, singular.ok = singular.ok, ...) : 
+ #   NA/NaN/Inf 出現於 'y'
+ # In addition: Warning message:
+ #   In storage.mode(v) <- "double" : NAs introduced by coercion
+                 # (58),(60),(62),(64),(66),
+                 # (),(),(),(),(),
+                 # (),(),(),(),(),
+
+for (i in c(1:50)){
+  TCM_Anova[,i+8] <- as.numeric(as.character(TCM_Anova[,i+8]))
   model1 <- summary(aov(TCM_Anova[,i+8] ~ TCM_Anova$Yin_def*TCM_Anova$Yang_def*TCM_Anova$Phlegm_stasis ))
-  DisplayAnovaSummary(model_summary_object = model1, title = names(TCM_Anova[i+6]), title_font_size = 16,footnote = "")
+  DisplayAnovaSummary(model_summary_object = model1, title = names(TCM_Anova[i+8]), title_font_size = 16,footnote = "")
   
 }
+
+
+gra_tes1 <- for (i in c(69:85)){
+  model1 <- summary(aov(TCM_Anova[,i+8] ~ TCM_Anova$Yin_def*TCM_Anova$Yang_def*TCM_Anova$Phlegm_stasis ))
+  DisplayAnovaSummary(model_summary_object = model1, title = names(TCM_Anova[i+8]), title_font_size = 16,footnote = "")
+  
+}
+
 
 
 #Anova製圖 *(Anova_table_export.R取自Github上別人提供的程式碼)----------------------------------------------------
 source("Anova_table_export.R")
 DisplayAnovaSummary(model_summary_object = model1, title = "SEX", title_font_size = 16,footnote = "")
+#if(is.na(x)) {x=FALSE} else {if(x) {x}}
+#if(is.na(model_summary$Pr..F.)) {model_summary$Pr..F.=FALSE} else  {if(model_summary$Pr..F.) {model_summary$Pr..F.}}
+#body(DisplayAnovaSummary)[[40]] <- substitute( "   }else if(is.na(model_summary$Pr..F.)) {model_summary$Pr..F.=FALSE} else  {if(model_summary$Pr..F.) {model_summary$Pr..F.}}")
 
+#anova輸出圖檔----------------------------------------
 
+# pdf(file = "C:\\R\\anova_7793.pdf",
+#     width = 10,
+#     height = 5)
+# plot(x = 1:10, 
+#      y = 1:10,DisplayAnovaSummary(model_summary_object = model1, title = names(TCM_Anova[i+8]), title_font_size = 16,footnote = ""))
+# dev.off()
 
 
 #做卡方檢定---------------------------------------------------------------------------------------------------------------------------
