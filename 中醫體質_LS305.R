@@ -168,7 +168,7 @@ str(TCM_Anova)
 print(TCM_Anova$FEV10_PRED)
 #TCM_Anova[,i+8][is.na(TCM_Anova[,i+8]) | TCM_Anova[,i+8]=="Inf"] = NA
 #TCM_Anova[,i+8] <- as.numeric(as.character(TCM_Anova[,i+8]))
-#做Anova ------------------------------------------------
+#做Anova -------------------------------------------------
 
  #(除68外已解決)ERROR:Error in lm.fit(x, y, offset = offset, singular.ok = singular.ok, ...) : 
  #NA/NaN/Inf 出現於 'y'
