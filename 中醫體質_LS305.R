@@ -10,9 +10,9 @@ measure <- read.csv("C:\\R\\LS305中醫\\release_list_measure.csv",sep=",", header
 #各種體質資料
 TCMlist<- read.csv("C:\\R\\LS305中醫\\TCM_list20220924.csv",fileEncoding = "Big5")
 #體質跟各項體檢資料
-TCMcal <- read.csv("C:\\R\\TCMmerge3.csv",fileEncoding = "Big5")
+TCMcal <- read.csv("C:\\R\\LS305中醫\\TCMmerge3.csv",fileEncoding = "Big5")
 #做anova所需之資料
-TCM_group <- read.csv("C:\\R\\TCM_group.csv",fileEncoding = "Big5")
+TCM_group <- read.csv("C:\\R\\LS305中醫\\TCM_group.csv",fileEncoding = "Big5")
 
 
 #分離資料---------------------------------------------------------------------------------------------------------------------------------
@@ -173,7 +173,7 @@ TCM_Anova <- TCM_Anova[,-grep("MVV|ANTI_HCV_AB_1|HBSAG_1|HBEAG_1|ANTI_HBS_AB_1|A
 
 #做Anova +輸出-------------------------------------------------
 #open PDF
-pdf(file = "C:\\R\\TCM_anova_result.pdf",
+pdf(file = "C:\\R\\LS305中醫\\TCM_anova_result.pdf",
     width = 10,
     height = 5)
 
