@@ -165,19 +165,30 @@ TCM_Anova <- TCM_Anova[-6244,]
 
 #隔離無法ANOVA的資料
 TCM_Anova_failed <- subset(TCM_Anova,
-                           select = c("MVV","ANTI_HCV_AB_1","HBSAG_1","HBEAG_1","ANTI_HBS_AB_1","ANTI_HBC_AB_1")
+                           select = c("MVV","ANTI_HCV_AB_1","HBSAG_1","HBEAG_1",
+                                      "ANTI_HBS_AB_1","ANTI_HBC_AB_1","ANTI_HDV_AB_1")
                           )
-TCM_Anova <- TCM_Anova[,-grep("MVV|ANTI_HCV_AB_1|HBSAG_1|HBEAG_1|ANTI_HBS_AB_1|ANTI_HBC_AB_1",colnames(TCM_Anova))]
+TCM_Anova <- TCM_Anova[,-grep("MVV|ANTI_HCV_AB_1|HBSAG_1|HBEAG_1|ANTI_HBS_AB_1|ANTI_HBC_AB_1|ANTI_HDV_AB_1",colnames(TCM_Anova))]
 
 
-#做Anova -------------------------------------------------
+#做Anova +輸出-------------------------------------------------
+#open PDF
+pdf(file = "C:\\R\\TCM_anova_result.pdf",
+    width = 10,
+    height = 5)
 
-for (i in c(1:79)){
+#running plots
+for (i in c(1:78)){
   TCM_Anova[,i+8] <- as.numeric(as.character(TCM_Anova[,i+8]))
   TCM_Anova[,i+8][is.na(TCM_Anova[,i+8]) | TCM_Anova[,i+8]=="Inf"] = NA
   model1 <- summary(aov(TCM_Anova[,i+8] ~ TCM_Anova$Yin_def*TCM_Anova$Yang_def*TCM_Anova$Phlegm_stasis ))
   DisplayAnovaSummary(model_summary_object = model1, title = names(TCM_Anova[i+8]), title_font_size = 16,footnote = "")
 }
+
+
+#turn off PDF plotting
+dev.off() 
+
 
 #ERROR:Error in lm.fit(x, y, offset = offset, singular.ok = singular.ok, ...) : 
 #NA/NaN/Inf 出現於 'y'
@@ -199,14 +210,6 @@ for (i in c(1:79)){
 source("Anova_table_export.R")
 DisplayAnovaSummary(model_summary_object = model1, title = "SEX", title_font_size = 16,footnote = "")
 
-#anova輸出圖檔----------------------------------------
-
-# pdf(file = "C:\\R\\anova_7793.pdf",
-#     width = 10,
-#     height = 5)
-# plot(x = 1:10, 
-#      y = 1:10,DisplayAnovaSummary(model_summary_object = model1, title = names(TCM_Anova[i+8]), title_font_size = 16,footnote = ""))
-# dev.off()
 
 
 #做卡方檢定---------------------------------------------------------------------------------------------------------------------------
