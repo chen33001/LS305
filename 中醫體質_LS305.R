@@ -206,7 +206,7 @@ dev.off()
 # 66(58),68(60),70(62),72(64),74(66),
 
 
-#Anova製圖 *(Anova_table_export.R取自Github上別人提供的程式碼)----------------------------------------------------
+#Anova製圖 *(Anova_table_export.R取自Github上別人提供的程式碼)-----------------------------------------------------
 source("Anova_table_export.R")
 DisplayAnovaSummary(model_summary_object = model1, title = "SEX", title_font_size = 16,footnote = "")
 
