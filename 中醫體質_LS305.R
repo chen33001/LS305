@@ -210,7 +210,7 @@ dev.off()
 source("Anova_table_export.R")
 DisplayAnovaSummary(model_summary_object = model1, title = "SEX", title_font_size = 16,footnote = "")
 
-#--------------------------------
+#取出anova圖中的p value製成表格--------------------------------------------------------------------
 TCM_Anova_p_value <- data.frame(c(1,1,1,1,1,1,1,1))
 
 for (i in c(1:78)){
@@ -218,21 +218,21 @@ for (i in c(1:78)){
   TCM_Anova_p_value[,i] <- model1[[1]][["Pr(>F)"]]
 }
 
-#
+#從TCM_Anova抓欄名(加欄名)
 TCM_Anova_name1 <- colnames(subset(TCM_Anova,
                                    select = c(9:86)))
 colnames(TCM_Anova_p_value) <- TCM_Anova_name1
 
-#
+#加列名
 TCM_Anova_name2 <- c("TCM_Anova$Yin_def","TCM_Anova$Yang_def","TCM_Anova$Phlegm_stasis","TCM_Anova$Yin_def:TCM_Anova$Yang_def",
                                 "TCM_Anova$Yin_def:TCM_Anova$Phlegm_stasi","TCM_Anova$Yang_def:TCM_Anova$Phlegm_stasis",
                                 "CM_Anova$Yin_def:TCM_Anova$Yang_def:TCM_Anova$Phlegm_stasis","Residuals")
 rownames(TCM_Anova_p_value) <- TCM_Anova_name2
 
-#
+#t()矩陣欄列互換
 TCM_Anova_p_value <- data.frame(t(TCM_Anova_p_value))
 
-#
+#輸出表格
 write.csv(TCM_Anova_p_value, file='C:\\R\\LS305中醫\\TCM_Anova_p_value.csv',fileEncoding = "Big5")
 
 #做卡方檢定---------------------------------------------------------------------------------------------------------------------------
