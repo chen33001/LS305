@@ -225,7 +225,7 @@ colnames(TCM_Anova_p_value) <- TCM_Anova_name1
 
 #¥[¦C¦W
 TCM_Anova_name2 <- c("TCM_Anova$Yin_def","TCM_Anova$Yang_def","TCM_Anova$Phlegm_stasis","TCM_Anova$Yin_def:TCM_Anova$Yang_def",
-                                "TCM_Anova$Yin_def:TCM_Anova$Phlegm_stasi","TCM_Anova$Yang_def:TCM_Anova$Phlegm_stasis",
+                                "TCM_Anova$Yin_def:TCM_Anova$Phlegm_stasis","TCM_Anova$Yang_def:TCM_Anova$Phlegm_stasis",
                                 "CM_Anova$Yin_def:TCM_Anova$Yang_def:TCM_Anova$Phlegm_stasis","Residuals")
 rownames(TCM_Anova_p_value) <- TCM_Anova_name2
 
