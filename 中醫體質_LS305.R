@@ -210,7 +210,30 @@ dev.off()
 source("Anova_table_export.R")
 DisplayAnovaSummary(model_summary_object = model1, title = "SEX", title_font_size = 16,footnote = "")
 
+#--------------------------------
+TCM_Anova_p_value <- data.frame(c(1,1,1,1,1,1,1,1))
 
+for (i in c(1:78)){
+  model1 <- summary(aov(TCM_Anova[,i+8] ~ TCM_Anova$Yin_def*TCM_Anova$Yang_def*TCM_Anova$Phlegm_stasis ))
+  TCM_Anova_p_value[,i] <- model1[[1]][["Pr(>F)"]]
+}
+
+#
+TCM_Anova_name1 <- colnames(subset(TCM_Anova,
+                                   select = c(9:86)))
+colnames(TCM_Anova_p_value) <- TCM_Anova_name1
+
+#
+TCM_Anova_name2 <- c("TCM_Anova$Yin_def","TCM_Anova$Yang_def","TCM_Anova$Phlegm_stasis","TCM_Anova$Yin_def:TCM_Anova$Yang_def",
+                                "TCM_Anova$Yin_def:TCM_Anova$Phlegm_stasi","TCM_Anova$Yang_def:TCM_Anova$Phlegm_stasis",
+                                "CM_Anova$Yin_def:TCM_Anova$Yang_def:TCM_Anova$Phlegm_stasis","Residuals")
+rownames(TCM_Anova_p_value) <- TCM_Anova_name2
+
+#
+TCM_Anova_p_value <- data.frame(t(TCM_Anova_p_value))
+
+#
+write.csv(TCM_Anova_p_value, file='C:\\R\\LS305中醫\\TCM_Anova_p_value.csv',fileEncoding = "Big5")
 
 #做卡方檢定---------------------------------------------------------------------------------------------------------------------------
 
