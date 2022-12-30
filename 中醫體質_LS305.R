@@ -1,7 +1,7 @@
 library(tidyverse)
-library(Hmisc) # install.packages("Hmisc") straight from CRAN. version 4.0-3
-library(grid) # version 3.3.3
-library(gtable) # version 0.2.0
+library(Hmisc) # install.packages("Hmisc") straight from CRAN. version 	4.7-2
+library(grid) # version 4.3.0
+library(gtable) # version 0.3.1
 library(gridExtra)
 #抽取資料---------------------------------------------------------------------------------------------------------------------------------
 #生菌讀取路徑:C:\\R\\      威甫讀取路徑:C:\\R\\LS305中醫
@@ -156,27 +156,6 @@ for (i in length(use_T_test)){
   chiqTCM$use_T_test[i] <- as.numeric(chiqTCM$use_T_test[i])
   
 }
-#Anova 資料清洗---------------------------------------------------------------------------------------------
-TCM_group <- TCM_group[,-grep("AGE|age_gruop",colnames(TCM_group))] #去除sex AGE age_group
-TCM_Anova_mergerdata<- merge(TCM_group, chiqTCM, by = "Release_No",all.x = TRUE  )
-TCM_Anova <- TCM_Anova_mergerdata[,-grep("X|TWB1_ID|TWB2_ID|SEX.y|體質",colnames(TCM_Anova_mergerdata))]
-TCM_Anova <- TCM_Anova[-6244,]
-
-#做Anova ------------------------------------------------
-for (i in c(1:64)){
-  model1 <- summary(aov(TCM_Anova[,i+8] ~ TCM_Anova$Yin_def*TCM_Anova$Yang_def*TCM_Anova$Phlegm_stasis ))
-  DisplayAnovaSummary(model_summary_object = model1, title = names(TCM_Anova[i+6]), title_font_size = 16,footnote = "")
-}
-
-
-
-
-#Anova製圖 *(Anova_table_export.R取自Github上別人提供的程式碼)----------------------------------------------------
-source("Anova_table_export.R")
-DisplayAnovaSummary(model_summary_object = model1, title = "SEX", title_font_size = 16,footnote = "")
-
-
-
 
 #做卡方檢定---------------------------------------------------------------------------------------------------------------------------
 
@@ -232,8 +211,69 @@ for (i in 1:length(use_T_test)) {
 for (i in 1:length(use_T_test)){
   hist(x=xxx2[,use_T_test[i]], main=use_T_test[i],xlab=use_T_test[i], ylab="數量")
 }
+
+
+#Anova 資料清洗---------------------------------------------------------------------------------------------
+source("C:\\Github\\LS305Anova_table_export.R")
+
+TCM_group <- TCM_group[,-grep("AGE|age_gruop",colnames(TCM_group))] #去除sex AGE age_group
+TCM_Anova_mergerdata<- merge(TCM_group, chiqTCM, by = "Release_No",all.x = TRUE  )
+TCM_Anova <- TCM_Anova_mergerdata[,-grep("X|TWB1_ID|TWB2_ID|SEX.y|體質",colnames(TCM_Anova_mergerdata))]
+TCM_Anova <- TCM_Anova[-6244,]
+
+#隔離無法ANOVA的資料
+TCM_Anova_failed <- subset(TCM_Anova,
+                           select = c("MVV","ANTI_HCV_AB_1","HBSAG_1","HBEAG_1",
+                                      "ANTI_HBS_AB_1","ANTI_HBC_AB_1","ANTI_HDV_AB_1")
+)
+TCM_Anova <- TCM_Anova[,-grep("MVV|ANTI_HCV_AB_1|HBSAG_1|HBEAG_1|ANTI_HBS_AB_1|ANTI_HBC_AB_1|ANTI_HDV_AB_1",colnames(TCM_Anova))]
+
+
+#做Anova +輸出-------------------------------------------------
+#open PDF
+pdf(file = "C:\\R\\LS305中醫\\TCM_anova_result.pdf",
+    width = 10,
+    height = 5)
+
+#running plots
+for (i in c(1:78)){
+  TCM_Anova[,i+8] <- as.numeric(as.character(TCM_Anova[,i+8]))
+  TCM_Anova[,i+8][is.na(TCM_Anova[,i+8]) | TCM_Anova[,i+8]=="Inf"] = NA
+  model1 <- summary(aov(TCM_Anova[,i+8] ~ TCM_Anova$Yin_def*TCM_Anova$Yang_def*TCM_Anova$Phlegm_stasis ))
+  DisplayAnovaSummary(model_summary_object = model1, title = names(TCM_Anova[i+8]), title_font_size = 16,footnote = "")
+}
+
+
+#turn off PDF plotting
+dev.off() 
+
+#取出anova圖中的p value製成表格--------------------------------------------------------------------
+TCM_Anova_p_value <- data.frame(c(1,1,1,1,1,1,1,1))
+
+for (i in c(1:78)){
+  model1 <- summary(aov(TCM_Anova[,i+8] ~ TCM_Anova$Yin_def*TCM_Anova$Yang_def*TCM_Anova$Phlegm_stasis ))
+  TCM_Anova_p_value[,i] <- model1[[1]][["Pr(>F)"]]
+}
+
+#從TCM_Anova抓欄名(加欄名)
+TCM_Anova_name1 <- colnames(subset(TCM_Anova,
+                                   select = c(9:86)))
+colnames(TCM_Anova_p_value) <- TCM_Anova_name1
+
+#加列名
+TCM_Anova_name2 <- c("TCM_Anova$Yin_def","TCM_Anova$Yang_def","TCM_Anova$Phlegm_stasis","TCM_Anova$Yin_def:TCM_Anova$Yang_def",
+                     "TCM_Anova$Yin_def:TCM_Anova$Phlegm_stasis","TCM_Anova$Yang_def:TCM_Anova$Phlegm_stasis",
+                     "CM_Anova$Yin_def:TCM_Anova$Yang_def:TCM_Anova$Phlegm_stasis","Residuals")
+rownames(TCM_Anova_p_value) <- TCM_Anova_name2
+
+#t()矩陣欄列互換
+TCM_Anova_p_value <- data.frame(t(TCM_Anova_p_value))
+
 #匯出檔案---------------------------------------------------------------------------------------------------------------------------------
 write.csv(result_set,file='C:\\R\\LS305中醫\\卡方結果.csv',fileEncoding = "Big5")
 write.csv(result_set_T_test, file='C:\\R\\LS305中醫\\T-test.csv',fileEncoding = "Big5")
 write.csv(chiqTCM, file='C:\\R\\LS305中醫\\中醫體質清理完成之資料.csv',fileEncoding = "Big5")
 write.csv(TCM_Anova, file = 'C:\\R\\LS305中醫\\TCM_Anova.csv',fileEncoding = "Big5")
+#輸出表格
+write.csv(TCM_Anova_p_value, file='C:\\R\\LS305中醫\\TCM_Anova_p_value.csv',fileEncoding = "Big5")
+write.csv(TCM_Anova_p_value, file='C:\\R\\LS305中醫\\TCM_Anova_p_value.csv',fileEncoding = "Big5")
