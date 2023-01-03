@@ -3,7 +3,7 @@ library(Hmisc) # install.packages("Hmisc") straight from CRAN. version 	4.7-2
 library(grid) # version 4.3.0
 library(gtable) # version 0.3.1
 library(gridExtra)
-#抽取資料---------------------------------------------------------------------------------------------------------------------------------
+#抽取資料----------------------------------------------------------------------------------------------------------------------------------
 #生菌讀取路徑:C:\\R\\      威甫讀取路徑:C:\\R\\LS305中醫
 #各項體檢資料
 measure <- read.csv("C:\\R\\LS305中醫\\release_list_measure.csv",sep=",", header=TRUE,na = "NA")
@@ -73,7 +73,7 @@ measure_extract<-subset(measure,
                                    "FASTING_GLUCOSE","T_CHO","TG","HDL_C","LDL_C",
                                    "T_BILIRUBIN","ALBUMIN","SGOT","SGPT","GAMMA_GT","AFP",
                                    "BUN","CREATININE","URIC_ACID","MICROALB","CREATININE_URINE")
-                        )
+)
 
 #抽取中醫體質的"Release_No","體質","SEX","AGE","age_gruop"和release_list_measure.csv依照 "Release_No"合併------------------------------------------------
 TCMlist<-subset(TCMlist,select=c("Release_No","體質","SEX","AGE","age_gruop"))
@@ -101,7 +101,7 @@ chiqTCM <- subset(TCMcal,
 #替換文字成數字
 #卡方檢定之資料清洗----------------------------------------------------------------------------------------
 chiqTCM$體質 <- as.character(chiqTCM$體質)
-  
+
 chiqTCM$體質[which(chiqTCM$體質=="平和")] <- 1
 chiqTCM$體質[which(chiqTCM$體質=="陰虛")] <- 2
 chiqTCM$體質[which(chiqTCM$體質=="陰虛+陽虛")] <- 3
@@ -111,37 +111,37 @@ chiqTCM$體質[which(chiqTCM$體質=="陽虛")] <- 6
 chiqTCM$體質[which(chiqTCM$體質=="痰瘀")] <- 7
 chiqTCM$體質[which(chiqTCM$體質=="痰瘀+陽虛")] <- 8
 chiqTCM$體質 <- as.numeric(chiqTCM$體質)
-  
+
 #ANTI_HCV_AB_1
 chiqTCM$ANTI_HCV_AB_1 <- as.character(chiqTCM$ANTI_HCV_AB_1)
 chiqTCM$ANTI_HCV_AB_1[which(chiqTCM$ANTI_HCV_AB_1=="Positive")] <- "1"
 chiqTCM$ANTI_HCV_AB_1[which(chiqTCM$ANTI_HCV_AB_1=="Negative")] <- "2"
-  
+
 #HBSAG_1
 chiqTCM$HBSAG_1 <- as.character(chiqTCM$HBSAG_1)
 chiqTCM$HBSAG_1[which(chiqTCM$HBSAG_1=="Positive")] <- "1"
 chiqTCM$HBSAG_1[which(chiqTCM$HBSAG_1=="Negative")] <- "2"
-  
+
 #HBEAG_1
 chiqTCM$HBEAG_1 <- as.character(chiqTCM$HBEAG_1)
 chiqTCM$HBEAG_1[which(chiqTCM$HBEAG_1=="Positive")] <- "1"
 chiqTCM$HBEAG_1[which(chiqTCM$HBEAG_1=="Negative")] <- "2"
-  
+
 #ANTI_HBS_AB_1
 chiqTCM$ANTI_HBS_AB_1 <- as.character(chiqTCM$ANTI_HBS_AB_1)
 chiqTCM$ANTI_HBS_AB_1[which(chiqTCM$ANTI_HBS_AB_1=="Positive")] <- "1"
 chiqTCM$ANTI_HBS_AB_1[which(chiqTCM$ANTI_HBS_AB_1=="Negative")] <- "2"
-  
+
 #ANTI_HBC_AB_1
 chiqTCM$ANTI_HBC_AB_1 <- as.character(chiqTCM$ANTI_HBC_AB_1)
 chiqTCM$ANTI_HBC_AB_1[which(chiqTCM$ANTI_HBC_AB_1=="Positive")] <- "1"
 chiqTCM$ANTI_HBC_AB_1[which(chiqTCM$ANTI_HBC_AB_1=="Negative")] <- "2"
-  
+
 #ANTI_HDV_AB_1
 chiqTCM$ANTI_HDV_AB_1 <- as.character(chiqTCM$ANTI_HDV_AB_1)
 chiqTCM$ANTI_HDV_AB_1[which(chiqTCM$ANTI_HDV_AB_1=="Positive")] <- "1"
 chiqTCM$ANTI_HDV_AB_1[which(chiqTCM$ANTI_HDV_AB_1=="Negative")] <- "2"
-  
+
 write.csv(chiqTCM,file='C:\\R\\LS305中醫\\chiqTCM.csv',fileEncoding = "Big5")
 
 #T-test資料清洗-----------------------------------------------------------------
@@ -156,6 +156,66 @@ for (i in length(use_T_test)){
   chiqTCM$use_T_test[i] <- as.numeric(chiqTCM$use_T_test[i])
   
 }
+<<<<<<< Updated upstream
+=======
+
+#Anova 資料清洗---------------------------------------------------------------------------------------------
+TCM_group <- TCM_group[,-grep("AGE|age_gruop",colnames(TCM_group))] #去除sex AGE age_group
+TCM_Anova_mergerdata<- merge(TCM_group, chiqTCM, by = "Release_No",all.x = TRUE  )
+TCM_Anova <- TCM_Anova_mergerdata[,-grep("X|TWB1_ID|TWB2_ID|SEX.y|體質",colnames(TCM_Anova_mergerdata))]
+TCM_Anova <- TCM_Anova[-6244,]
+
+#隔離無法ANOVA的資料
+TCM_Anova_failed <- subset(TCM_Anova,
+                           select = c("MVV","ANTI_HCV_AB_1","HBSAG_1","HBEAG_1",
+                                      "ANTI_HBS_AB_1","ANTI_HBC_AB_1","ANTI_HDV_AB_1")
+)
+TCM_Anova <- TCM_Anova[,-grep("MVV|ANTI_HCV_AB_1|HBSAG_1|HBEAG_1|ANTI_HBS_AB_1|ANTI_HBC_AB_1|ANTI_HDV_AB_1",colnames(TCM_Anova))]
+
+
+#做Anova +輸出 (Anova_table_export.R取自Github上別人提供的程式碼)-------------------------------------------------
+source("Anova_table_export.R")
+#open PDF
+pdf(file = "C:\\R\\LS305中醫\\TCM_anova_result.pdf",
+    width = 10,
+    height = 5)
+
+#running plots
+for (i in c(1:78)){
+  TCM_Anova[,i+8] <- as.numeric(as.character(TCM_Anova[,i+8]))
+  TCM_Anova[,i+8][is.na(TCM_Anova[,i+8]) | TCM_Anova[,i+8]=="Inf"] = NA
+  model1 <- summary(aov(TCM_Anova[,i+8] ~ TCM_Anova$Yin_def*TCM_Anova$Yang_def*TCM_Anova$Phlegm_stasis ))
+  DisplayAnovaSummary(model_summary_object = model1, title = names(TCM_Anova[i+8]), title_font_size = 16,footnote = "")
+}
+
+
+#turn off PDF plotting
+dev.off() 
+
+
+#ERROR:Error in lm.fit(x, y, offset = offset, singular.ok = singular.ok, ...) : 
+#NA/NaN/Inf 出現於 'y'
+#TCM_ANOVA:c30=VC_PRED(i=22),c37=FVC_PRED(i=29),C=39(31),47(39),49(41),
+#(43),(45),(47),(68)
+
+#Error in if ((model_summary$Pr..F.)[x] < 0.001) { : 
+#missing value where TRUE/FALSE needed   
+# 59(51),(),
+
+# Error in lm.fit(x, y, offset = offset, singular.ok = singular.ok, ...) : 
+#   NA/NaN/Inf 出現於 'y'
+# In addition: Warning message:
+#   In storage.mode(v) <- "double" : NAs introduced by coercion
+# 66(58),68(60),70(62),72(64),74(66),
+
+
+#Anova製圖 *(Anova_table_export.R取自Github上別人提供的程式碼)----------------------------------------------------
+
+#------------------------------
+
+
+
+>>>>>>> Stashed changes
 
 #做卡方檢定---------------------------------------------------------------------------------------------------------------------------
 
