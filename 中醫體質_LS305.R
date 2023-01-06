@@ -3,7 +3,7 @@ library(Hmisc) # install.packages("Hmisc") straight from CRAN. version 	4.7-2
 library(grid) # version 4.3.0
 library(gtable) # version 0.3.1
 library(gridExtra)
-library(openxlsx)
+
 
 #©â¨ú¸ê®Æ----------------------------------------------------------------------------------------------------------------------------
 #¥ÍµßÅª¨ú¸ô®|:C:\\R\\      «Â¨jÅª¨ú¸ô®|:C:\\R\\LS305¤¤Âå
@@ -161,7 +161,7 @@ for (i in length(use_T_test)){
 
   
 #Anova ¸ê®Æ²M¬~---------------------------------------------------------------------------------------------
-source("C:\\Github\\LS305Anova_table_export.R")
+source("C:\\\\LS305Anova_table_export.R")
 
 TCM_group <- TCM_group[,-grep("AGE|age_gruop",colnames(TCM_group))] #¥h°£sex AGE age_group
 TCM_Anova_mergerdata<- merge(TCM_group, chiqTCM, by = "Release_No",all.x = TRUE  )
@@ -231,12 +231,7 @@ rownames(TCM_Anova_p_value) <- TCM_Anova_name2
 TCM_Anova_p_value <- data.frame(t(TCM_Anova_p_value))
 
 #¥[ÅÜ¬Û¤¤¤å¸ÑÄÀ
-TCM_Anova_p_value_meaning1 <- c("³±µê","¶§µê","·ð·ï","³±µê+¶§µê",
-                                "³±µê+·ð·ï","¶§µê+·ð·ï",
-                                "³±µê+¶§µê+·ð·ï","´Ý¾l")
-TCM_Anova_p_value <- rbind(TCM_Anova_p_value_meaning1, TCM_Anova_p_value)
-
-TCM_Anova_p_value_meaning2 <- c(" ","¨­°ª","Åé­«","¨­Åé½è¶q«ü¼Æ","Åé¯×ªÕ²v","¸y³ò","Áv³ò","¸yÁv¤ñ",
+TCM_Anova_p_value_meaning1 <- c("¨­°ª","Åé­«","¨­Åé½è¶q«ü¼Æ","Åé¯×ªÕ²v","¸y³ò","Áv³ò","¸yÁv¤ñ",
                                 "ÀR§¤®É²Ä¤@¦¸¦¬ÁYÀ£","ÀR§¤®É²Ä¤@¦¸µÎ±iÀ£",
                                 "ÀR§¤®É²Ä¤G¦¸¦¬ÁYÀ£","ÀR§¤®É²Ä¤G¦¸µÎ±iÀ£",
                                 "ÀR§¤®É²Ä¤T¦¸¦¬ÁYÀ£","ÀR§¤®É²Ä¤T¦¸µÎ±iÀ£",
@@ -263,8 +258,12 @@ TCM_Anova_p_value_meaning2 <- c(" ","¨­°ª","Åé­«","¨­Åé½è¶q«ü¼Æ","Åé¯×ªÕ²v","¸y³
                                 "£^ ¡Ð¾¢ÓiñQÂà²¾»Ã¯À","¥Ò«¬­L¨à¦å²M³J¥Õ","¦å¤¤§¿¯À´á",
                                 "¦Ù»ÄÓþ","§¿»Ä","§¿¤¤·L³J¥Õ","§¿¤¤¦Ù»ÄÓþ"
 )
-TCM_Anova_p_value <- cbind(TCM_Anova_p_value_meaning2, TCM_Anova_p_value)
+TCM_Anova_p_value <- cbind(TCM_Anova_p_value_meaning1, TCM_Anova_p_value)
 
+TCM_Anova_p_value_meaning2 <- c("¤¤¤å¸ÑÄÀ","³±µê","¶§µê","·ð·ï","³±µê+¶§µê",
+                                "³±µê+·ð·ï","¶§µê+·ð·ï",
+                                "³±µê+¶§µê+·ð·ï","´Ý¾l")
+TCM_Anova_p_value <- rbind(TCM_Anova_p_value_meaning2, TCM_Anova_p_value)
 
 #°µ¥d¤èÀË©w---------------------------------------------------------------------------------------------------------------------------
 
@@ -330,5 +329,5 @@ write.csv(result_set_T_test, file='C:\\R\\LS305¤¤Âå\\T-test.csv',fileEncoding = 
 write.csv(chiqTCM, file='C:\\R\\LS305¤¤Âå\\¤¤ÂåÅé½è²M²z§¹¦¨¤§¸ê®Æ.csv',fileEncoding = "Big5")
 write.csv(TCM_Anova, file = 'C:\\R\\LS305¤¤Âå\\TCM_Anova.csv',fileEncoding = "Big5")
 #¿é¥Xªí®æ
-write.xlsx(TCM_Anova_p_value, file='C:\\R\\TCM_Anova_p_value.xlsx',fileEncoding = "Big5")
-write.xlsx(TCM_Anova_p_value, file='C:\\R\\LS305¤¤Âå\\TCM_Anova_p_value.xlsx',fileEncoding = "Big5")
+write.csv(TCM_Anova_p_value, file='C:\\R\\TCM_Anova_p_value.xlsx',fileEncoding = "Big5")
+write.csv(TCM_Anova_p_value, file='C:\\R\\LS305¤¤Âå\\TCM_Anova_p_value.xlsx',fileEncoding = "Big5")
