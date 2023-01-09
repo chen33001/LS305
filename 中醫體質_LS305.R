@@ -161,7 +161,7 @@ for (i in length(use_T_test)){
 
   
 #Anova 資料清洗---------------------------------------------------------------------------------------------
-source("C:\\\\LS305Anova_table_export.R")
+source("C:\\R\\LS305中醫\\Anova_table_export.R")
 
 TCM_group <- TCM_group[,-grep("AGE|age_gruop",colnames(TCM_group))] #去除sex AGE age_group
 TCM_Anova_mergerdata<- merge(TCM_group, chiqTCM, by = "Release_No",all.x = TRUE  )

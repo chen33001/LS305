@@ -12,5 +12,9 @@ rm.TCMmerge3 <- TCMmerge3 %>% filter(TWB1_ID != "")
 
 #資料合併------------------------------------------------------------------------
 GWAS <- merge(TCMmerge3,TCM_Anova , by = "Release_No")
+#去重---------------------------------------------------------------------------
+GWAS <- distinct(GWAS, Release_No, Yin_def, Yang_def, Phlegm_stasis,
+            .keep_all = TRUE )
+
 #資料匯出--------------------------------------------------------------------------
 write.table(GWAS, file = "C:\\R\\LS305中醫\\GWAS.txt",sep = "\t",row.names = F,quote = F)
