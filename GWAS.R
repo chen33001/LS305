@@ -30,7 +30,7 @@ GWAS_Phlegm_stasis <- GWAS_Phlegm_stasis %>% distinct()
 
 
 
-#FID跟IID不同的情況------------------------------------------------------------
+#FID跟IID相同的情況------------------------------------------------------------
 rm.col_same <- cbind(rm.TCMmerge3$TWB1_ID, rm.TCMmerge3$TWB1_ID)
 rm.col_same <- data.frame(rm.col_same)
   
