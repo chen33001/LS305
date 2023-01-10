@@ -1,7 +1,6 @@
-
 library(stringr)
 library(dplyr)
-#生菌讀取路徑:C:\\R\\      威甫讀取路徑:C:\\R\\LS305中醫
+#生菌讀取路徑:C:\\R\\      威甫讀取路徑:C:\\R\\LS305中醫\\
 #讀取資料---------------------------------------------------------------
 TCM_Anova <- read.csv("C:\\R\\LS305中醫\\TCM_Anova.csv",fileEncoding = "big5")
 TCMmerge3 <- read.csv("C:\\R\\LS305中醫\\TCMmerge3.csv",fileEncoding = "big5")
@@ -53,12 +52,6 @@ GWAS_Phlegm_stasis <- data.frame(GWAS_Phlegm_stasis)
 names(GWAS_Phlegm_stasis) <- c("FID","IID","Phlegm_stasis")
 #去除GWAS重複列-----------------------------------------------------------------------
 GWAS_Phlegm_stasis <- GWAS_Phlegm_stasis %>% distinct()
-
-#資料匯出--------------------------------------------------------------------------
-write.table(GWAS, file = "C:\\R\\LS305中醫\\GWAS.txt",sep = "\t",row.names = F,quote = F)
-write.table(GWAS_Yin, file = "C:\\R\\LS305中醫\\GWAS_Yin.txt",sep = "\t",row.names = F,quote = F)
-write.table(GWAS_Yang, file = "C:\\R\\LS305中醫\\GWAS_Yang.txt",sep = "\t",row.names = F,quote = F)
-write.table(GWAS_Phlegm_stasis, file = "C:\\R\\LS305中醫\\GWAS_Phlegm_stasis.txt",sep = "\t",row.names = F,quote = F)
 
 #資料匯出--------------------------------------------------------------------------
 write.table(GWAS, file = "C:\\R\\LS305中醫\\GWAS.txt",sep = "\t",row.names = F,quote = F)
