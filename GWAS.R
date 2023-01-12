@@ -3,9 +3,9 @@ library(dplyr)
 library(CMplot)
 #生菌讀取路徑:C:\\R\\      威甫讀取路徑:C:\\R\\LS305中醫\\
 #讀取資料---------------------------------------------------------------
-TCM_Anova <- read.csv("C:\\R\\LS305中醫\\TCM_Anova.csv",fileEncoding = "big5")
-TCMmerge3 <- read.csv("C:\\R\\LS305中醫\\TCMmerge3.csv",fileEncoding = "big5")
-TCM_group <- read.csv("C:\\R\\LS305中醫\\TCM_group.csv",fileEncoding = "big5")
+TCM_Anova <- read.csv("C:\\R\\TCM_Anova.csv",fileEncoding = "big5")
+TCMmerge3 <- read.csv("C:\\R\\TCMmerge3.csv",fileEncoding = "big5")
+TCM_group <- read.csv("C:\\R\\TCM_group.csv",fileEncoding = "big5")
 #資料清洗---------------------------------------------------------------
 TCM_Anova <- subset(TCM_Anova, select = c("Release_No","Yin_def","Yang_def","Phlegm_stasis"))
 TCMmerge3 <- subset(TCMmerge3, select = c("Release_No","TWB1_ID"))
@@ -42,7 +42,7 @@ covar_cons_sex_age <- cbind.data.frame(rm.TCMmerge3$TWB1_ID, covar_cons_sex_age)
 names(covar_cons_sex_age) <- c("FID" ,"IID","Sex","Age" )
 
 #作圖-----------------------------------------------------------------------------------
-result <- read.table("GWAS_PCA_Cons.assoc.logistic", header = TRUE)
+result <- read.table("result.assoc.logistic", header = TRUE)
 pvalue <- result[, c("SNP", "CHR", "BP", "P")]
 #manhattan plot 
 CMplot(pvalue, plot.type = "m", LOG10 = TRUE, threshold = 1e-5, chr.den.col = NULL, 
@@ -52,26 +52,82 @@ CMplot(pvalue, plot.type = "q", conf.int.col = NULL, box = TRUE,
        file = "jpg", memo = "", dpi = 300, file.output = TRUE, verbose = FALSE)
 median((result$STAT)^2)/0.455
 
-#subset significant region for LocusZoom
+#subset significant region for LocusZoom----------------------------------------
 # find min p-value
 subset(pvalue, P == min(P))
-# subset region
-locus <- subset(pvalue, CHR == 10 & BP < 119529777 + 400000 & BP > 119529777 - 400000)
-write.table(locus, "locus_10.txt", append = FALSE, quote = FALSE, sep = "\t", 
+
+# Yin_def:find another site-----------------------------------------------------
+Yin_def_locus <- subset(pvalue, P < 1E-5)
+
+# Yin_def subset region
+locus <- subset(pvalue, CHR == 1 & BP < 88843951 + 400000 & BP > 88843951 - 400000)
+write.table(locus, "locus_1_rs994452.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-# find another site
-subset(pvalue, P < 1E-6)
-# subset region
-locus <- subset(pvalue, CHR == 2 & BP < 99982730 + 400000 & BP > 99982730 - 400000)
-write.table(locus, "locus_2.txt", append = FALSE, quote = FALSE, sep = "\t", 
+locus <- subset(pvalue, CHR == 1 & BP < 88847231 + 400000 & BP > 88847231 - 400000)
+write.table(locus, "locus_1_rs449198.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
+locus <- subset(pvalue, CHR == 1 & BP < 88853812 + 400000 & BP > 88853812 - 400000)
+write.table(locus, "locus_1_rs448483.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
 
+locus <- subset(pvalue, CHR == 1 & BP < 88864082 + 400000 & BP > 88864082 - 400000)
+write.table(locus, "locus_1_rs4656043.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
 
+#8-----------------------------------------
+locus <- subset(pvalue, CHR == 8 & BP < 3117884 + 400000 & BP > 3117884 - 400000)
+write.table(locus, "locus_8_Affx-32045388.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+locus <- subset(pvalue, CHR == 8 & BP < 5250660 + 400000 & BP > 5250660 - 400000)
+write.table(locus, "locus_8_rs10101849.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+#17----------------------------------------
+locus <- subset(pvalue, CHR == 17 & BP < 6168235 + 400000 & BP > 6168235 - 400000)
+write.table(locus, "locus_17_rs1811229.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+locus <- subset(pvalue, CHR == 17 & BP < 6169183 + 400000 & BP > 6169183 - 400000)
+write.table(locus, "locus_17_rs56987007.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+#18----------------------------------------
+locus <- subset(pvalue, CHR == 18 & BP < 20188276 + 400000 & BP > 20188276 - 400000)
+write.table(locus, "locus_18_rs4378711.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+locus <- subset(pvalue, CHR == 18 & BP < 20205437 + 400000 & BP > 20205437 - 400000)
+write.table(locus, "locus_18_rs12326842.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+locus <- subset(pvalue, CHR == 18 & BP < 20219787 + 400000 & BP > 20219787 - 400000)
+write.table(locus, "locus_18_rs34241323.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+locus <- subset(pvalue, CHR == 18 & BP < 20223695 + 400000 & BP > 20223695 - 400000)
+write.table(locus, "locus_18_rs11661542.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+#21----------------------------------------
+locus <- subset(pvalue, CHR == 21 & BP < 33203899 + 400000 & BP > 33203899 - 400000)
+write.table(locus, "locus_21_rs56269846.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+locus <- subset(pvalue, CHR == 21 & BP < 33223437 + 400000 & BP > 33223437 - 400000)
+write.table(locus, "locus_21_rs80147001.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+#------------------------------------------------
+# subset region
+locus <- subset(pvalue, CHR ==  & BP <  + 400000 & BP >  - 400000)
+write.table(locus, "locus_.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
 
 #資料匯出--------------------------------------------------------------------------
-write.table(GWAS, file = "C:\\R\\LS305中醫\\GWAS.txt",sep = "\t",row.names = F,quote = F)
-write.table(GWAS_cons, file = "C:\\R\\LS305中醫\\GWAS_cons.txt",sep = "\t",row.names = F,quote = F)
-write.table(rm.col_same,file = "C:\\R\\LS305中醫\\list.txt",sep = "\t",row.names = F,quote = F)
-write.table(covar_cons_sex_age,file = "C:\\R\\LS305中醫\\covar_cons.txt",sep = "\t",row.names = F,quote = F)
+#write.table(GWAS, file = "C:\\GWAS\\GWAS.txt",sep = "\t",row.names = F,quote = F)
+write.table(GWAS_cons, file = "C:\\GWAS\\GWAS_cons.txt",sep = "\t",row.names = F,quote = F)
+write.table(rm.col_same,file = "C:\\GWAS\\list.txt",sep = "\t",row.names = F,quote = F)
+write.table(covar_cons_sex_age,file = "C:\\GWAS\\covar_cons.txt",sep = "\t",row.names = F,quote = F)
