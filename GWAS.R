@@ -60,6 +60,7 @@ subset(pvalue, P == min(P))
 Yin_def_locus <- subset(pvalue, P < 1E-5)
 
 # Yin_def subset region
+##Yin_def chr 1-----------------------------------------
 locus <- subset(pvalue, CHR == 1 & BP < 88843951 + 400000 & BP > 88843951 - 400000)
 write.table(locus, "locus_1_rs994452.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
@@ -75,8 +76,17 @@ write.table(locus, "locus_1_rs448483.txt", append = FALSE, quote = FALSE, sep = 
 locus <- subset(pvalue, CHR == 1 & BP < 88864082 + 400000 & BP > 88864082 - 400000)
 write.table(locus, "locus_1_rs4656043.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
+#Yin_def chr 2-----------------------------------------
 
-#8-----------------------------------------
+locus <- subset(pvalue, CHR == 2 & BP < 121306440 + 400000 & BP > 121306440 - 400000)
+write.table(locus, "locus_2_rs17050272.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+#Yin_def chr 8-----------------------------------------
+locus <- subset(pvalue, CHR == 8 & BP < 3103110 + 400000 & BP > 3103110 - 400000)
+write.table(locus, "locus_8_rs4875411.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
 locus <- subset(pvalue, CHR == 8 & BP < 3117884 + 400000 & BP > 3117884 - 400000)
 write.table(locus, "locus_8_Affx-32045388.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
