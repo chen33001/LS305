@@ -58,13 +58,6 @@ median((result$STAT)^2)/0.455
 # find min p-value
 subset(pvalue, P == min(P))
 
-# Yang_def:find another site--------------------------------------
-Yang_def_locus <- subset(pvalue, P < 1E-5)
-
-# Yang_def subset region
-locus <- subset(pvalue, CHR ==  & BP <  + 400000 & BP >  - 400000)
-write.table(locus, "locus__.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
 # Yin_def:find another site---------------------------------------
 Yin_def_locus <- subset(pvalue, P < 1E-5)
 
@@ -140,6 +133,40 @@ locus <- subset(pvalue, CHR == 21 & BP < 33223437 + 400000 & BP > 33223437 - 400
 write.table(locus, "locus_21_rs80147001.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
+# Yang_def:find another site--------------------------------------
+Yang_def_locus <- subset(pvalue, P < 1E-5)
+Yang_def_locus
+# Yang_def subset region
+#Yang_def chr 4
+locus <- subset(pvalue, CHR == 4 & BP < 88771325 + 400000 & BP > 88771325 - 400000)
+write.table(locus, "locus_4_rs10032322.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+#Yang_def chr 10
+locus <- subset(pvalue, CHR == 10 & BP < 135301270 + 400000 & BP > 135301270 - 400000)
+write.table(locus, "locus_10_rs1590821.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+locus <- subset(pvalue, CHR == 10 & BP < 135333618 + 400000 & BP > 135333618 - 400000)
+write.table(locus, "locus_10_rs4838767.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+locus <- subset(pvalue, CHR == 10 & BP < 135351137 + 400000 & BP > 135351137 - 400000)
+write.table(locus, "locus_10_rs2070676.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+locus <- subset(pvalue, CHR == 10 & BP < 135351362 + 400000 & BP > 135351362 - 400000)
+write.table(locus, "locus_10_rs2515641.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+locus <- subset(pvalue, CHR == 10 & BP < 135370005 + 400000 & BP > 135370005 - 400000)
+write.table(locus, "locus_10_rs12257368.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+#Yang_def chr 21
+locus <- subset(pvalue, CHR == 21 & BP < 33552301 + 400000 & BP > 33552301 - 400000)
+write.table(locus, "locus_21_rs11088205.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
 
 # Phlegm_stasis:find another site------------------------------------
 Phlegm_stasis_locus <- subset(pvalue, P < 1E-5)
@@ -157,6 +184,6 @@ write.table(GWAS_cons, file = "C:\\GWAS\\GWAS_cons.txt",sep = "\t",row.names = F
 write.table(rm.col_same,file = "C:\\GWAS\\list.txt",sep = "\t",row.names = F,quote = F)
 write.table(covar_cons_sex_age,file = "C:\\GWAS\\covar_cons.txt",sep = "\t",row.names = F,quote = F)
 
-write.xlsx(Yang_def_locus, file = "C:\\GWAS\\Yang_def_locus.xlsx")
 write.xlsx(Yin_def_locus, file = "C:\\GWAS\\Yin_def_locus.xlsx")
+write.xlsx(Yang_def_locus, file = "C:\\GWAS\\Yang_def_locus.xlsx")
 write.xlsx(Phlegm_stasis_locus, file = "C:\\GWAS\\Phlegm_stasis_locus.xlsx")
