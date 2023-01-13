@@ -1,6 +1,7 @@
 library(stringr)
 library(dplyr)
 library(CMplot)
+library(openxlsx)
 #生菌讀取路徑:C:\\R\\      威甫讀取路徑:C:\\R\\LS305中醫\\
 #讀取資料---------------------------------------------------------------
 TCM_Anova <- read.csv("C:\\R\\TCM_Anova.csv",fileEncoding = "big5")
@@ -42,6 +43,7 @@ covar_cons_sex_age <- cbind.data.frame(rm.TCMmerge3$TWB1_ID, covar_cons_sex_age)
 names(covar_cons_sex_age) <- c("FID" ,"IID","Sex","Age" )
 
 #作圖-----------------------------------------------------------------------------------
+setwd("C:\\GWAS")
 result <- read.table("result.assoc.logistic", header = TRUE)
 pvalue <- result[, c("SNP", "CHR", "BP", "P")]
 #manhattan plot 
@@ -56,11 +58,18 @@ median((result$STAT)^2)/0.455
 # find min p-value
 subset(pvalue, P == min(P))
 
-# Yin_def:find another site-----------------------------------------------------
+# Yang_def:find another site--------------------------------------
+Yang_def_locus <- subset(pvalue, P < 1E-5)
+
+# Yang_def subset region
+locus <- subset(pvalue, CHR ==  & BP <  + 400000 & BP >  - 400000)
+write.table(locus, "locus__.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+# Yin_def:find another site---------------------------------------
 Yin_def_locus <- subset(pvalue, P < 1E-5)
 
-# Yin_def subset region
-##Yin_def chr 1-----------------------------------------
+#Yin_def subset region
+#Yin_def chr 1
 locus <- subset(pvalue, CHR == 1 & BP < 88843951 + 400000 & BP > 88843951 - 400000)
 write.table(locus, "locus_1_rs994452.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
@@ -76,17 +85,18 @@ write.table(locus, "locus_1_rs448483.txt", append = FALSE, quote = FALSE, sep = 
 locus <- subset(pvalue, CHR == 1 & BP < 88864082 + 400000 & BP > 88864082 - 400000)
 write.table(locus, "locus_1_rs4656043.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
-#Yin_def chr 2-----------------------------------------
+#Yin_def chr 2
 
 locus <- subset(pvalue, CHR == 2 & BP < 121306440 + 400000 & BP > 121306440 - 400000)
 write.table(locus, "locus_2_rs17050272.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-#Yin_def chr 8-----------------------------------------
+#Yin_def chr 8
 locus <- subset(pvalue, CHR == 8 & BP < 3103110 + 400000 & BP > 3103110 - 400000)
 write.table(locus, "locus_8_rs4875411.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
+#Error: SNP affx-32045388 not recognized as SNP
 locus <- subset(pvalue, CHR == 8 & BP < 3117884 + 400000 & BP > 3117884 - 400000)
 write.table(locus, "locus_8_Affx-32045388.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
@@ -95,7 +105,7 @@ locus <- subset(pvalue, CHR == 8 & BP < 5250660 + 400000 & BP > 5250660 - 400000
 write.table(locus, "locus_8_rs10101849.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-#17----------------------------------------
+#Yin_def chr 17
 locus <- subset(pvalue, CHR == 17 & BP < 6168235 + 400000 & BP > 6168235 - 400000)
 write.table(locus, "locus_17_rs1811229.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
@@ -104,7 +114,7 @@ locus <- subset(pvalue, CHR == 17 & BP < 6169183 + 400000 & BP > 6169183 - 40000
 write.table(locus, "locus_17_rs56987007.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-#18----------------------------------------
+#Yin_def chr 18
 locus <- subset(pvalue, CHR == 18 & BP < 20188276 + 400000 & BP > 20188276 - 400000)
 write.table(locus, "locus_18_rs4378711.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
@@ -121,7 +131,7 @@ locus <- subset(pvalue, CHR == 18 & BP < 20223695 + 400000 & BP > 20223695 - 400
 write.table(locus, "locus_18_rs11661542.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-#21----------------------------------------
+#Yin_def chr 21
 locus <- subset(pvalue, CHR == 21 & BP < 33203899 + 400000 & BP > 33203899 - 400000)
 write.table(locus, "locus_21_rs56269846.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
@@ -130,14 +140,23 @@ locus <- subset(pvalue, CHR == 21 & BP < 33223437 + 400000 & BP > 33223437 - 400
 write.table(locus, "locus_21_rs80147001.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-#------------------------------------------------
-# subset region
-locus <- subset(pvalue, CHR ==  & BP <  + 400000 & BP >  - 400000)
-write.table(locus, "locus_.txt", append = FALSE, quote = FALSE, sep = "\t", 
+
+# Phlegm_stasis:find another site------------------------------------
+Phlegm_stasis_locus <- subset(pvalue, P < 1E-5)
+
+# Phlegm_stasis subset region
+locus <- subset(pvalue, CHR == 2 & BP < 4354172 + 400000 & BP > 4354172 - 400000)
+write.table(locus, "locus_2_rs58835236.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-#資料匯出--------------------------------------------------------------------------
-#write.table(GWAS, file = "C:\\GWAS\\GWAS.txt",sep = "\t",row.names = F,quote = F)
+locus <- subset(pvalue, CHR == 4 & BP < 20895013 + 400000 & BP > 20895013 - 400000)
+write.table(locus, "locus_4_rs7670834.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+#資料匯出-----------------------------------------------------------------------
 write.table(GWAS_cons, file = "C:\\GWAS\\GWAS_cons.txt",sep = "\t",row.names = F,quote = F)
 write.table(rm.col_same,file = "C:\\GWAS\\list.txt",sep = "\t",row.names = F,quote = F)
 write.table(covar_cons_sex_age,file = "C:\\GWAS\\covar_cons.txt",sep = "\t",row.names = F,quote = F)
+
+write.xlsx(Yang_def_locus, file = "C:\\GWAS\\Yang_def_locus.xlsx")
+write.xlsx(Yin_def_locus, file = "C:\\GWAS\\Yin_def_locus.xlsx")
+write.xlsx(Phlegm_stasis_locus, file = "C:\\GWAS\\Phlegm_stasis_locus.xlsx")
