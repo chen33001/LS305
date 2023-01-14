@@ -4,9 +4,9 @@ library(CMplot)
 library(openxlsx)
 #生菌讀取路徑:C:\\R\\      威甫讀取路徑:C:\\R\\LS305中醫\\
 #讀取資料---------------------------------------------------------------
-TCM_Anova <- read.csv("C:\\R\\TCM_Anova.csv",fileEncoding = "big5")
-TCMmerge3 <- read.csv("C:\\R\\TCMmerge3.csv",fileEncoding = "big5")
-TCM_group <- read.csv("C:\\R\\TCM_group.csv",fileEncoding = "big5")
+TCM_Anova <- read.csv("C:\\R\\LS305中醫\\TCM_Anova.csv",fileEncoding = "big5")
+TCMmerge3 <- read.csv("C:\\R\\LS305中醫\\TCMmerge3.csv",fileEncoding = "big5")
+TCM_group <- read.csv("C:\\R\\LS305中醫\\TCM_group.csv",fileEncoding = "big5")
 #資料清洗---------------------------------------------------------------
 TCM_Anova <- subset(TCM_Anova, select = c("Release_No","Yin_def","Yang_def","Phlegm_stasis"))
 TCMmerge3 <- subset(TCMmerge3, select = c("Release_No","TWB1_ID"))
@@ -43,7 +43,7 @@ covar_cons_sex_age <- cbind.data.frame(rm.TCMmerge3$TWB1_ID, covar_cons_sex_age)
 names(covar_cons_sex_age) <- c("FID" ,"IID","Sex","Age" )
 
 #作圖-----------------------------------------------------------------------------------
-setwd("C:\\GWAS")
+setwd("C:/R/GWAS")
 result <- read.table("result.assoc.logistic", header = TRUE)
 pvalue <- result[, c("SNP", "CHR", "BP", "P")]
 #manhattan plot 
@@ -180,10 +180,10 @@ locus <- subset(pvalue, CHR == 4 & BP < 20895013 + 400000 & BP > 20895013 - 4000
 write.table(locus, "locus_4_rs7670834.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 #資料匯出-----------------------------------------------------------------------
-write.table(GWAS_cons, file = "C:\\GWAS\\GWAS_cons.txt",sep = "\t",row.names = F,quote = F)
-write.table(rm.col_same,file = "C:\\GWAS\\list.txt",sep = "\t",row.names = F,quote = F)
-write.table(covar_cons_sex_age,file = "C:\\GWAS\\covar_cons.txt",sep = "\t",row.names = F,quote = F)
+write.table(GWAS_cons, file = "C:\\R\\LS305中醫\\GWAS_cons.txt",sep = "\t",row.names = F,quote = F)
+write.table(rm.col_same,file = "C:\\R\\LS305中醫\\list.txt",sep = "\t",row.names = F,quote = F)
+write.table(covar_cons_sex_age,file = "C:\\R\\LS305中醫\\covar_cons.txt",sep = "\t",row.names = F,quote = F)
 
-write.xlsx(Yin_def_locus, file = "C:\\GWAS\\Yin_def_locus.xlsx")
-write.xlsx(Yang_def_locus, file = "C:\\GWAS\\Yang_def_locus.xlsx")
-write.xlsx(Phlegm_stasis_locus, file = "C:\\GWAS\\Phlegm_stasis_locus.xlsx")
+write.xlsx(Yin_def_locus, file = "C:\\R\\LS305中醫\\Yin_def_locus.xlsx")
+write.xlsx(Yang_def_locus, file = "C:\\R\\LS305中醫\\Yang_def_locus.xlsx")
+write.xlsx(Phlegm_stasis_locus, file = "C:\\R\\LS305中醫\\Phlegm_stasis_locus.xlsx")
