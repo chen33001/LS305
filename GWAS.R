@@ -43,7 +43,7 @@ covar_cons_sex_age <- cbind.data.frame(rm.TCMmerge3$TWB1_ID, covar_cons_sex_age)
 names(covar_cons_sex_age) <- c("FID" ,"IID","Sex","Age" )
 
 #作圖-----------------------------------------------------------------------------------
-setwd("C:/R/GWAS")
+setwd("C:\\GWAS")
 result <- read.table("result.assoc.logistic", header = TRUE)
 pvalue <- result[, c("SNP", "CHR", "BP", "P")]
 #manhattan plot 
@@ -62,109 +62,78 @@ subset(pvalue, P == min(P))
 Yin_def_locus <- subset(pvalue, P < 1E-5)
 
 #Yin_def subset region
-#Yin_def chr 1
-locus <- subset(pvalue, CHR == 1 & BP < 88843951 + 400000 & BP > 88843951 - 400000)
-write.table(locus, "locus_1_rs994452.txt", append = FALSE, quote = FALSE, sep = "\t", 
+
+locus <- subset(pvalue, CHR == 1 & BP < 181508326 + 400000 & BP > 181508326 - 400000)
+write.table(locus, "locus_1_rs6681017.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-locus <- subset(pvalue, CHR == 1 & BP < 88847231 + 400000 & BP > 88847231 - 400000)
-write.table(locus, "locus_1_rs449198.txt", append = FALSE, quote = FALSE, sep = "\t", 
+
+locus <- subset(pvalue, CHR == 1 & BP < 181509821 + 400000 & BP > 181509821 - 400000)
+write.table(locus, "locus_1_rs6685078.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-locus <- subset(pvalue, CHR == 1 & BP < 88853812 + 400000 & BP > 88853812 - 400000)
-write.table(locus, "locus_1_rs448483.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-locus <- subset(pvalue, CHR == 1 & BP < 88864082 + 400000 & BP > 88864082 - 400000)
-write.table(locus, "locus_1_rs4656043.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-#Yin_def chr 2
 
 locus <- subset(pvalue, CHR == 2 & BP < 121306440 + 400000 & BP > 121306440 - 400000)
 write.table(locus, "locus_2_rs17050272.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-#Yin_def chr 8
-locus <- subset(pvalue, CHR == 8 & BP < 3103110 + 400000 & BP > 3103110 - 400000)
-write.table(locus, "locus_8_rs4875411.txt", append = FALSE, quote = FALSE, sep = "\t", 
+
+locus <- subset(pvalue, CHR == 5 & BP < 168212096 + 400000 & BP > 168212096 - 400000)
+write.table(locus, "locus_5_rs10475891.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-#Error: SNP affx-32045388 not recognized as SNP
-locus <- subset(pvalue, CHR == 8 & BP < 3117884 + 400000 & BP > 3117884 - 400000)
-write.table(locus, "locus_8_Affx-32045388.txt", append = FALSE, quote = FALSE, sep = "\t", 
+
+locus <- subset(pvalue, CHR == 10 & BP < 60793767 + 400000 & BP > 60793767 - 400000)
+write.table(locus, "locus_10_rs10826267.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-locus <- subset(pvalue, CHR == 8 & BP < 5250660 + 400000 & BP > 5250660 - 400000)
-write.table(locus, "locus_8_rs10101849.txt", append = FALSE, quote = FALSE, sep = "\t", 
+
+locus <- subset(pvalue, CHR == 10 & BP < 132345848 + 400000 & BP > 132345848 - 400000)
+write.table(locus, "locus_10_rs1334910.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-#Yin_def chr 17
-locus <- subset(pvalue, CHR == 17 & BP < 6168235 + 400000 & BP > 6168235 - 400000)
-write.table(locus, "locus_17_rs1811229.txt", append = FALSE, quote = FALSE, sep = "\t", 
+
+locus <- subset(pvalue, CHR == 14 & BP < 70839635 + 400000 & BP > 70839635 - 400000)
+write.table(locus, "locus_14_rs3742916.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-locus <- subset(pvalue, CHR == 17 & BP < 6169183 + 400000 & BP > 6169183 - 400000)
-write.table(locus, "locus_17_rs56987007.txt", append = FALSE, quote = FALSE, sep = "\t", 
+
+locus <- subset(pvalue, CHR == 17 & BP < 2859272 + 400000 & BP > 2859272 - 400000)
+write.table(locus, "locus_17_rs8077217.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-#Yin_def chr 18
-locus <- subset(pvalue, CHR == 18 & BP < 20188276 + 400000 & BP > 20188276 - 400000)
-write.table(locus, "locus_18_rs4378711.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-locus <- subset(pvalue, CHR == 18 & BP < 20205437 + 400000 & BP > 20205437 - 400000)
-write.table(locus, "locus_18_rs12326842.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-locus <- subset(pvalue, CHR == 18 & BP < 20219787 + 400000 & BP > 20219787 - 400000)
-write.table(locus, "locus_18_rs34241323.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-locus <- subset(pvalue, CHR == 18 & BP < 20223695 + 400000 & BP > 20223695 - 400000)
-write.table(locus, "locus_18_rs11661542.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-#Yin_def chr 21
-locus <- subset(pvalue, CHR == 21 & BP < 33203899 + 400000 & BP > 33203899 - 400000)
-write.table(locus, "locus_21_rs56269846.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-locus <- subset(pvalue, CHR == 21 & BP < 33223437 + 400000 & BP > 33223437 - 400000)
-write.table(locus, "locus_21_rs80147001.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
 
 # Yang_def:find another site--------------------------------------
 Yang_def_locus <- subset(pvalue, P < 1E-5)
-Yang_def_locus
 # Yang_def subset region
-#Yang_def chr 4
-locus <- subset(pvalue, CHR == 4 & BP < 88771325 + 400000 & BP > 88771325 - 400000)
-write.table(locus, "locus_4_rs10032322.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-#Yang_def chr 10
-locus <- subset(pvalue, CHR == 10 & BP < 135301270 + 400000 & BP > 135301270 - 400000)
-write.table(locus, "locus_10_rs1590821.txt", append = FALSE, quote = FALSE, sep = "\t", 
+
+locus <- subset(pvalue, CHR == 2 & BP < 237554988 + 400000 & BP > 237554988 - 400000)
+write.table(locus, "locus_2_rs1796444.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-locus <- subset(pvalue, CHR == 10 & BP < 135333618 + 400000 & BP > 135333618 - 400000)
-write.table(locus, "locus_10_rs4838767.txt", append = FALSE, quote = FALSE, sep = "\t", 
+locus <- subset(pvalue, CHR == 8 & BP < 96221214 + 400000 & BP > 96221214 - 400000)
+write.table(locus, "locus_8_rs880642.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-locus <- subset(pvalue, CHR == 10 & BP < 135351137 + 400000 & BP > 135351137 - 400000)
-write.table(locus, "locus_10_rs2070676.txt", append = FALSE, quote = FALSE, sep = "\t", 
+locus <- subset(pvalue, CHR == 11 & BP < 92605599 + 400000 & BP > 92605599 - 400000)
+write.table(locus, "locus_11_rs77906267.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-locus <- subset(pvalue, CHR == 10 & BP < 135351362 + 400000 & BP > 135351362 - 400000)
-write.table(locus, "locus_10_rs2515641.txt", append = FALSE, quote = FALSE, sep = "\t", 
+locus <- subset(pvalue, CHR == 13 & BP < 94870765 + 400000 & BP > 94870765 - 400000)
+write.table(locus, "locus_13_rs1572050.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-locus <- subset(pvalue, CHR == 10 & BP < 135370005 + 400000 & BP > 135370005 - 400000)
-write.table(locus, "locus_10_rs12257368.txt", append = FALSE, quote = FALSE, sep = "\t", 
+locus <- subset(pvalue, CHR == 15 & BP < 38847023 + 400000 & BP > 38847023 - 400000)
+write.table(locus, "locus_15_rs117840856.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-#Yang_def chr 21
-locus <- subset(pvalue, CHR == 21 & BP < 33552301 + 400000 & BP > 33552301 - 400000)
-write.table(locus, "locus_21_rs11088205.txt", append = FALSE, quote = FALSE, sep = "\t", 
+locus <- subset(pvalue, CHR == 17 & BP < 10143039 + 400000 & BP > 10143039 - 400000)
+write.table(locus, "locus_17_rs6503300.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+
+locus <- subset(pvalue, CHR == 22 & BP < 26416570 + 400000 & BP > 26416570 - 400000)
+write.table(locus, "locus_22_rs1033589.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
 
@@ -172,13 +141,30 @@ write.table(locus, "locus_21_rs11088205.txt", append = FALSE, quote = FALSE, sep
 Phlegm_stasis_locus <- subset(pvalue, P < 1E-5)
 
 # Phlegm_stasis subset region
-locus <- subset(pvalue, CHR == 2 & BP < 4354172 + 400000 & BP > 4354172 - 400000)
-write.table(locus, "locus_2_rs58835236.txt", append = FALSE, quote = FALSE, sep = "\t", 
+locus <- subset(pvalue, CHR == 5 & BP < 168212096 + 400000 & BP > 168212096 - 400000)
+write.table(locus, "locus_5_rs10475891.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
 
-locus <- subset(pvalue, CHR == 4 & BP < 20895013 + 400000 & BP > 20895013 - 400000)
-write.table(locus, "locus_4_rs7670834.txt", append = FALSE, quote = FALSE, sep = "\t", 
+locus <- subset(pvalue, CHR == 8 & BP < 94168269 + 400000 & BP > 94168269 - 400000)
+write.table(locus, "locus_8_rs11994583.txt", append = FALSE, quote = FALSE, sep = "\t", 
             row.names = FALSE, col.names = TRUE)
+
+locus <- subset(pvalue, CHR == 8 & BP < 94169379 + 400000 & BP > 94169379 - 400000)
+write.table(locus, "locus_8_rs278568.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+locus <- subset(pvalue, CHR == 10 & BP < 115381747 + 400000 & BP > 115381747 - 400000)
+write.table(locus, "locus_10_rs868738.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+locus <- subset(pvalue, CHR == 14 & BP < 60209188 + 400000 & BP > 60209188 - 400000)
+write.table(locus, "locus_14_rs10138254.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+locus <- subset(pvalue, CHR == 22 & BP < 26416570 + 400000 & BP > 26416570 - 400000)
+write.table(locus, "locus_22_rs1033589.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
 #資料匯出-----------------------------------------------------------------------
 write.table(GWAS_cons, file = "C:\\R\\LS305中醫\\GWAS_cons.txt",sep = "\t",row.names = F,quote = F)
 write.table(rm.col_same,file = "C:\\R\\LS305中醫\\list.txt",sep = "\t",row.names = F,quote = F)
