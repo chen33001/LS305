@@ -184,6 +184,6 @@ write.table(GWAS_cons, file = "C:\\R\\LS305中醫\\GWAS_cons.txt",sep = "\t",row
 write.table(rm.col_same,file = "C:\\R\\LS305中醫\\list.txt",sep = "\t",row.names = F,quote = F)
 write.table(covar_cons_sex_age,file = "C:\\R\\LS305中醫\\covar_cons.txt",sep = "\t",row.names = F,quote = F)
 
-write.xlsx(Yin_def_locus, file = "C:\\R\\LS305中醫\\Yin_def_locus.xlsx")
-write.xlsx(Yang_def_locus, file = "C:\\R\\LS305中醫\\Yang_def_locus.xlsx")
-write.xlsx(Phlegm_stasis_locus, file = "C:\\R\\LS305中醫\\Phlegm_stasis_locus.xlsx")
+write.xlsx(Yin_def_locus, file = "C:\\R\\GWAS\\Yin_def_locus.xlsx")
+write.xlsx(Yang_def_locus, file = "C:\\R\\GWAS\\Yang_def_locus.xlsx")
+write.xlsx(Phlegm_stasis_locus, file = "C:\\R\\GWAS\\Phlegm_stasis_locus.xlsx")
