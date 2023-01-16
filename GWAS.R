@@ -43,7 +43,7 @@ covar_cons_sex_age <- cbind.data.frame(rm.TCMmerge3$TWB1_ID, covar_cons_sex_age)
 names(covar_cons_sex_age) <- c("FID" ,"IID","Sex","Age" )
 
 #作圖-----------------------------------------------------------------------------------
-setwd("C:\\GWAS")
+setwd("C:\\R\\GWAS")
 result <- read.table("result.assoc.logistic", header = TRUE)
 pvalue <- result[, c("SNP", "CHR", "BP", "P")]
 #manhattan plot 
