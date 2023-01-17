@@ -62,45 +62,13 @@ Yin_def_locus <- subset(pvalue, P < 1E-5)
 
 #Yin_def subset region
 
-locus <- subset(pvalue, CHR == 1 & BP < 181508326 + 400000 & BP > 181508326 - 400000)
-write.table(locus, "locus_1_rs6681017.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-
-locus <- subset(pvalue, CHR == 1 & BP < 181509821 + 400000 & BP > 181509821 - 400000)
-write.table(locus, "locus_1_rs6685078.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-
-locus <- subset(pvalue, CHR == 2 & BP < 121306440 + 400000 & BP > 121306440 - 400000)
-write.table(locus, "locus_2_rs17050272.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-
-locus <- subset(pvalue, CHR == 5 & BP < 168212096 + 400000 & BP > 168212096 - 400000)
-write.table(locus, "locus_5_rs10475891.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-
-locus <- subset(pvalue, CHR == 10 & BP < 60793767 + 400000 & BP > 60793767 - 400000)
-write.table(locus, "locus_10_rs10826267.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-
-locus <- subset(pvalue, CHR == 10 & BP < 132345848 + 400000 & BP > 132345848 - 400000)
-write.table(locus, "locus_10_rs1334910.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-
-locus <- subset(pvalue, CHR == 14 & BP < 70839635 + 400000 & BP > 70839635 - 400000)
-write.table(locus, "locus_14_rs3742916.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-
-locus <- subset(pvalue, CHR == 17 & BP < 2859272 + 400000 & BP > 2859272 - 400000)
-write.table(locus, "locus_17_rs8077217.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
+#迴圈
+for(i in 1:length(Yin_def_locus$BP)){
+  locus <- subset(pvalue, CHR == 1 & BP < Yin_def_locus[i,3] + 400000 & BP > Yin_def_locus[i,3] - 400000)
+  write.table(locus, sprintf("locus_%d_%s.txt",Yin_def_locus[i,2] ,Yin_def_locus[i,1]), append = FALSE, quote = FALSE, sep = "\t", 
+              row.names = FALSE, col.names = TRUE)
+  
+}
 
 # Yang_def:find another site--------------------------------------
 Yang_def_locus <- subset(pvalue, P < 1E-5)
