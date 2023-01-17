@@ -64,7 +64,7 @@ Yin_def_locus <- subset(pvalue, P < 1E-5)
 
 #迴圈
 for(i in 1:length(Yin_def_locus$BP)){
-  locus <- subset(pvalue, CHR == 1 & BP < Yin_def_locus[i,3] + 400000 & BP > Yin_def_locus[i,3] - 400000)
+  locus <- subset(pvalue, CHR == Yin_def_locus[i,2] & BP < Yin_def_locus[i,3] + 400000 & BP > Yin_def_locus[i,3] - 400000)
   write.table(locus, sprintf("locus_%d_%s.txt",Yin_def_locus[i,2] ,Yin_def_locus[i,1]), append = FALSE, quote = FALSE, sep = "\t", 
               row.names = FALSE, col.names = TRUE)
   
