@@ -74,65 +74,28 @@ for(i in 1:length(Yin_def_locus$BP)){
 Yang_def_locus <- subset(pvalue, P < 1E-5)
 # Yang_def subset region
 
-locus <- subset(pvalue, CHR == 2 & BP < 237554988 + 400000 & BP > 237554988 - 400000)
-write.table(locus, "locus_2_rs1796444.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
 
-locus <- subset(pvalue, CHR == 8 & BP < 96221214 + 400000 & BP > 96221214 - 400000)
-write.table(locus, "locus_8_rs880642.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-locus <- subset(pvalue, CHR == 11 & BP < 92605599 + 400000 & BP > 92605599 - 400000)
-write.table(locus, "locus_11_rs77906267.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-locus <- subset(pvalue, CHR == 13 & BP < 94870765 + 400000 & BP > 94870765 - 400000)
-write.table(locus, "locus_13_rs1572050.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-locus <- subset(pvalue, CHR == 15 & BP < 38847023 + 400000 & BP > 38847023 - 400000)
-write.table(locus, "locus_15_rs117840856.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-locus <- subset(pvalue, CHR == 17 & BP < 10143039 + 400000 & BP > 10143039 - 400000)
-write.table(locus, "locus_17_rs6503300.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-
-locus <- subset(pvalue, CHR == 22 & BP < 26416570 + 400000 & BP > 26416570 - 400000)
-write.table(locus, "locus_22_rs1033589.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
+#迴圈
+for(i in 1:length(Yang_def_locus$BP)){
+  locus <- subset(pvalue, CHR == Yang_def_locus[i,2] & BP < Yang_def_locus[i,3] + 400000 & BP > Yang_def_locus[i,3] - 400000)
+  write.table(locus, sprintf("locus_%d_%s.txt",Yang_def_locus[i,2] ,Yang_def_locus[i,1]), append = FALSE, quote = FALSE, sep = "\t", 
+              row.names = FALSE, col.names = TRUE)
+  
+}
 
 
 # Phlegm_stasis:find another site------------------------------------
 Phlegm_stasis_locus <- subset(pvalue, P < 1E-5)
 
 # Phlegm_stasis subset region
-locus <- subset(pvalue, CHR == 5 & BP < 168212096 + 400000 & BP > 168212096 - 400000)
-write.table(locus, "locus_5_rs10475891.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
 
-locus <- subset(pvalue, CHR == 8 & BP < 94168269 + 400000 & BP > 94168269 - 400000)
-write.table(locus, "locus_8_rs11994583.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-locus <- subset(pvalue, CHR == 8 & BP < 94169379 + 400000 & BP > 94169379 - 400000)
-write.table(locus, "locus_8_rs278568.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-locus <- subset(pvalue, CHR == 10 & BP < 115381747 + 400000 & BP > 115381747 - 400000)
-write.table(locus, "locus_10_rs868738.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-locus <- subset(pvalue, CHR == 14 & BP < 60209188 + 400000 & BP > 60209188 - 400000)
-write.table(locus, "locus_14_rs10138254.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-locus <- subset(pvalue, CHR == 22 & BP < 26416570 + 400000 & BP > 26416570 - 400000)
-write.table(locus, "locus_22_rs1033589.txt", append = FALSE, quote = FALSE, sep = "\t", 
-            row.names = FALSE, col.names = TRUE)
-
-
+#迴圈
+for(i in 1:length(Phlegm_stasis_locus$BP)){
+  locus <- subset(pvalue, CHR == Phlegm_stasis_locus[i,2] & BP < Phlegm_stasis_locus[i,3] + 400000 & BP > Phlegm_stasis_locus[i,3] - 400000)
+  write.table(locus, sprintf("locus_%d_%s.txt",Phlegm_stasis_locus[i,2] ,Phlegm_stasis_locus[i,1]), append = FALSE, quote = FALSE, sep = "\t", 
+              row.names = FALSE, col.names = TRUE)
+  
+}
 
 
 #資料匯出--------------------------------------------------------------------------
