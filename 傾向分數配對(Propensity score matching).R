@@ -3,10 +3,14 @@ library(dplyr)
 library(ggplot2)
 library(gridExtra)
 
-#第1步Difference-in-means: pre-treatment covariates
+#資料讀取
 PSM <- read.csv("C:\\R\\LS305中醫\\TCM_Anova.csv",fileEncoding = "big5")
+
 PSM_COV <- c("BODY_WEIGHT","BMI","BODY_FAT_RATE","BODY_WAISTLINE","BODY_BUTTOCKS","WHR",
              "CREATININE","URIC_ACID")
+
+
+#第1步Difference-in-means: pre-treatment covariates
 PSM %>%
   group_by(Yin_def) %>%
   select(one_of(PSM_COV)) %>%
@@ -42,6 +46,7 @@ mod_match <- matchit(Yin_def ~ BODY_WEIGHT + BMI + BODY_FAT_RATE + BODY_WAISTLIN
                      method = "nearest", data = PSM_nomiss)
 dta_m <- match.data(mod_match)
 dim(dta_m)
+
 #第4步Examining covariate balance in the matched sample
 fn_bal <- function(dta, variable) {
   dta$variable <- dta[, variable]
