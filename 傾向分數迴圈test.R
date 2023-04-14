@@ -205,6 +205,63 @@ grid.arrange(
   fn_bal(dta_m3, "BODY_BUTTOCKS"),
   nrow = 3, widths = c(1, 0.8)
 )
+#第4.2 Difference-in-means
+#陰虛
+dta_m1 %>%
+  group_by(Yin_def) %>%
+  select(one_of(PSM_COV)) %>%
+  summarise_all(list(mean))
+
+lapply(PSM_COV, function(v) {
+  t.test(dta_m1[, v] ~ dta_m1$Yin_def)
+})
+#陽虛
+dta_m2 %>%
+  group_by(Yang_def) %>%
+  select(one_of(PSM_COV)) %>%
+  summarise_all(list(mean))
+
+lapply(PSM_COV, function(v) {
+  t.test(dta_m2[, v] ~ dta_m2$Yang_def)
+})
+#痰盂
+dta_m3 %>%
+  group_by(Phlegm_stasis) %>%
+  select(one_of(PSM_COV)) %>%
+  summarise_all(list(mean))
+
+lapply(PSM_COV, function(v) {
+  t.test(dta_m3[, v] ~ dta_m3$Phlegm_stasis)
+})
+#第5步Estimating treatment effects
+#陰虛
+with(dta_m1, t.test(BMI ~ Yin_def))
+
+lm_treat1 <- lm(BMI ~ Yin_def, data = dta_m1)
+summary(lm_treat1)
+
+lm_treat2 <- lm(BMI ~ Yin_def + BODY_WEIGHT  + BODY_FAT_RATE + BODY_WAISTLINE + BODY_BUTTOCKS, data = dta_m1)
+summary(lm_treat2)
+
+#陽虛
+with(dta_m2, t.test(BMI ~ Yang_def))
+
+lm_treat1 <- lm(BMI ~ Yang_def, data = dta_m2)
+summary(lm_treat1)
+
+lm_treat2 <- lm(BMI ~ Yang_def + BODY_WEIGHT  + BODY_FAT_RATE + BODY_WAISTLINE + BODY_BUTTOCKS, data = dta_m2)
+summary(lm_treat2)
+
+#痰盂
+with(dta_m3, t.test(BMI ~ Phlegm_stasis))
+
+lm_treat1 <- lm(BMI ~ Phlegm_stasis, data = dta_m3)
+summary(lm_treat1)
+
+lm_treat2 <- lm(BMI ~ Phlegm_stasis + BODY_WEIGHT  + BODY_FAT_RATE + BODY_WAISTLINE + BODY_BUTTOCKS, data = dta_m3)
+summary(lm_treat2)
+
+
 write.csv(dta_m1,file='C:\\Users\\user\\Desktop\\傾向分數估計\\陰虛傾向分數估計.csv',fileEncoding = "Big5")
 write.csv(dta_m2,file='C:\\Users\\user\\Desktop\\傾向分數估計\\陽虛傾向分數估計.csv',fileEncoding = "Big5")
 write.csv(dta_m3,file='C:\\Users\\user\\Desktop\\傾向分數估計\\痰盂傾向分數估計.csv',fileEncoding = "Big5")
