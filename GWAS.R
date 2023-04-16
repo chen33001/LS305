@@ -55,16 +55,16 @@ pvalue_3 <- result_3[, c("SNP", "CHR", "BP", "P")]
 
 #manhattan plot
 for(i in 1:3){
-  CMplot(str_c("pvalue_",i), plot.type = "m", LOG10 = TRUE, threshold = 1e-5, chr.den.col = NULL, 
-         file = "jpg", memo = "", dpi = 300, file.output = TRUE, verbose = FALSE)
-  #QQ plot
-  CMplot(str_c("pvalue_",i), plot.type = "q", conf.int.col = NULL, box = TRUE, 
-         file = "jpg", memo = "", dpi = 300, file.output = TRUE, verbose = FALSE)
-  median((str_c("result_",i)$STAT)^2)/0.455
-  
-  #subset significant region for LocusZoom----------------------------------------
-  # find min p-value
-  subset(str_c("pvalue_",i), P == min(P))
+CMplot(str_c("pvalue_",i), plot.type = "m", LOG10 = TRUE, threshold = 1e-5, chr.den.col = NULL, 
+       file = "jpg", memo = "", dpi = 300, file.output = TRUE, verbose = FALSE)
+#QQ plot
+CMplot(str_c("pvalue_",i), plot.type = "q", conf.int.col = NULL, box = TRUE, 
+       file = "jpg", memo = "", dpi = 300, file.output = TRUE, verbose = FALSE)
+median((str_c("result_",i)$STAT)^2)/0.455
+
+#subset significant region for LocusZoom----------------------------------------
+# find min p-value
+subset(str_c("pvalue_",i), P == min(P))
 }
 # Yin_def:find another site---------------------------------------
 Yin_def_locus <- subset(pvalue_1, P < 1E-5)
@@ -79,13 +79,13 @@ for(i in 1:length(Yin_def_locus$BP)){
 }
 
 # Yang_def:find another site--------------------------------------
-Yang_def_locus <- subset(pvalue_3, P < 1E-5)
+Yang_def_locus <- subset(pvalue, P < 1E-5)
 # Yang_def subset region
 
 
 #迴圈
 for(i in 1:length(Yang_def_locus$BP)){
-  locus <- subset(pvalue_3, CHR == Yang_def_locus[i,2] & BP < Yang_def_locus[i,3] + 400000 & BP > Yang_def_locus[i,3] - 400000)
+  locus <- subset(pvalue, CHR == Yang_def_locus[i,2] & BP < Yang_def_locus[i,3] + 400000 & BP > Yang_def_locus[i,3] - 400000)
   write.table(locus, sprintf("locus_%d_%s.txt",Yang_def_locus[i,2] ,Yang_def_locus[i,1]), append = FALSE, quote = FALSE, sep = "\t", 
               row.names = FALSE, col.names = TRUE)
   
@@ -93,13 +93,13 @@ for(i in 1:length(Yang_def_locus$BP)){
 
 
 # Phlegm_stasis:find another site------------------------------------
-Phlegm_stasis_locus <- subset(pvalue_2, P < 1E-5)
+Phlegm_stasis_locus <- subset(pvalue, P < 1E-5)
 
 # Phlegm_stasis subset region
 
 #迴圈
 for(i in 1:length(Phlegm_stasis_locus$BP)){
-  locus <- subset(pvalue_2, CHR == Phlegm_stasis_locus[i,2] & BP < Phlegm_stasis_locus[i,3] + 400000 & BP > Phlegm_stasis_locus[i,3] - 400000)
+  locus <- subset(pvalue, CHR == Phlegm_stasis_locus[i,2] & BP < Phlegm_stasis_locus[i,3] + 400000 & BP > Phlegm_stasis_locus[i,3] - 400000)
   write.table(locus, sprintf("locus_%d_%s.txt",Phlegm_stasis_locus[i,2] ,Phlegm_stasis_locus[i,1]), append = FALSE, quote = FALSE, sep = "\t", 
               row.names = FALSE, col.names = TRUE)
   
