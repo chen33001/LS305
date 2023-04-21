@@ -2,10 +2,24 @@ library(MatchIt)
 library(dplyr)
 library(ggplot2)
 library(gridExtra)
-
+library(tidyverse)
+library(data.table)
 
 #資料讀取
-PSM <- read.csv("C:\\R\\LS305中醫\\TCM_Anova.csv",fileEncoding = "big5")
+TCM_Anova <- read.csv("C:\\R\\LS305中醫\\TCM_Anova.csv",fileEncoding = "big5")
+lab_info_input <- read.csv("C:\\R\\LS305中醫\\lab_info.csv",fileEncoding = "big5")
+
+#資料清洗
+names(lab_info_input)[1] <- "Release_No"
+lab_info_firstwash <- subset(lab_info_input,select=c("Release_No","TWB1_ID","FOLLOW"))
+lab_info_secondwash <- subset(lab_info_firstwash, FOLLOW=="Baseline")
+lab_info_secondwash<-data.table(lab_info_secondwash)
+lab_info <- lab_info_secondwash[grepl('TWB',TWB1_ID)]
+PSM <- merge(lab_info,TCM_Anova)
+PSM <-subset(PSM, select = c(-X))
+PSM <- as.data.frame(PSM)
+
+
 
 #欲觀察的變數
 PSM_COV <- c("BODY_WEIGHT","BMI","BODY_FAT_RATE","BODY_WAISTLINE","BODY_BUTTOCKS","WHR",
@@ -19,7 +33,7 @@ PSM %>%
   summarise_all(list(~mean(., na.rm = T)))
 
 lapply(PSM_COV, function(v) {
-  t.test(PSM[, v] ~ PSM[, 'Yin_def'])
+  t.test(PSM[ ,v] ~ PSM[ ,'Yin_def'])
 })
 #陽虛
 PSM %>%
