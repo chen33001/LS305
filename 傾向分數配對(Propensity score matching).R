@@ -117,7 +117,7 @@ prs_df3 %>%
 #第3步Executing a matching algorithm
 #陰虛
 PSM_nomiss <- PSM %>%  # MatchIt does not allow missing values
-  select(BMI, Yin_def, one_of(PSM_COV)) %>%
+  select(Release_No, Yin_def, one_of(PSM_COV)) %>%
   na.omit()
 
 mod_match1 <- matchit(Yin_def ~ BODY_WEIGHT + BMI + BODY_FAT_RATE + BODY_WAISTLINE + BODY_BUTTOCKS,
@@ -128,7 +128,7 @@ dim(dta_m1)
 #陽虛
 
 PSM_nomiss <- PSM %>%  # MatchIt does not allow missing values
-  select(BMI, Yang_def, one_of(PSM_COV)) %>%
+  select(Release_No, Yang_def, one_of(PSM_COV)) %>%
   na.omit()
 
 mod_match2 <- matchit(Yang_def ~ BODY_WEIGHT + BMI + BODY_FAT_RATE + BODY_WAISTLINE + BODY_BUTTOCKS,
@@ -139,7 +139,7 @@ dim(dta_m2)
 #痰盂
 
 PSM_nomiss <- PSM %>%  # MatchIt does not allow missing values
-  select(BMI, Phlegm_stasis, one_of(PSM_COV)) %>%
+  select(Release_No, Phlegm_stasis, one_of(PSM_COV)) %>%
   na.omit()
 
 mod_match3 <- matchit(Phlegm_stasis ~ BODY_WEIGHT + BMI + BODY_FAT_RATE + BODY_WAISTLINE + BODY_BUTTOCKS,
