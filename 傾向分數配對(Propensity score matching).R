@@ -2,10 +2,24 @@ library(MatchIt)
 library(dplyr)
 library(ggplot2)
 library(gridExtra)
-
+library(tidyverse)
+library(data.table)
 
 #資料讀取
-PSM <- read.csv("C:\\R\\LS305中醫\\TCM_Anova.csv",fileEncoding = "big5")
+TCM_Anova <- read.csv("C:\\R\\LS305中醫\\TCM_Anova.csv",fileEncoding = "big5")
+lab_info_input <- read.csv("C:\\R\\LS305中醫\\lab_info.csv",fileEncoding = "big5")
+
+#資料清洗
+names(lab_info_input)[1] <- "Release_No"
+lab_info_firstwash <- subset(lab_info_input,select=c("Release_No","TWB1_ID","FOLLOW"))
+lab_info_secondwash <- subset(lab_info_firstwash, FOLLOW=="Baseline")
+lab_info_secondwash<-data.table(lab_info_secondwash)
+lab_info <- lab_info_secondwash[grepl('TWB',TWB1_ID)]
+PSM <- merge(lab_info,TCM_Anova)
+PSM <-subset(PSM, select = c(-X))
+PSM <- as.data.frame(PSM)
+
+
 
 #欲觀察的變數
 PSM_COV <- c("BODY_WEIGHT","BMI","BODY_FAT_RATE","BODY_WAISTLINE","BODY_BUTTOCKS","WHR",
@@ -19,7 +33,7 @@ PSM %>%
   summarise_all(list(~mean(., na.rm = T)))
 
 lapply(PSM_COV, function(v) {
-  t.test(PSM[, v] ~ PSM[, 'Yin_def'])
+  t.test(PSM[ ,v] ~ PSM[ ,'Yin_def'])
 })
 #陽虛
 PSM %>%
@@ -103,7 +117,7 @@ prs_df3 %>%
 #第3步Executing a matching algorithm
 #陰虛
 PSM_nomiss <- PSM %>%  # MatchIt does not allow missing values
-  select(BMI, Yin_def, one_of(PSM_COV)) %>%
+  select(Release_No, Yin_def, one_of(PSM_COV)) %>%
   na.omit()
 
 mod_match1 <- matchit(Yin_def ~ BODY_WEIGHT + BMI + BODY_FAT_RATE + BODY_WAISTLINE + BODY_BUTTOCKS,
@@ -114,7 +128,7 @@ dim(dta_m1)
 #陽虛
 
 PSM_nomiss <- PSM %>%  # MatchIt does not allow missing values
-  select(BMI, Yang_def, one_of(PSM_COV)) %>%
+  select(Release_No, Yang_def, one_of(PSM_COV)) %>%
   na.omit()
 
 mod_match2 <- matchit(Yang_def ~ BODY_WEIGHT + BMI + BODY_FAT_RATE + BODY_WAISTLINE + BODY_BUTTOCKS,
@@ -125,7 +139,7 @@ dim(dta_m2)
 #痰盂
 
 PSM_nomiss <- PSM %>%  # MatchIt does not allow missing values
-  select(BMI, Phlegm_stasis, one_of(PSM_COV)) %>%
+  select(Release_No, Phlegm_stasis, one_of(PSM_COV)) %>%
   na.omit()
 
 mod_match3 <- matchit(Phlegm_stasis ~ BODY_WEIGHT + BMI + BODY_FAT_RATE + BODY_WAISTLINE + BODY_BUTTOCKS,
@@ -265,6 +279,81 @@ summary(lm_treat2)
 write.csv(dta_m1,file='C:\\Users\\user\\Desktop\\傾向分數估計\\陰虛傾向分數估計.csv',fileEncoding = "Big5")
 write.csv(dta_m2,file='C:\\Users\\user\\Desktop\\傾向分數估計\\陽虛傾向分數估計.csv',fileEncoding = "Big5")
 write.csv(dta_m3,file='C:\\Users\\user\\Desktop\\傾向分數估計\\痰盂傾向分數估計.csv',fileEncoding = "Big5")
+#轉換做GWAS需要的資料-----------------------------------------------------------
+lab_info_input <- read.csv("C:\\R\\lab_info.csv",fileEncoding = "big5")
+lab_info_input <- subset(lab_info_input,
+                             FOLLOW=="Baseline")
+names(lab_info_input)[1] <- "Release_No"
+  #陰虛
+yin_stasis <- read.csv("C:\\GWAS\\陰虛傾向分數估計.csv",fileEncoding = "big5")
+yin_stasis <- merge(yin_stasis,lab_info_input, by = "Release_No", all.x = T)
 
+yin_stasis_list  <-  subset(yin_stasis,select=c("TWB1_ID","TWB1_ID")) 
+write.table(yin_stasis_list,file='C:\\GWAS\\list_yin.txt',sep = "\t",row.names = F,
+            quote = F,fileEncoding = "Big5")
 
+yin_stasis_list <- subset(yin_stasis,select=c("TWB1_ID","TWB1_ID","Yin_def"))
+colnames(yin_stasis_list) <- c("FID","IID","Yin_def")
+yin_stasis_list$Yin_def[which(yin_stasis_list$Yin_def=="1")] <- 2
+yin_stasis_list$Yin_def[which(yin_stasis_list$Yin_def=="0")] <- 1
+write.table(yin_stasis_list,file='C:\\GWAS\\YIN_GWAS_cons.txt',sep = "\t",row.names = F,
+            quote = F,fileEncoding = "Big5")
 
+covar_yin  <-   subset(yin_stasis,select=c("TWB1_ID","TWB1_ID","BODY_WEIGHT",
+                                           "BMI","BODY_FAT_RATE","BODY_WAISTLINE",
+                                           "BODY_BUTTOCKS","WHR","CREATININE","URIC_ACID"))
+colnames(covar_yin) <- c("FID","IID","BODY_WEIGHT",
+                         "BMI","BODY_FAT_RATE","BODY_WAISTLINE",
+                         "BODY_BUTTOCKS","WHR","CREATININE","URIC_ACID")
+write.table(covar_yin,file='C:\\GWAS\\covar_yin.txt',sep = "\t",row.names = F,
+            quote = F,fileEncoding = "Big5")
+  #陽虛
+yang_stasis <- read.csv("C:\\GWAS\\陽虛傾向分數估計.csv",fileEncoding = "big5")
+
+yang_stasis <- merge(yang_stasis,lab_info_input, by = "Release_No", all.x = T)
+
+yang_stasis_list  <-  subset(yang_stasis,select=c("TWB1_ID","TWB1_ID")) 
+write.table(yang_stasis_list,file='C:\\GWAS\\list_yang.txt',sep = "\t",row.names = F,
+            quote = F,fileEncoding = "Big5")
+
+yang_stasis_list <- subset(yang_stasis,select=c("TWB1_ID","TWB1_ID","Yang_def"))
+colnames(yang_stasis_list) <- c("FID","IID","yang_def")
+yang_stasis_list$yang_def[which(yang_stasis_list$yang_def=="1")] <- 2
+yang_stasis_list$yang_def[which(yang_stasis_list$yang_def=="0")] <- 1
+write.table(yang_stasis_list,file='C:\\GWAS\\yang_GWAS_cons.txt',sep = "\t",row.names = F,
+            quote = F,fileEncoding = "Big5")
+
+covar_yang  <-   subset(yang_stasis,select=c("TWB1_ID","TWB1_ID","BODY_WEIGHT",
+                                           "BMI","BODY_FAT_RATE","BODY_WAISTLINE",
+                                           "BODY_BUTTOCKS","WHR","CREATININE","URIC_ACID"))
+colnames(covar_yang) <- c("FID","IID","BODY_WEIGHT",
+                         "BMI","BODY_FAT_RATE","BODY_WAISTLINE",
+                         "BODY_BUTTOCKS","WHR","CREATININE","URIC_ACID")
+write.table(covar_yang,file='C:\\GWAS\\covar_yang.txt',sep = "\t",row.names = F,
+            quote = F,fileEncoding = "Big5")
+
+  #痰瘀
+Phlegm_stasis <- read.csv("C:\\GWAS\\痰盂傾向分數估計.csv",fileEncoding = "big5")
+Phlegm_stasis <- merge(Phlegm_stasis,lab_info_input, by = "Release_No", all.x = T)
+
+Phlegm_stasis_list  <-  subset(Phlegm_stasis,select=c("TWB1_ID","TWB1_ID")) 
+write.table(Phlegm_stasis_list,file='C:\\GWAS\\list_Phlegm.txt',sep = "\t",row.names = F,
+            quote = F,fileEncoding = "Big5")
+
+Phlegm_stasis_list <- subset(Phlegm_stasis,select=c("TWB1_ID","TWB1_ID","Phlegm_stasis"))
+colnames(Phlegm_stasis_list) <- c("FID","IID","Phlegm_stasis")
+Phlegm_stasis_list$Phlegm_stasis[which(Phlegm_stasis_list$Phlegm_stasis=="1")] <- 2
+Phlegm_stasis_list$Phlegm_stasis[which(Phlegm_stasis_list$Phlegm_stasis=="0")] <- 1
+write.table(Phlegm_stasis_list,file='C:\\GWAS\\Phlegm_GWAS_cons.txt',sep = "\t",row.names = F,
+            quote = F,fileEncoding = "Big5")
+
+covar_yang  <-   subset(yang_stasis,select=c("TWB1_ID","TWB1_ID","BODY_WEIGHT",
+                                             "BMI","BODY_FAT_RATE","BODY_WAISTLINE",
+                                             "BODY_BUTTOCKS","WHR","CREATININE","URIC_ACID"))
+colnames(covar_yang) <- c("FID","IID","BODY_WEIGHT",
+                          "BMI","BODY_FAT_RATE","BODY_WAISTLINE",
+                          "BODY_BUTTOCKS","WHR","CREATININE","URIC_ACID")
+write.table(covar_yang,file='C:\\GWAS\\covar_Phlegm.txt',sep = "\t",row.names = F,
+            quote = F,fileEncoding = "Big5")
+
+#把序號對應成TWB編號------------------------------------------------------------
