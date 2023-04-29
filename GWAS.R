@@ -48,7 +48,6 @@ result_1 <- read.table("Yin_def_result.assoc.logistic", header = TRUE)
 result_2<- read.table("Phlegm_stasis_result.assoc.logistic", header = TRUE)
 result_3 <- read.table("Yang_def_result.assoc.logistic", header = TRUE)
 
-
 pvalue_1 <- result_1[, c("SNP", "CHR", "BP", "P")]
 pvalue_2 <- result_2[, c("SNP", "CHR", "BP", "P")]
 pvalue_3 <- result_3[, c("SNP", "CHR", "BP", "P")]
@@ -71,6 +70,7 @@ for (i in 1:3){
 }
 
 
+<<<<<<< Updated upstream
 #作圖迴圈失效-----------------
 CMplot(pvalue_1, plot.type = "m", LOG10 = TRUE, threshold = 1e-5, chr.den.col = NULL, 
        file = "jpg", file.name="yin_Manhtn.P", dpi = 300, file.output = TRUE, verbose = FALSE)
@@ -86,6 +86,8 @@ CMplot(pvalue_3, plot.type = "m", LOG10 = TRUE, threshold = 1e-5, chr.den.col = 
        file = "jpg", file.name="Yang_Manhtn.P", dpi = 300, file.output = TRUE, verbose = FALSE)
 CMplot(pvalue_3, plot.type = "q", conf.int.col = NULL, box = TRUE, 
        file = "jpg", file.name="_Yang", dpi = 300, file.output = TRUE, verbose = FALSE)
+=======
+>>>>>>> Stashed changes
 
 # Yin_def:find another site---------------------------------------
 Yin_def_locus <- subset(pvalue_1, P < 1E-5)

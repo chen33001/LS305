@@ -360,3 +360,4 @@ write.table(covar_yang,file='C:\\Users\\User\\Desktop\\傾向分數估計\\covar
 
 #把序號對應成TWB編號------------------------------------------------------------ 
 
+
