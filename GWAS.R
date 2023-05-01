@@ -1,48 +1,130 @@
 library(stringr)
 library(dplyr)
 library(CMplot)
+library(magrittr)
 
 #生菌讀取路徑:C:\\R\\      威甫讀取路徑:C:\\R\\LS305中醫\\
-#讀取資料---------------------------------------------------------------
-TCM_Anova <- read.csv("C:\\R\\LS305中醫\\TCM_Anova.csv",fileEncoding = "big5")
-TCMmerge3 <- read.csv("C:\\R\\LS305中醫\\TCMmerge3.csv",fileEncoding = "big5")
-TCM_group <- read.csv("C:\\R\\LS305中醫\\TCM_group.csv",fileEncoding = "big5")
-#資料清洗---------------------------------------------------------------
-TCM_Anova <- subset(TCM_Anova, select = c("Release_No","Yin_def","Yang_def","Phlegm_stasis"))
-TCMmerge3 <- subset(TCMmerge3, select = c("Release_No","TWB1_ID"))
-rm.TCMmerge3 <- TCMmerge3 %>% filter(TWB1_ID != "") %>% distinct()
-covar_cons <- merge(rm.TCMmerge3, TCM_group)
+#讀取做GWAS需要的資料----------------------------------------------------------- 
+lab_info_input <- read.csv("C:\\R\\LS305中醫\\lab_info.csv",fileEncoding = "big5")
+#陰虛
+yin_stasis <- read.csv("C:\\Users\\User\\Desktop\\傾向分數估計\\陰虛傾向分數估計.csv",fileEncoding = "big5")
+#陽虛
+yang_stasis <- read.csv("C:\\Users\\User\\Desktop\\傾向分數估計\\陽虛傾向分數估計.csv",fileEncoding = "big5")
+#痰盂
+Phlegm_stasis <- read.csv("C:\\Users\\User\\Desktop\\傾向分數估計\\痰盂傾向分數估計.csv",fileEncoding = "big5")
+
+#清洗做GWAS需要的資料，把序號對應成TWB編號-----------------------------------------------------------
+names(lab_info_input)[1] <- "Release_No"
+lab_info_wash <- lab_info_input %>% 
+                  subset(select=c("Release_No","TWB1_ID","FOLLOW")) %>% 
+                  subset(FOLLOW=="Baseline") %>%
+                  data.table()
+lab_info_input <- lab_info_wash[grepl('TWB',TWB1_ID)]
+
+#製作陰虛的list.txt資料---------------------------------------------------------
+#陰虛
+yin_stasis_list <- yin_stasis %<>%
+                  merge(lab_info_input, by = "Release_No", all.x = T) 
 
 
-#資料合併更改column名稱(FID跟IID相同的情況)------------------------------------------------------------------------
-rm.col_same <- cbind(rm.TCMmerge3$TWB1_ID, rm.TCMmerge3$TWB1_ID)
-rm.col_same <- data.frame(rm.col_same)
-GWAS_cons <- cbind(rm.col_same[,1], rm.col_same[,2],TCM_Anova[,2], TCM_Anova[,3], TCM_Anova[,4])
-GWAS_cons <- data.frame(GWAS_cons)
-names(GWAS_cons) <- c("FID" ,"IID","Yin_def","Yang_def","Phlegm_stasis")
-#去除GWAS重複列-----------------------------------------------------------------------
-GWAS_cons <- GWAS_cons %>% distinct()
-#修改Yin, Yang, phlegm(0 --> 1 1 --> 2)-------------------------------------------------------------------------------------
-#Yin------------------------
-GWAS_cons$Yin_def[which(GWAS_cons$Yin_def=="1")] <- 2
-GWAS_cons$Yin_def[which(GWAS_cons$Yin_def=="0")] <- 1
-#Yang----------------------------------------------
-GWAS_cons$Yang_def[which(GWAS_cons$Yang_def=="1")] <- 2
-GWAS_cons$Yang_def[which(GWAS_cons$Yang_def=="0")] <- 1
-#phlegm----------------------------------------------
-GWAS_cons$Phlegm_stasis[which(GWAS_cons$Phlegm_stasis=="1")] <- 2
-GWAS_cons$Phlegm_stasis[which(GWAS_cons$Phlegm_stasis=="0")] <- 1
+yin_stasis_list  <-  subset(yin_stasis_list,select=c("TWB1_ID","TWB1_ID"))  
+write.table(yin_stasis_list,file='C:\\Users\\User\\Desktop\\傾向分數估計\\list_yin.txt',sep = "\t",row.names = F, 
+            quote = F,fileEncoding = "Big5") 
 
-#covar_cons---log-----------------------------------------------------------------------------------------------
-covar_cons <- cbind(rm.TCMmerge3$Release_No, rm.TCMmerge3$TWB1_ID)
-covar_cons <- data.frame(covar_cons)
-names(covar_cons) <- c("Release_No", "TWB1_ID")
-covar_cons_sex_age <- merge(covar_cons, TCM_group, by = "Release_No")
-covar_cons_sex_age <- subset(covar_cons_sex_age[,2:4])
-covar_cons_sex_age <- cbind.data.frame(rm.TCMmerge3$TWB1_ID, covar_cons_sex_age)
-names(covar_cons_sex_age) <- c("FID" ,"IID","Sex","Age" )
+#製作YIN_GWAS_cons.txt
+YIN_GWAS_cons <- yin_stasis %>%
+                    subset(select=c("TWB1_ID","TWB1_ID","Yin_def"))
+#改欄位名稱
+colnames(YIN_GWAS_cons) <- c("FID","IID","Yin_def") 
+#改Yin_def的數值0->1, 1->2
+YIN_GWAS_cons$Yin_def[which(YIN_GWAS_cons$Yin_def=="1")] <- 2 
+YIN_GWAS_cons$Yin_def[which(YIN_GWAS_cons$Yin_def=="0")] <- 1 
+write.table(YIN_GWAS_cons,file='C:\\Users\\User\\Desktop\\傾向分數估計\\YIN_GWAS_cons.txt',sep = "\t",row.names = F, 
+            quote = F,fileEncoding = "Big5") 
 
-#作圖-----------------------------------------------------------------------------------
+#製作covar_yin.txt資料
+covar_yin  <- yin_stasis %>%
+              subset(select=c("TWB1_ID","TWB1_ID","BODY_WEIGHT", 
+                              "BMI","BODY_FAT_RATE","BODY_WAISTLINE", 
+                              "BODY_BUTTOCKS","WHR","CREATININE","URIC_ACID"))
+#改欄位名稱
+colnames(covar_yin) <- c("FID","IID","BODY_WEIGHT", 
+                         "BMI","BODY_FAT_RATE","BODY_WAISTLINE", 
+                         "BODY_BUTTOCKS","WHR","CREATININE","URIC_ACID") 
+write.table(covar_yin,file='C:\\Users\\user\\Desktop\\傾向分數估計\\covar_yin.txt',sep = "\t",row.names = F, 
+            quote = F,fileEncoding = "Big5") 
+
+#製作陽虛的list.txt資料---------------------------------------------------------------------
+#陽虛
+yang_stasis_list <- yang_stasis %<>%
+                    merge(lab_info_input, by = "Release_No", all.x = T) 
+
+
+yang_stasis_list  <-  subset(yang_stasis_list,select=c("TWB1_ID","TWB1_ID"))  
+write.table(yang_stasis_list,file='C:\\Users\\User\\Desktop\\傾向分數估計\\list_yang.txt',sep = "\t",row.names = F, 
+            quote = F,fileEncoding = "Big5") 
+
+#製作YANG_GWAS_cons.txt
+YANG_GWAS_cons <- yang_stasis %>%
+  subset(select=c("TWB1_ID","TWB1_ID","Yang_def"))
+#改欄位名稱
+colnames(YANG_GWAS_cons) <- c("FID","IID","Yang_def") 
+#改YANG_def的數值0->1, 1->2
+YANG_GWAS_cons$Yang_def[which(YANG_GWAS_cons$Yang_def=="1")] <- 2 
+YANG_GWAS_cons$Yang_def[which(YANG_GWAS_cons$Yang_def=="0")] <- 1 
+write.table(YANG_GWAS_cons,file='C:\\Users\\User\\Desktop\\傾向分數估計\\YANG_GWAS_cons.txt',sep = "\t",row.names = F, 
+            quote = F,fileEncoding = "Big5") 
+
+#製作covar_yang.txt資料
+covar_yang  <- yang_stasis %>%
+  subset(select=c("TWB1_ID","TWB1_ID","BODY_WEIGHT", 
+                  "BMI","BODY_FAT_RATE","BODY_WAISTLINE", 
+                  "BODY_BUTTOCKS","WHR","CREATININE","URIC_ACID"))
+#改欄位名稱
+colnames(covar_yang) <- c("FID","IID","BODY_WEIGHT", 
+                         "BMI","BODY_FAT_RATE","BODY_WAISTLINE", 
+                         "BODY_BUTTOCKS","WHR","CREATININE","URIC_ACID") 
+write.table(covar_yang,file='C:\\Users\\user\\Desktop\\傾向分數估計\\covar_yang.txt',sep = "\t",row.names = F, 
+            quote = F,fileEncoding = "Big5") 
+
+
+#製作痰盂的list.txt資料--------------------------------------------------------------
+Phlegm_stasis_list <- Phlegm_stasis %<>%
+                      merge(lab_info_input, by = "Release_No", all.x = T) 
+
+
+Phlegm_stasis_list  <-  subset(Phlegm_stasis_list,select=c("TWB1_ID","TWB1_ID"))  
+write.table(Phlegm_stasis_list,file='C:\\Users\\User\\Desktop\\傾向分數估計\\list_Phlegm.txt',sep = "\t",row.names = F, 
+            quote = F,fileEncoding = "Big5") 
+
+#製作Phlegm_GWAS_cons.txt
+Phlegm_GWAS_cons <- Phlegm_stasis %>%
+                    subset(select=c("TWB1_ID","TWB1_ID","Phlegm_stasis"))
+#改欄位名稱
+colnames(Phlegm_GWAS_cons) <- c("FID","IID","Phlegm_def") 
+#改Phlegm_def的數值0->1, 1->2
+Phlegm_GWAS_cons$Phlegm_def[which(Phlegm_GWAS_cons$Phlegm_def=="1")] <- 2 
+Phlegm_GWAS_cons$Phlegm_def[which(Phlegm_GWAS_cons$Phlegm_def=="0")] <- 1 
+write.table(Phlegm_GWAS_cons,file='C:\\Users\\User\\Desktop\\傾向分數估計\\Phlegm_GWAS_cons.txt',sep = "\t",row.names = F, 
+            quote = F,fileEncoding = "Big5") 
+
+#製作covar_Phlegm.txt資料
+covar_Phlegm  <- Phlegm_stasis %>%
+  subset(select=c("TWB1_ID","TWB1_ID","BODY_WEIGHT", 
+                  "BMI","BODY_FAT_RATE","BODY_WAISTLINE", 
+                  "BODY_BUTTOCKS","WHR","CREATININE","URIC_ACID"))
+#改欄位名稱
+colnames(covar_Phlegm) <- c("FID","IID","BODY_WEIGHT", 
+                          "BMI","BODY_FAT_RATE","BODY_WAISTLINE", 
+                          "BODY_BUTTOCKS","WHR","CREATININE","URIC_ACID") 
+write.table(covar_Phlegm,file='C:\\Users\\user\\Desktop\\傾向分數估計\\covar_Phlegm.txt',sep = "\t",row.names = F, 
+            quote = F,fileEncoding = "Big5") 
+
+
+
+
+
+#先去做Plink，跑出.logistic檔案後，再回來R作圖-----------------------------------------------------------------------------------
 setwd("C:\\R\\GWAS")
 result_1 <- read.table("Yin_def_result.assoc.logistic", header = TRUE)
 result_2<- read.table("Phlegm_stasis_result.assoc.logistic", header = TRUE)
