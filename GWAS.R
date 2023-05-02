@@ -120,100 +120,148 @@ colnames(covar_Phlegm) <- c("FID","IID","BODY_WEIGHT",
 write.table(covar_Phlegm,file='C:\\Users\\user\\Desktop\\傾向分數估計\\covar_Phlegm.txt',sep = "\t",row.names = F, 
             quote = F,fileEncoding = "Big5") 
 
+#先去做plink，跑出het檔案後，再回來R跑heterozygosity--------------------------------------------
+#做heterozygosity
+#陰虛-----------------------------------------------------------------
+setwd("C:\\R\\中醫體質_GWAS\\陰虛_GWAS")
+het <- read.table("het.het", header = TRUE)
+het$meanHet <- (het$N.NM. - het$O.HOM.) / het$N.NM.
+upplimit <- mean(het$meanHet) + (3 * sd(het$meanHet))
+lowlimit <- mean(het$meanHet) - (3 * sd(het$meanHet))
+remove <- het[which(het$meanHet < lowlimit | het$meanHet > upplimit), c("FID", "IID")]
+write.table(remove, "fail-het-qc.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = FALSE)
 
+#陽虛----------------------------------------------------
+setwd("C:\\R\\中醫體質_GWAS\\陽虛_GWAS")
+het <- read.table("het.het", header = TRUE)
+het$meanHet <- (het$N.NM. - het$O.HOM.) / het$N.NM.
+upplimit <- mean(het$meanHet) + (3 * sd(het$meanHet))
+lowlimit <- mean(het$meanHet) - (3 * sd(het$meanHet))
+remove <- het[which(het$meanHet < lowlimit | het$meanHet > upplimit), c("FID", "IID")]
+write.table(remove, "fail-het-qc.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = FALSE)
 
+#痰盂----------------------------------------------------
+setwd("C:\\R\\中醫體質_GWAS\\痰盂_GWAS")
+het <- read.table("het.het", header = TRUE)
+het$meanHet <- (het$N.NM. - het$O.HOM.) / het$N.NM.
+upplimit <- mean(het$meanHet) + (3 * sd(het$meanHet))
+lowlimit <- mean(het$meanHet) - (3 * sd(het$meanHet))
+remove <- het[which(het$meanHet < lowlimit | het$meanHet > upplimit), c("FID", "IID")]
+write.table(remove, "fail-het-qc.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = FALSE)
+#做完heterozygosity後，跑plink，做出pca.eigenvec檔案後，再回來做combin_PCA_變數.R---------------------------------------------------
 
+#跑combin_PCA_變數.R------------------------------------
+#陰虛------------------------------------------------------------------------------------
+setwd ("C:\\R\\中醫體質_GWAS\\陰虛_GWAS")
+pc  <- read.table("pca.eigenvec", header = TRUE)
+covar <-read.table("covar_yin.txt", header = TRUE)
+covar_1 <- merge(covar, pc, by = c("FID", "IID"))
+covar_2 <- covar_1[, c("FID", "IID", "FID","IID","BODY_WEIGHT", 
+                       "BMI","BODY_FAT_RATE","BODY_WAISTLINE", 
+                       "BODY_BUTTOCKS","WHR","CREATININE","URIC_ACID", paste0("PC", 1:10, sep = ""))]
+write.table(covar_2, "Yin_covariate.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
 
+#陽虛---------------------------------------------------------------------------------
+setwd ("C:\\R\\中醫體質_GWAS\\陽虛_GWAS")
+pc  <- read.table("pca.eigenvec", header = TRUE)
+covar <-read.table("covar_yang.txt", header = TRUE)
+covar_1 <- merge(covar, pc, by = c("FID", "IID"))
+covar_2 <- covar_1[, c("FID", "IID","FID","IID","BODY_WEIGHT", 
+                       "BMI","BODY_FAT_RATE","BODY_WAISTLINE", 
+                       "BODY_BUTTOCKS","WHR","CREATININE","URIC_ACID", paste0("PC", 1:10, sep = ""))]
+write.table(covar_2, "Yang_covariate.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+#痰盂----------------------------------------------------------------------------------
+setwd ("C:\\R\\中醫體質_GWAS\\痰盂_GWAS")
+pc  <- read.table("pca.eigenvec", header = TRUE)
+covar <-read.table("covar_Phlegm.txt", header = TRUE)
+covar_1 <- merge(covar, pc, by = c("FID", "IID"))
+covar_2 <- covar_1[, c("FID", "IID", "FID","IID","BODY_WEIGHT", 
+                       "BMI","BODY_FAT_RATE","BODY_WAISTLINE", 
+                       "BODY_BUTTOCKS","WHR","CREATININE","URIC_ACID", paste0("PC", 1:10, sep = ""))]
+write.table(covar_2, "Phlegm_covariate.txt", append = FALSE, quote = FALSE, sep = "\t", 
+            row.names = FALSE, col.names = TRUE)
+
+#跑完combin_PCA_變數.R--------------------------------------------------------------------------------
 #先去做Plink，跑出.logistic檔案後，再回來R作圖-----------------------------------------------------------------------------------
-setwd("C:\\R\\GWAS")
-result_1 <- read.table("Yin_def_result.assoc.logistic", header = TRUE)
-result_2<- read.table("Phlegm_stasis_result.assoc.logistic", header = TRUE)
-result_3 <- read.table("Yang_def_result.assoc.logistic", header = TRUE)
+#先去做Plink，跑出.logistic檔案後，再回來R作圖-----------------------------------------------------------------------
+#先去做Plink，跑出.logistic檔案後，再回來R作圖-----------------------------------------------------------------------
+#很重要說3次
 
-pvalue_1 <- result_1[, c("SNP", "CHR", "BP", "P")]
-pvalue_2 <- result_2[, c("SNP", "CHR", "BP", "P")]
-pvalue_3 <- result_3[, c("SNP", "CHR", "BP", "P")]
+#陰虛作圖資料讀取------------------------------------------
 
-#manhattan plot
-for (i in 1:3){
-  CMplot(str_c("pvalue_",i), plot.type = "m", LOG10 = TRUE, threshold = 1e-5, chr.den.col = NULL, 
-         file = "jpg", dpi = 300, file.output = TRUE, verbose = FALSE)
-  
-  #QQ plot
-  CMplot(str_c("pvalue_",i), plot.type = "q", conf.int.col = NULL, box = TRUE, 
-         file = "jpg", dpi = 300, file.output = TRUE, verbose = FALSE)
-  median((str_c("result_",i)$STAT)^2)/0.455
-  
-  
-  
-  #subset significant region for LocusZoom----------------------------------------
-  # find min p-value
-  subset(str_c("pvalue_",i), P == min(P))
-}
+setwd("C:\\R\\中醫體質_GWAS\\陰虛_GWAS")
+result_Yin <- read.table("GWAS_PCA_Yin.assoc.logistic", header = TRUE)
+pvalue_Yin <- result_Yin[, c("SNP", "CHR", "BP", "P")]
 
+#陰虛作圖-----------------
+#Manhattan plot
+CMplot(pvalue_Yin, plot.type = "m", LOG10 = TRUE, threshold = 1e-5, chr.den.col = NULL, 
+       file = "jpg", dpi = 300, file.output = TRUE, verbose = FALSE)
+#QQ plot
+CMplot(pvalue_Yin, plot.type = "q", conf.int.col = NULL, box = TRUE, 
+       file = "jpg", dpi = 300, file.output = TRUE, verbose = FALSE)
 
-<<<<<<< Updated upstream
-#作圖迴圈失效-----------------
-CMplot(pvalue_1, plot.type = "m", LOG10 = TRUE, threshold = 1e-5, chr.den.col = NULL, 
-       file = "jpg", file.name="yin_Manhtn.P", dpi = 300, file.output = TRUE, verbose = FALSE)
-CMplot(pvalue_1, plot.type = "q", conf.int.col = NULL, box = TRUE, 
-       file = "jpg", file.name="_yin", dpi = 300, file.output = TRUE, verbose = FALSE)
+#陽虛作圖資料讀取-------------------------------------------
+setwd("C:\\R\\中醫體質_GWAS\\陽虛_GWAS")
+result_Yang<- read.table("GWAS_PCA_Yang.assoc.logistic", header = TRUE)
+pvalue_Yang <- result_Yang[, c("SNP", "CHR", "BP", "P")]
+#陽虛作圖-----------------
+#Manhattan plot
+CMplot(pvalue_Yang, plot.type = "m", LOG10 = TRUE, threshold = 1e-5, chr.den.col = NULL, 
+       file = "jpg", dpi = 300, file.output = TRUE, verbose = FALSE)
+#QQ plot
+CMplot(pvalue_Yang, plot.type = "q", conf.int.col = NULL, box = TRUE, 
+       file = "jpg", dpi = 300, file.output = TRUE, verbose = FALSE)
 
-CMplot(pvalue_2, plot.type = "m", LOG10 = TRUE, threshold = 1e-5, chr.den.col = NULL, 
-       file = "jpg", file.name="Phlegm_Manhtn.P", dpi = 300, file.output = TRUE, verbose = FALSE)
-CMplot(pvalue_2, plot.type = "q", conf.int.col = NULL, box = TRUE, 
-       file = "jpg", file.name="_Phlegm", dpi = 300, file.output = TRUE, verbose = FALSE)
+#痰盂作圖資料讀取-------------------------------------------
+setwd("C:\\R\\中醫體質_GWAS\\痰盂_GWAS")
+result_Phlegm<- read.table("GWAS_PCA_Phlegm.assoc.logistic", header = TRUE)
+pvalue_Phlegm <- result_Phlegm[, c("SNP", "CHR", "BP", "P")]
+#痰盂作圖-----------------
+#Manhattan plot
+CMplot(pvalue_Phlegm, plot.type = "m", LOG10 = TRUE, threshold = 1e-5, chr.den.col = NULL, 
+       file = "jpg", dpi = 300, file.output = TRUE, verbose = FALSE)
+#QQ plot
+CMplot(pvalue_Phlegm, plot.type = "q", conf.int.col = NULL, box = TRUE, 
+       file = "jpg", dpi = 300, file.output = TRUE, verbose = FALSE)
 
-CMplot(pvalue_3, plot.type = "m", LOG10 = TRUE, threshold = 1e-5, chr.den.col = NULL, 
-       file = "jpg", file.name="Yang_Manhtn.P", dpi = 300, file.output = TRUE, verbose = FALSE)
-CMplot(pvalue_3, plot.type = "q", conf.int.col = NULL, box = TRUE, 
-       file = "jpg", file.name="_Yang", dpi = 300, file.output = TRUE, verbose = FALSE)
-=======
->>>>>>> Stashed changes
-
+#匯出顯著基因-------------------------------------------------------
 # Yin_def:find another site---------------------------------------
-Yin_def_locus <- subset(pvalue_1, P < 1E-5)
-
+Yin_def_locus <- subset(pvalue_Yin, P < 1E-5)
 #Yin_def subset region
 #迴圈
-
 for(i in 1:length(Yin_def_locus$BP)){
-  locus <- subset(pvalue_1, CHR == Yin_def_locus[i,2] & BP < Yin_def_locus[i,3] + 400000 & BP > Yin_def_locus[i,3] - 400000)
+  locus <- subset(pvalue_Yin, CHR == Yin_def_locus[i,2] & BP < Yin_def_locus[i,3] + 400000 & BP > Yin_def_locus[i,3] - 400000)
   write.table(locus, sprintf("locus_%d_%s.txt",Yin_def_locus[i,2] ,Yin_def_locus[i,1]), append = FALSE, quote = FALSE, sep = "\t", 
               row.names = FALSE, col.names = TRUE)
-  
 }
 
 # Yang_def:find another site--------------------------------------
-Yang_def_locus <- subset(pvalue_3, P < 1E-5)
+Yang_def_locus <- subset(pvalue_Yang, P < 1E-5)
 # Yang_def subset region
-
-
 #迴圈
 for(i in 1:length(Yang_def_locus$BP)){
-  locus <- subset(pvalue_3, CHR == Yang_def_locus[i,2] & BP < Yang_def_locus[i,3] + 400000 & BP > Yang_def_locus[i,3] - 400000)
+  locus <- subset(pvalue_Yang, CHR == Yang_def_locus[i,2] & BP < Yang_def_locus[i,3] + 400000 & BP > Yang_def_locus[i,3] - 400000)
   write.table(locus, sprintf("locus_%d_%s.txt",Yang_def_locus[i,2] ,Yang_def_locus[i,1]), append = FALSE, quote = FALSE, sep = "\t", 
               row.names = FALSE, col.names = TRUE)
-  
 }
 
 
 # Phlegm_stasis:find another site------------------------------------
-Phlegm_stasis_locus <- subset(pvalue_2, P < 1E-5)
+Phlegm_stasis_locus <- subset(pvalue_Phlegm, P < 1E-5)
 
 # Phlegm_stasis subset region
 
 #迴圈
 for(i in 1:length(Phlegm_stasis_locus$BP)){
-  locus <- subset(pvalue_2, CHR == Phlegm_stasis_locus[i,2] & BP < Phlegm_stasis_locus[i,3] + 400000 & BP > Phlegm_stasis_locus[i,3] - 400000)
+  locus <- subset(pvalue_Phlegm, CHR == Phlegm_stasis_locus[i,2] & BP < Phlegm_stasis_locus[i,3] + 400000 & BP > Phlegm_stasis_locus[i,3] - 400000)
   write.table(locus, sprintf("locus_%d_%s.txt",Phlegm_stasis_locus[i,2] ,Phlegm_stasis_locus[i,1]), append = FALSE, quote = FALSE, sep = "\t", 
               row.names = FALSE, col.names = TRUE)
-  
 }
 
-
-#資料匯出--------------------------------------------------------------------------
-write.table(GWAS, file = "C:\\R\\GWAS\\GWAS.txt",sep = "\t",row.names = F,quote = F)
-write.table(GWAS_cons, file = "C:\\R\\GWAS\\GWAS_cons.txt",sep = "\t",row.names = F,quote = F)
-write.table(rm.col_same,file = "C:\\R\\GWAS\\list.txt",sep = "\t",row.names = F,quote = F)
-write.table(covar_cons_sex_age,file = "C:\\R\\GWAS\\covar_cons.txt",sep = "\t",row.names = F,quote = F)

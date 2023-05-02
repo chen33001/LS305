@@ -8,11 +8,11 @@ Select: ★★★★★
 
 1. 由1.的資料合併TCM_Anova找有中醫的release_No
 2. 根據陰虛、陽虛、痰盂不同體質做傾向分數配對
-- 3.做GWAS需要的資料
+- 4.做GWAS需要的資料
     
     (1)需要TWB1.hg19.bed、TWB1.hg19.bim、TWB1.hg19.fam 檔案，這是基因的資訊，[這3個檔案需要去老師的dropbox上下載]
     
-    - (2)做list_yin.txt、list_yang.txt、list_Phlegm.txt，(包含兩行TWB1_ID)[這3個檔案放在跑Plink所需資料裡]
+    - (2)做list_yin.txt、list_yang.txt、list_Phlegm.txt，(包含兩行TWB1_ID)，[這3個檔案放在跑Plink所需資料裡]
         
         [list_yin.txt](Genome-wide%20Association%20Studies%203dfabf94d5ce44e4be8ab0e8d02c8ecc/list_yin.txt)
         
@@ -55,7 +55,7 @@ cd /d C:\R\中醫體質_GWAS\陰虛_GWAS
 plink --bfile TWB1.hg19 --keep list_yin.txt --pheno YIN_GWAS_cons.txt --pheno-name Yin_def --make-bed --out TWB1_pheno
 plink --bfile TWB1_pheno --mind 0.05 --make-bed --out qc1
 plink --bfile qc1 --het --out het
-##heterozygosity.r
+##去R stuio 做 heterozygosity.r
 plink --bfile qc1 --remove fail-het-qc.txt --make-bed --out qc2
 plink --bfile qc2 --indep-pairwise 250 5 0.2 --exclude range long.range.LD.region.txt --out indep
 plink --bfile qc2 --extract indep.prune.in --genome --min 0.1875 --out related  #take long time
@@ -65,13 +65,13 @@ plink --bfile qc3 --geno 0.05 --maf 0.05 --hwe 0.00001 --make-bed --out qc-final
 #PCA --> 10PCs
 #plink --bfile qc-final --indep-pairwise 250 5 0.2 --exclude range long.range.LD.region.txt --out indep
 plink --bfile qc-final --extract indep.prune.in --pca header --out pca
-#R code combin covariate and 10 PCs (combin_PCA.R --> cons_covariate.txt)
-plink --bfile qc-final --logistic  hide-covar --covar cons_covariate.txt --covar-name BODY_WEIGHT,BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,WHR,CREATININE,URIC_ACID,PC1-PC10 --out GWAS_PCA_Yin
+#記得去跑combin covariate.R，跑出Yin_covariate.txt才能做下一步 R code combin covariate and 10 PCs (combin_PCA.R --> cons_covariate.txt)
+plink --bfile qc-final --logistic  hide-covar --covar Yin_covariate.txt --covar-name BODY_WEIGHT,BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,WHR,CREATININE,URIC_ACID,PC1-PC10 --out GWAS_PCA_Yin
 
 #without PCA
 plink --bfile qc-final --covar covar_yin.txt --covar-name BODY_WEIGHT,BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,WHR,CREATININE,URIC_ACID --logistic --out GWAS_Yin
 
-plink --bfile qc-final --logistic hide-covar --covar cons_covariate.txt --covar-name BODY_WEIGHT,BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,WHR,CREATININE,URIC_ACID,PC1-PC10 --out Yin_def_result
+plink --bfile qc-final --logistic hide-covar --covar Yin_covariate.txt --covar-name BODY_WEIGHT,BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,WHR,CREATININE,URIC_ACID,PC1-PC10 --out Yin_def_result
 ```
 
 ## 陽虛
@@ -81,7 +81,7 @@ cd /d C:\R\中醫體質_GWAS\陽虛_GWAS
 plink --bfile TWB1.hg19 --keep list_yang.txt --pheno yang_GWAS_cons.txt --pheno-name Yang_def --make-bed --out TWB1_pheno
 plink --bfile TWB1_pheno --mind 0.05 --make-bed --out qc1
 plink --bfile qc1 --het --out het
-##heterozygosity.r
+##去R stuio 做 heterozygosity.r
 plink --bfile qc1 --remove fail-het-qc.txt --make-bed --out qc2
 plink --bfile qc2 --indep-pairwise 250 5 0.2 --exclude range long.range.LD.region.txt --out indep
 plink --bfile qc2 --extract indep.prune.in --genome --min 0.1875 --out related  #take long time
@@ -91,13 +91,13 @@ plink --bfile qc3 --geno 0.05 --maf 0.05 --hwe 0.00001 --make-bed --out qc-final
 #PCA --> 10PCs
 #plink --bfile qc-final --indep-pairwise 250 5 0.2 --exclude range long.range.LD.region.txt --out indep
 plink --bfile qc-final --extract indep.prune.in --pca header --out pca
-#R code combin covariate and 10 PCs (combin_PCA.R --> cons_covariate.txt)
-plink --bfile qc-final --logistic  hide-covar --covar cons_covariate.txt --covar-name BODY_WEIGHT,BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,WHR,CREATININE,URIC_ACID,PC1-PC10 --out GWAS_PCA_Yang
+#記得去跑combin covariate.R，跑出Yang_covariate.txt才能做下一步 R code combin covariate and 10 PCs (combin_PCA.R --> cons_covariate.txt)
+plink --bfile qc-final --logistic  hide-covar --covar Yang_covariate.txt --covar-name BODY_WEIGHT,BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,WHR,CREATININE,URIC_ACID,PC1-PC10 --out GWAS_PCA_Yang
 
 #without PCA
 plink --bfile qc-final --covar covar_yang.txt --covar-name BODY_WEIGHT,BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,WHR,CREATININE,URIC_ACID --logistic --out GWAS_Yang
 
-plink --bfile qc-final --logistic hide-covar --covar cons_covariate.txt --covar-name BODY_WEIGHT,BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,WHR,CREATININE,URIC_ACID,PC1-PC10 --out Yang_def_result
+plink --bfile qc-final --logistic hide-covar --covar Yang_covariate.txt --covar-name BODY_WEIGHT,BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,WHR,CREATININE,URIC_ACID,PC1-PC10 --out Yang_def_result
 ```
 
 ## 痰盂
@@ -105,6 +105,32 @@ plink --bfile qc-final --logistic hide-covar --covar cons_covariate.txt --covar-
 ```powershell
 cd /d C:\R\中醫體質_GWAS\痰盂_GWAS
 plink --bfile TWB1.hg19 --keep list_Phlegm.txt --pheno Phlegm_GWAS_cons.txt --pheno-name Phlegm_def --make-bed --out TWB1_pheno
+plink --bfile TWB1_pheno --mind 0.05 --make-bed --out qc1
+plink --bfile qc1 --het --out het
+##去R stuio 做 heterozygosity.r
+plink --bfile qc1 --remove fail-het-qc.txt --make-bed --out qc2
+plink --bfile qc2 --indep-pairwise 250 5 0.2 --exclude range long.range.LD.region.txt --out indep
+plink --bfile qc2 --extract indep.prune.in --genome --min 0.1875 --out related  #take long time
+plink --bfile qc2 --remove related.genome --make-bed --out qc3
+plink --bfile qc3 --geno 0.05 --maf 0.05 --hwe 0.00001 --make-bed --out qc-final
+
+#PCA --> 10PCs
+#plink --bfile qc-final --indep-pairwise 250 5 0.2 --exclude range long.range.LD.region.txt --out indep
+plink --bfile qc-final --extract indep.prune.in --pca header --out pca
+#記得去跑combin covariate.R，跑出Phlegm_covariate.txt才能做下一步 R code combin covariate and 10 PCs (combin_PCA.R --> cons_covariate.txt)
+plink --bfile qc-final --logistic  hide-covar --covar Phlegm_covariate.txt --covar-name BODY_WEIGHT,BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,WHR,CREATININE,URIC_ACID,PC1-PC10 --out GWAS_PCA_Phlegm
+
+#without PCA
+plink --bfile qc-final --covar covar_Phlegm.txt --covar-name BODY_WEIGHT,BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,WHR,CREATININE,URIC_ACID --logistic --out GWAS_Phlegm
+
+plink --bfile qc-final --logistic hide-covar --covar Phlegm_covariate.txt --covar-name BODY_WEIGHT,BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,WHR,CREATININE,URIC_ACID,PC1-PC10 --out Phlegm_def_result
+```
+
+Plink 流程  跑出logistic檔案
+
+```powershell
+cd /d C:\R\GWAS
+plink --bfile TWB1.hg19 --keep list.txt --pheno GWAS_Cons.txt --pheno-name Yin_def, Yang_def, Phlegm_stasis --make-bed --out TWB1_pheno
 plink --bfile TWB1_pheno --mind 0.05 --make-bed --out qc1
 plink --bfile qc1 --het --out het
 ##heterozygosity.r
@@ -118,10 +144,10 @@ plink --bfile qc3 --geno 0.05 --maf 0.05 --hwe 0.00001 --make-bed --out qc-final
 #plink --bfile qc-final --indep-pairwise 250 5 0.2 --exclude range long.range.LD.region.txt --out indep
 plink --bfile qc-final --extract indep.prune.in --pca header --out pca
 #R code combin covariate and 10 PCs (combin_PCA.R --> cons_covariate.txt)
-plink --bfile qc-final --logistic  hide-covar --covar cons_covariate.txt --covar-name BODY_WEIGHT,BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,WHR,CREATININE,URIC_ACID,PC1-PC10 --out GWAS_PCA_Phlegm
+plink --bfile qc-final --logistic  hide-covar --covar cons_covariate.txt --covar-name Sex,Age,PC1-PC10 --out GWAS_PCA_Cons
 
 #without PCA
-plink --bfile qc-final --covar covar_yin.txt --covar-name BODY_WEIGHT,BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,WHR,CREATININE,URIC_ACID --logistic --out GWAS_Phlegm
+plink --bfile qc-final --covar covar_cons.txt --covar-name Sex,Age --logistic --out GWAS_CONS
 
-plink --bfile qc-final --logistic hide-covar --covar cons_covariate.txt --covar-name BODY_WEIGHT,BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,WHR,CREATININE,URIC_ACID,PC1-PC10 --out Phlegm_def_result
+plink --bfile qc-final --logistic hide-covar --covar cons_covariate.txt --covar-name Sex,,Age,PC1-PC10 --out result
 ```
