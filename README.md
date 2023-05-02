@@ -125,29 +125,3 @@ plink --bfile qc-final --covar covar_Phlegm.txt --covar-name BODY_WEIGHT,BMI,BOD
 
 plink --bfile qc-final --logistic hide-covar --covar Phlegm_covariate.txt --covar-name BODY_WEIGHT,BMI,BODY_FAT_RATE,BODY_WAISTLINE,BODY_BUTTOCKS,WHR,CREATININE,URIC_ACID,PC1-PC10 --out Phlegm_def_result
 ```
-
-Plink 流程  跑出logistic檔案
-
-```powershell
-cd /d C:\R\GWAS
-plink --bfile TWB1.hg19 --keep list.txt --pheno GWAS_Cons.txt --pheno-name Yin_def, Yang_def, Phlegm_stasis --make-bed --out TWB1_pheno
-plink --bfile TWB1_pheno --mind 0.05 --make-bed --out qc1
-plink --bfile qc1 --het --out het
-##heterozygosity.r
-plink --bfile qc1 --remove fail-het-qc.txt --make-bed --out qc2
-plink --bfile qc2 --indep-pairwise 250 5 0.2 --exclude range long.range.LD.region.txt --out indep
-plink --bfile qc2 --extract indep.prune.in --genome --min 0.1875 --out related  #take long time
-plink --bfile qc2 --remove related.genome --make-bed --out qc3
-plink --bfile qc3 --geno 0.05 --maf 0.05 --hwe 0.00001 --make-bed --out qc-final
-
-#PCA --> 10PCs
-#plink --bfile qc-final --indep-pairwise 250 5 0.2 --exclude range long.range.LD.region.txt --out indep
-plink --bfile qc-final --extract indep.prune.in --pca header --out pca
-#R code combin covariate and 10 PCs (combin_PCA.R --> cons_covariate.txt)
-plink --bfile qc-final --logistic  hide-covar --covar cons_covariate.txt --covar-name Sex,Age,PC1-PC10 --out GWAS_PCA_Cons
-
-#without PCA
-plink --bfile qc-final --covar covar_cons.txt --covar-name Sex,Age --logistic --out GWAS_CONS
-
-plink --bfile qc-final --logistic hide-covar --covar cons_covariate.txt --covar-name Sex,,Age,PC1-PC10 --out result
-```
