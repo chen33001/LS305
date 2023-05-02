@@ -12,7 +12,7 @@ Select: ★★★★★
     
     (1)需要TWB1.hg19.bed、TWB1.hg19.bim、TWB1.hg19.fam 檔案，這是基因的資訊，[這3個檔案需要去老師的dropbox上下載]
     
-    - (2)做list_yin.txt、list_yang.txt、list_Phlegm.txt，(包含兩行TWB1_ID)
+    - (2)做list_yin.txt、list_yang.txt、list_Phlegm.txt，(包含兩行TWB1_ID)[這3個檔案放在跑Plink所需資料裡]
         
         [list_yin.txt](Genome-wide%20Association%20Studies%203dfabf94d5ce44e4be8ab0e8d02c8ecc/list_yin.txt)
         
@@ -20,7 +20,7 @@ Select: ★★★★★
         
         [list_Phlegm.txt](Genome-wide%20Association%20Studies%203dfabf94d5ce44e4be8ab0e8d02c8ecc/list_Phlegm.txt)
         
-    - (3)做YIN_GWAS_cons.txt、YANG_GWAS_cons.txt、Phlegm_GWAS_cons.txt，(包含FID、	IID、[(yin_def)或是(yang_def)或是(Phlegm_def)]
+    - (3)做YIN_GWAS_cons.txt、YANG_GWAS_cons.txt、Phlegm_GWAS_cons.txt，(包含FID、	IID、[(yin_def)或是(yang_def)或是(Phlegm_def)]，[這3個檔案放在跑Plink所需資料裡]
         
         [yang_GWAS_cons.txt](Genome-wide%20Association%20Studies%203dfabf94d5ce44e4be8ab0e8d02c8ecc/yang_GWAS_cons.txt)
         
@@ -28,7 +28,7 @@ Select: ★★★★★
         
         [YIN_GWAS_cons.txt](Genome-wide%20Association%20Studies%203dfabf94d5ce44e4be8ab0e8d02c8ecc/YIN_GWAS_cons.txt)
         
-    - (4)做covar_yiin.txt、covar_yang.txt、covar_Phlegm.txt(包含FID、IID、以及欲觀察的性狀)
+    - (4)做covar_yiin.txt、covar_yang.txt、covar_Phlegm.txt(包含FID、IID、以及欲觀察的性狀)，[這3個檔案放在跑Plink所需資料裡]
         
         [covar_yin.txt](Genome-wide%20Association%20Studies%203dfabf94d5ce44e4be8ab0e8d02c8ecc/covar_yin.txt)
         
