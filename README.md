@@ -10,7 +10,7 @@ Select: ★★★★★
 2. 根據陰虛、陽虛、痰盂不同體質做傾向分數配對
 - 4.做GWAS需要的資料
     
-    (1)需要TWB1.hg19.bed、TWB1.hg19.bim、TWB1.hg19.fam 檔案，這是基因的資訊
+    (1)需要TWB1.hg19.bed、TWB1.hg19.bim、TWB1.hg19.fam 檔案，這是基因的資訊，[這3個檔案需要去老師的dropbox上下載]
     
     - (2)做list_yin.txt、list_yang.txt、list_Phlegm.txt，(包含兩行TWB1_ID)
         
