@@ -156,8 +156,7 @@ for (i in length(use_T_test)){
   chiqTCM$use_T_test[i] <- as.numeric(chiqTCM$use_T_test[i])
   
 }
-<<<<<<< Updated upstream
-=======
+
 
 #Anova 資料清洗---------------------------------------------------------------------------------------------
 TCM_group <- TCM_group[,-grep("AGE|age_gruop",colnames(TCM_group))] #去除sex AGE age_group
@@ -192,31 +191,7 @@ for (i in c(1:78)){
 #turn off PDF plotting
 dev.off() 
 
-
-#ERROR:Error in lm.fit(x, y, offset = offset, singular.ok = singular.ok, ...) : 
-#NA/NaN/Inf 出現於 'y'
-#TCM_ANOVA:c30=VC_PRED(i=22),c37=FVC_PRED(i=29),C=39(31),47(39),49(41),
-#(43),(45),(47),(68)
-
-#Error in if ((model_summary$Pr..F.)[x] < 0.001) { : 
-#missing value where TRUE/FALSE needed   
-# 59(51),(),
-
-# Error in lm.fit(x, y, offset = offset, singular.ok = singular.ok, ...) : 
-#   NA/NaN/Inf 出現於 'y'
-# In addition: Warning message:
-#   In storage.mode(v) <- "double" : NAs introduced by coercion
-# 66(58),68(60),70(62),72(64),74(66),
-
-
 #Anova製圖 *(Anova_table_export.R取自Github上別人提供的程式碼)----------------------------------------------------
-
-#------------------------------
-
-
-
->>>>>>> Stashed changes
-
 #做卡方檢定---------------------------------------------------------------------------------------------------------------------------
 
 use_vb <- c("SEX", 
