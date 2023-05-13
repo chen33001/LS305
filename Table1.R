@@ -38,6 +38,27 @@ Phlegm_cols <- colnames(Table1_Phlegm)
 Phlegm_new_cols <- c(Phlegm_cols[1], Phlegm_cols[13], Phlegm_cols[14], Phlegm_cols[2], Phlegm_cols[3:12], Phlegm_cols[15:25])
 Table1_Phlegm <- Table1_Phlegm[, Phlegm_new_cols]
 
+
+#匯出Table1 excel
+write.csv(Table1_yin,file='C:\\Github\\LS305\\Table1資料\\Table1need_yin.csv',fileEncoding = "Big5")
+write.csv(Table1_yang,file='C:\\Github\\LS305\\Table1資料\\Table1need_yang.csv',fileEncoding = "Big5")
+write.csv(Table1_Phlegm,file='C:\\Github\\LS305\\Table1資料\\Table1need_Phlegm.csv',fileEncoding = "Big5")
+
+
+
+
 #survey
-#陰虛
+#計算陰虛與非陰虛數量的平均數和標準差
+#先分出陰虛與非陰虛數量
+yin_number <- filter(Table1_yin, Yin_def == 1) 
+Not_yin_number <- filter(Table1_yin, Yin_def == 0)
+#再計算平均數和標準差
+#AGE的平均數和標準差
+tapply(Table1_yin$AGE, Table1_yin$Yin_def, mean)
+tapply(Table1_yin$AGE, Table1_yin$Yin_def, sd)
+#SEX的男女分別數量
+yin_number_SEX2 <- filter(yin_number, SEX == 2) 
+yin_number_SEX1 <- filter(yin_number, SEX == 1)
+Not_yin_number_SEX2 <- filter(Not_yin_number, SEX == 2)
+Not_yin_number_SEX1 <- filter(Not_yin_number, SEX == 1)
 
