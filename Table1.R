@@ -45,9 +45,28 @@ write.csv(Table1_yang,file='C:\\Github\\LS305\\Table1資料\\Table1need_yang.csv',
 write.csv(Table1_Phlegm,file='C:\\Github\\LS305\\Table1資料\\Table1need_Phlegm.csv',fileEncoding = "Big5")
 
 
-
+#上面跑完後Global Environment可以先清空了--------------------------------------------------------------------------------------
 
 #survey
+setwd("C:/Github/LS305/Table1資料")
+source("C:\\Github\\LS305\\statisticaltests.R")
+Table1need_yin <- read.csv("C:\\Github\\LS305\\Table1資料\\Table1need_yin.csv")
+Table1need_yang <- read.csv("C:\\Github\\LS305\\Table1資料\\Table1need_yang.csv")
+Table1need_Phlegm <- read.csv("C:\\Github\\LS305\\Table1資料\\Table1need_Phlegm.csv")
+
+
+yin_statistics <- statisticaltests(Table1need_yin,'yin',T)
+yang_statistics <- statisticaltests(Table1need_yang,'yang',T)
+Phlegm_statistics <- statisticaltests(Table1need_Phlegm,'Phlegm',T)
+
+
+
+
+#以下程式碼先不用跑---------------------------------------------------------------------------
+#以下程式碼先不用跑---------------------------------------------------------------------------
+#以下程式碼先不用跑---------------------------------------------------------------------------
+
+
 #計算陰虛與非陰虛數量的平均數和標準差
 #先分出陰虛與非陰虛數量
 yin_number <- filter(Table1_yin, Yin_def == 1) 
