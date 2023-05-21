@@ -62,22 +62,5 @@ Phlegm_statistics <- statisticaltests(Table1need_Phlegm,'Phlegm',T)
 
 
 
-#以下程式碼先不用跑---------------------------------------------------------------------------
-#以下程式碼先不用跑---------------------------------------------------------------------------
-#以下程式碼先不用跑---------------------------------------------------------------------------
 
-
-#計算陰虛與非陰虛數量的平均數和標準差
-#先分出陰虛與非陰虛數量
-yin_number <- filter(Table1_yin, Yin_def == 1) 
-Not_yin_number <- filter(Table1_yin, Yin_def == 0)
-#再計算平均數和標準差
-#AGE的平均數和標準差
-tapply(Table1_yin$AGE, Table1_yin$Yin_def, mean)
-tapply(Table1_yin$AGE, Table1_yin$Yin_def, sd)
-#SEX的男女分別數量
-yin_number_SEX2 <- filter(yin_number, SEX == 2) 
-yin_number_SEX1 <- filter(yin_number, SEX == 1)
-Not_yin_number_SEX2 <- filter(Not_yin_number, SEX == 2)
-Not_yin_number_SEX1 <- filter(Not_yin_number, SEX == 1)
 
