@@ -49,6 +49,7 @@ write.csv(Table1_Phlegm,file='C:\\Github\\LS305\\Table1資料\\Table1need_Phlegm.c
 
 #survey
 setwd("C:/Github/LS305/Table1資料")
+#用github上別人的程式碼
 source("C:\\Github\\LS305\\statisticaltests.R")
 Table1need_yin <- read.csv("C:\\Github\\LS305\\Table1資料\\Table1need_yin.csv")
 Table1need_yang <- read.csv("C:\\Github\\LS305\\Table1資料\\Table1need_yang.csv")
