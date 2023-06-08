@@ -14,11 +14,11 @@ yang_stasis <- read.csv("C:\\Users\\User\\Desktop\\傾向分數估計\\陽虛傾
 Phlegm_stasis <- read.csv("C:\\Users\\User\\Desktop\\傾向分數估計\\痰盂傾向分數估計.csv",fileEncoding = "big5")
 
 #清洗做GWAS需要的資料，把序號對應成TWB編號-----------------------------------------------------------
-names(lab_info_input)[1] <- "Release_No"
 lab_info_wash <- lab_info_input %>% 
+                  rename(Release_No = 嚜燎elease_No ) %>% 
                   subset(select=c("Release_No","TWB1_ID","FOLLOW")) %>% 
                   subset(FOLLOW=="Baseline") %>%
-                  data.table()
+                  data.table::data.table()
 lab_info_input <- lab_info_wash[grepl('TWB',TWB1_ID)]
 
 #製作陰虛的list.txt資料---------------------------------------------------------
